@@ -1,9 +1,11 @@
 # soo-dev
 soo-dev
 
-# Run BE and FE using F5 in vscode
-add launch.json into .vscode
-example:
+## Run BE and FE using F5 in vscode
+
+### add launch.json into .vscode
+
+```sh
 {
     // IntelliSense를 사용하여 가능한 특성에 대해 알아보세요.
     // 기존 특성에 대한 설명을 보려면 가리킵니다.
@@ -27,9 +29,10 @@ example:
         }
     ]
 }
+```
 
-add tasks.json into .vscode
-example:
+### add tasks.json into .vscode
+```sh
 {
     "version": "2.0.0",
     "tasks": [
@@ -75,3 +78,4 @@ example:
         }
     ]
 }
+```
