@@ -16,16 +16,24 @@ async function bootstrap() {
         ],
         credentials: true,
     };
-    const corsConfigPath = path.join(__dirname, '../config/cors.json');
-    let corsOptions = defaultCorsOptions;
+    let corsOptions: any = defaultCorsOptions;
+    const corsConfigPath = path.join(__dirname, '../config/env.json');
     if (fs.existsSync(corsConfigPath)) {
         try {
-            corsOptions = JSON.parse(fs.readFileSync(corsConfigPath, 'utf-8'));
+            const envConfig = JSON.parse(fs.readFileSync(corsConfigPath, 'utf-8'));
+            if (envConfig.cors && envConfig.cors.enabled) {
+                corsOptions = {
+                    origin: envConfig.cors.origin || defaultCorsOptions.origin,
+                    credentials: envConfig.cors.credentials !== undefined ? envConfig.cors.credentials : defaultCorsOptions.credentials,
+                    methods: envConfig.cors.allowedMethods,
+                    allowedHeaders: envConfig.cors.allowedHeaders,
+                };
+            }
         } catch (e) {
             console.warn('CORS 설정 파일 파싱 오류, 기본값 사용:', e);
         }
     }
-    console.log('CORS 설정:', corsOptions);
+    console.log('Load CORS: ', corsOptions);
     app.enableCors(corsOptions);
     await app.listen(process.env.PORT || 3000);
 }
