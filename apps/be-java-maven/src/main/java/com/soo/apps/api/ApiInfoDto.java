@@ -1,4 +1,4 @@
-package com.soo.common.dto;
+package com.soo.apps.api;
 
 import java.io.Serializable;
 import java.util.List;

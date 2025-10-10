@@ -23,6 +23,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
     value = {
         "com.soo.apps.template.mapper",
         "com.soo.apps.database.mapper",
+        "com.soo.apps.coolmove.mapper",
     }
 )
 @EnableTransactionManagement

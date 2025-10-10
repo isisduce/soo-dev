@@ -2,6 +2,8 @@ package com.soo.common.helper;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class SystemHelper {
 
@@ -11,6 +13,24 @@ public class SystemHelper {
 
     public static boolean IsWindows() { return osName.contains("windows"); }
     public static boolean IsLinux()   { return osName.contains("linux"); }
+
+    // ====================================================================================================
+
+    public static String GetCurrentDate() {
+        return GetCurrentDateTime("yyyyMMdd");
+    }
+
+    public static String GetCurrentTime() {
+        return GetCurrentDateTime("HHmmss");
+    }
+
+    public static String GetCurrentDateTime() {
+        return GetCurrentDateTime("yyyyMMdd_HHmmss");
+    }
+
+    public static String GetCurrentDateTime(String pattern) {
+        return LocalDateTime.now().format(DateTimeFormatter.ofPattern(pattern));
+    }
 
     // ====================================================================================================
 

@@ -1,4 +1,4 @@
-package com.soo.common.api;
+package com.soo.apps.api;
 
 import java.io.File;
 import java.nio.file.Path;
@@ -8,10 +8,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import com.soo.common.dto.ApiInfoDto;
-import com.soo.common.dto.ApiParamDto;
-
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 

@@ -1,6 +1,6 @@
 import { readdirSync, readFileSync } from 'fs';
 import { join } from 'path';
-import { ApiInfoDto } from '../dto/api.dto';
+import { ApiInfoDto } from './api.dto';
 
 export const ApiParser = {
     parseApiListFromControllers: (dirPath: string): ApiInfoDto[] => {

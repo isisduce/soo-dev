@@ -6,7 +6,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { TypeormConfigService } from './database/typeorm-config.service';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { ApiController } from './apps/api/controller/api.controller';
+import { ApiController } from './apps/api/api.controller';
 import { TemplateEntity } from './database/entities/template.entity';
 // import { TemplateController } from './apps/template/controller/template.controller';
 import { TemplateService } from './apps/template/service/template.service';

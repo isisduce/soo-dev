@@ -1,10 +1,10 @@
-import { Controller, Get, Query } from '@nestjs/common';
-import { join } from 'path';
-import { ApiParser } from '../../../common/api/api.parser';
-import { ApiInfoDto } from '../../../common/dto/api.dto';
-import { ConfigService } from '@nestjs/config';
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'fs';
+import { ConfigService } from '@nestjs/config';
+import { Controller, Get, Query } from '@nestjs/common';
 import { isAbsolute } from 'path';
+import { join } from 'path';
+import { ApiInfoDto } from './api.dto';
+import { ApiParser } from './api.parser';
 
 @Controller('api')
 export class ApiController {
