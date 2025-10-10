@@ -1,1 +1,1 @@
-# be-java-maven
+# soo-dev-be-java-maven

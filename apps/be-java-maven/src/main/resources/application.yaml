@@ -1,6 +1,6 @@
 spring:
     application:
-        name: be-java-maven
+        name: soo-dev-be-java-maven
     profiles:
         include: cmn,dev
     jpa:

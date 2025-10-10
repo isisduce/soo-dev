@@ -32,14 +32,14 @@ logging:
 ---
 app:
     config:
-        # cors-json:      /nas/soo/apps/web-filesystem/be-java-maven/config/cors.json
-        # api-list-json:  /nas/soo/apps/web-filesystem/be-java-maven/config/api-list.json
-        # be-env-json:    /nas/soo/apps/web-filesystem/be-java-maven/config/env.json
-        # fe-env-json:    /nas/soo/apps/web-filesystem/fe-vite-react-ts/config/env.json
-        cors-json:     /develop/com.soo/web-filesystem/be-java-maven/config/cors.json
-        api-list-json: /develop/com.soo/web-filesystem/be-java-maven/config/api-list.json
-        be-env-json:   /develop/com.soo/web-filesystem/be-java-maven/config/env.json
-        fe-env-json:   /develop/com.soo/web-filesystem/fe-vite-react-ts/public/config/env.json
+        # cors-json:      /nas/soo/apps/soo-dev/be-java-maven/config/cors.json
+        # api-list-json:  /nas/soo/apps/soo-dev/be-java-maven/config/api-list.json
+        # be-env-json:    /nas/soo/apps/soo-dev/be-java-maven/config/env.json
+        # fe-env-json:    /nas/soo/apps/soo-dev/fe-vite-react-ts/config/env.json
+        cors-json:     /develop/com.soo/soo-dev/be-java-maven/config/cors.json
+        api-list-json: /develop/com.soo/soo-dev/be-java-maven/config/api-list.json
+        be-env-json:   /develop/com.soo/soo-dev/be-java-maven/config/env.json
+        fe-env-json:   /develop/com.soo/soo-dev/fe-vite-react-ts/public/config/env.json
 ---
 web-filesystem:
     root-dir: /nas
