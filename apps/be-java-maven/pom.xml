@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.soo</groupId>
-	<artifactId>web-filesystem-be-java-maven</artifactId>
+	<artifactId>be-java-maven</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>web-filesystem-be-java-maven</name>
-	<description>WebFileSystem</description>
+	<name>be-java-maven</name>
+	<description>BeJavaMaven</description>
 	<url/>
 	<licenses>
 		<license/>

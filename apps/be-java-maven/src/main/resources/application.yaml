@@ -1,6 +1,6 @@
 spring:
     application:
-        name: web-filesystem-be-java-maven
+        name: be-java-maven
     profiles:
         include: cmn,dev
     jpa:
