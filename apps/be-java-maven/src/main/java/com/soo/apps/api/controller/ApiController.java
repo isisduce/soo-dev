@@ -29,8 +29,8 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/api")
 public class ApiController {
 
-    @Value("${app.config.api-list-json}")
-    private String appConfigApiListJson;
+    @Value("${app.config.be-api-json}")
+    private String appConfigBeApiJson;
 
     private final String apiBase = "/api";
 
@@ -42,15 +42,15 @@ public class ApiController {
     /**
      * @Description API List
      */
-    @GetMapping("/api-list")
+    @GetMapping("/list")
     @Parameters({
         @Parameter(name = "generate", description = "Regenerate the api-list.json file (only in dev mode)", example = "false")
     })
     public ResponseEntity<?> getApiList(
             @RequestParam(value = "generate", required = false, defaultValue = "false") boolean generate
     ) {
-        String apiPath = String.format("GET %s%s", apiBase, "/api-list");
-        Path jsonPath = Path.of(appConfigApiListJson);
+        String apiPath = String.format("GET %s%s", apiBase, "/list");
+        Path jsonPath = Path.of(appConfigBeApiJson);
         ObjectMapper objectMapper = new ObjectMapper();
         List<ApiInfoDto> allApiList = null;
         if (packageConfig.isDev()) {
@@ -59,15 +59,15 @@ public class ApiController {
             ApiParser apiParser = new ApiParser();
             allApiList = apiParser.parseApiListFromControllers(dirPath);
             boolean fileExists = Files.exists(jsonPath);
-            // logger.info("[DEV] api-list-json exists: {}", fileExists);
+            // logger.info("[DEV] api.json exists: {}", fileExists);
             if (generate || !fileExists) {
                 try {
                     String json = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(allApiList);
                     Files.createDirectories(jsonPath.getParent());
                     Files.writeString(jsonPath, json, StandardCharsets.UTF_8);
-                    log.info("[DEV] api-list-json generated: {}", jsonPath);
+                    log.info("[DEV] api.json generated: {}", jsonPath);
                 } catch (Exception e) {
-                    log.error("[DEV] api-list-json file write error", e);
+                    log.error("[DEV] api.json file write error", e);
                 }
             }
         } else {
@@ -77,7 +77,7 @@ public class ApiController {
                     allApiList = objectMapper.readValue(json, objectMapper.getTypeFactory().constructCollectionType(List.class, ApiInfoDto.class));
                 }
             } catch (Exception e) {
-                log.error("api-list-json file read error", e);
+                log.error("api.json file read error", e);
             }
         }
         log.info(apiPath + " => " + ApiCode.SUCCESS_MSG);

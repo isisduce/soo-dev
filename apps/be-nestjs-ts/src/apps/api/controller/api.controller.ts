@@ -16,14 +16,14 @@ export class ApiController {
     /**
      * @desc API List
      */
-    @Get('api-list')
+    @Get('list')
     getApiList(
         /**
          * @desc Regenerate the api-list.json file (only in dev mode)
          */
         @Query('generate') generate: boolean = false
     ): ApiInfoDto[] {
-        const apiListJsonPath = this.configService.get<string>('APP_API_LIST_JSON') || 'config/api-list.json';
+        const apiListJsonPath = this.configService.get<string>('BE_API_JSON') || 'config/api.json';
         const dirPath = join(process.cwd(), 'src', 'apps');
         let allApiList: ApiInfoDto[] = [];
         const isDev = process.env.NODE_ENV !== 'production';
@@ -37,7 +37,7 @@ export class ApiController {
                     writeFileSync(filePath, JSON.stringify(allApiList, null, 2), 'utf-8');
                 } catch (e) {
                     // eslint-disable-next-line no-console
-                    console.error('[DEV] api-list-json file write error', e);
+                    console.error('[DEV] api.json file write error', e);
                 }
             }
         } else {
@@ -49,7 +49,7 @@ export class ApiController {
                 }
             } catch (e) {
                 // eslint-disable-next-line no-console
-                console.error('api-list-json file read error', e);
+                console.error('api.json file read error', e);
             }
         }
         return allApiList;

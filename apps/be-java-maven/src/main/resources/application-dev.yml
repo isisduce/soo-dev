@@ -35,7 +35,7 @@ app:
         # be-api-json: /nas/soo/apps/soo-dev/be-java-maven/config/api.json
         # be-env-json: /nas/soo/apps/soo-dev/be-java-maven/config/env.json
         # fe-env-json: /nas/soo/apps/soo-dev/fe-vite-react-ts/config/env.json
-        be-api-json: /develop/com.soo/soo-dev/be-java-maven/config/api.json
-        be-env-json: /develop/com.soo/soo-dev/be-java-maven/config/env.json
-        fe-env-json: /develop/com.soo/soo-dev/fe-vite-react-ts/public/config/env.json
+        be-api-json: /develop/com.soo/soo-dev/apps/be-java-maven/config/api.json
+        be-env-json: /develop/com.soo/soo-dev/apps/be-java-maven/config/env.json
+        fe-env-json: /develop/com.soo/soo-dev/apps/fe-vite-react-ts/public/config/env.json
 ---

@@ -22,6 +22,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
     sqlSessionFactoryRef = "sqlSessionFactory",
     value = {
         "com.soo.apps.template.mapper",
+        "com.soo.apps.database.mapper",
     }
 )
 @EnableTransactionManagement
