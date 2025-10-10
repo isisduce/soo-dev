@@ -1,0 +1,320 @@
+[ {
+  "controller" : "ApiController",
+  "method" : "GET",
+  "label" : "/api/api-list",
+  "path" : "/api/api-list",
+  "description" : "API List",
+  "params" : [ {
+    "name" : "generate",
+    "type" : "boolean",
+    "required" : false,
+    "defaultValue" : false,
+    "description" : "Regenerate the api-list.json file (only in dev mode)"
+  } ]
+}, {
+  "controller" : "TemplateController",
+  "method" : "GET",
+  "label" : "/api/template/alive",
+  "path" : "/api/template/alive",
+  "description" : "alive",
+  "params" : [ ]
+}, {
+  "controller" : "TemplateController",
+  "method" : "GET",
+  "label" : "/api/template/hello",
+  "path" : "/api/template/hello",
+  "description" : "hello",
+  "params" : [ {
+    "name" : "text",
+    "type" : "String",
+    "required" : false,
+    "defaultValue" : "Hello Java",
+    "description" : null
+  } ]
+}, {
+  "controller" : "TemplateController",
+  "method" : "GET",
+  "label" : "/api/template/tables",
+  "path" : "/api/template/tables",
+  "description" : "tables",
+  "params" : [ ]
+}, {
+  "controller" : "WebExplorerConfigController",
+  "method" : "GET",
+  "label" : "/api/file-explorer/config/paths",
+  "path" : "/api/file-explorer/config/paths",
+  "description" : null,
+  "params" : [ ]
+}, {
+  "controller" : "WebExplorerConfigController",
+  "method" : "PUT",
+  "label" : "/api/file-explorer/config/root-path",
+  "path" : "/api/file-explorer/config/root-path",
+  "description" : null,
+  "params" : [ ]
+}, {
+  "controller" : "WebExplorerConfigController",
+  "method" : "PUT",
+  "label" : "/api/file-explorer/config/hidden-files",
+  "path" : "/api/file-explorer/config/hidden-files",
+  "description" : null,
+  "params" : [ ]
+}, {
+  "controller" : "WebExplorerController",
+  "method" : "GET",
+  "label" : "/api/web-explorer/list",
+  "path" : "/api/web-explorer/list",
+  "description" : null,
+  "params" : [ {
+    "name" : "path",
+    "type" : "String",
+    "required" : false,
+    "defaultValue" : null,
+    "description" : "조회할 디렉토리 경로"
+  }, {
+    "name" : "extensions",
+    "type" : "List<String>",
+    "required" : false,
+    "defaultValue" : null,
+    "description" : "조회할 파일 확장자 목록"
+  } ]
+}, {
+  "controller" : "WebExplorerController",
+  "method" : "POST",
+  "label" : "/api/web-explorer/list",
+  "path" : "/api/web-explorer/list",
+  "description" : null,
+  "params" : [ ]
+}, {
+  "controller" : "WebExplorerController",
+  "method" : "GET",
+  "label" : "/api/web-explorer/info",
+  "path" : "/api/web-explorer/info",
+  "description" : null,
+  "params" : [ ]
+}, {
+  "controller" : "WebExplorerController",
+  "method" : "GET",
+  "label" : "/api/web-explorer/download",
+  "path" : "/api/web-explorer/download",
+  "description" : null,
+  "params" : [ ]
+}, {
+  "controller" : "WebExplorerController",
+  "method" : "GET",
+  "label" : "/api/web-explorer/read",
+  "path" : "/api/web-explorer/read",
+  "description" : null,
+  "params" : [ ]
+}, {
+  "controller" : "WebExplorerController",
+  "method" : "POST",
+  "label" : "/api/web-explorer/write",
+  "path" : "/api/web-explorer/write",
+  "description" : null,
+  "params" : [ ]
+}, {
+  "controller" : "WebExplorerController",
+  "method" : "POST",
+  "label" : "/api/web-explorer/upload",
+  "path" : "/api/web-explorer/upload",
+  "description" : null,
+  "params" : [ {
+    "name" : "targetPath",
+    "type" : "String",
+    "required" : false,
+    "defaultValue" : null,
+    "description" : "업로드할 경로"
+  }, {
+    "name" : "path",
+    "type" : "String",
+    "required" : false,
+    "defaultValue" : null,
+    "description" : null
+  }, {
+    "name" : "file",
+    "type" : "MultipartFile[]",
+    "required" : false,
+    "defaultValue" : null,
+    "description" : null
+  }, {
+    "name" : "files",
+    "type" : "MultipartFile[]",
+    "required" : false,
+    "defaultValue" : null,
+    "description" : null
+  } ]
+}, {
+  "controller" : "WebExplorerController",
+  "method" : "POST",
+  "label" : "/api/web-explorer/upload-multiple",
+  "path" : "/api/web-explorer/upload-multiple",
+  "description" : null,
+  "params" : [ {
+    "name" : "targetPath",
+    "type" : "String",
+    "required" : false,
+    "defaultValue" : null,
+    "description" : "업로드할 경로"
+  }, {
+    "name" : "path",
+    "type" : "String",
+    "required" : false,
+    "defaultValue" : null,
+    "description" : null
+  }, {
+    "name" : "files",
+    "type" : "MultipartFile[]",
+    "required" : false,
+    "defaultValue" : null,
+    "description" : "업로드할 파일들"
+  } ]
+}, {
+  "controller" : "WebExplorerController",
+  "method" : "POST",
+  "label" : "/api/web-explorer/download-multiple",
+  "path" : "/api/web-explorer/download-multiple",
+  "description" : null,
+  "params" : [ ]
+}, {
+  "controller" : "WebExplorerController",
+  "method" : "POST",
+  "label" : "/api/web-explorer/create-directory",
+  "path" : "/api/web-explorer/create-directory",
+  "description" : null,
+  "params" : [ ]
+}, {
+  "controller" : "WebExplorerController",
+  "method" : "POST",
+  "label" : "/api/web-explorer/create-directory-alt",
+  "path" : "/api/web-explorer/create-directory-alt",
+  "description" : null,
+  "params" : [ {
+    "name" : "name",
+    "type" : "String",
+    "required" : false,
+    "defaultValue" : null,
+    "description" : null
+  } ]
+}, {
+  "controller" : "WebExplorerController",
+  "method" : "DELETE",
+  "label" : "/api/web-explorer/delete",
+  "path" : "/api/web-explorer/delete",
+  "description" : null,
+  "params" : [ ]
+}, {
+  "controller" : "WebExplorerController",
+  "method" : "POST",
+  "label" : "/api/web-explorer/delete-multiple",
+  "path" : "/api/web-explorer/delete-multiple",
+  "description" : null,
+  "params" : [ ]
+}, {
+  "controller" : "WebExplorerController",
+  "method" : "POST",
+  "label" : "/api/web-explorer/move",
+  "path" : "/api/web-explorer/move",
+  "description" : null,
+  "params" : [ ]
+}, {
+  "controller" : "WebExplorerController",
+  "method" : "POST",
+  "label" : "/api/web-explorer/rename",
+  "path" : "/api/web-explorer/rename",
+  "description" : null,
+  "params" : [ ]
+}, {
+  "controller" : "WebExplorerController",
+  "method" : "POST",
+  "label" : "/api/web-explorer/copy",
+  "path" : "/api/web-explorer/copy",
+  "description" : null,
+  "params" : [ ]
+}, {
+  "controller" : "WebFileSystemController",
+  "method" : "GET",
+  "label" : "/api/webfilesystem/alive",
+  "path" : "/api/webfilesystem/alive",
+  "description" : null,
+  "params" : [ ]
+}, {
+  "controller" : "WebFileSystemController",
+  "method" : "GET",
+  "label" : "/api/webfilesystem/env/reload",
+  "path" : "/api/webfilesystem/env/reload",
+  "description" : null,
+  "params" : [ ]
+}, {
+  "controller" : "WebFileSystemController",
+  "method" : "GET",
+  "label" : "/api/webfilesystem/env/status",
+  "path" : "/api/webfilesystem/env/status",
+  "description" : null,
+  "params" : [ ]
+}, {
+  "controller" : "WebFileSystemController",
+  "method" : "GET",
+  "label" : "/api/webfilesystem/env/rootPath",
+  "path" : "/api/webfilesystem/env/rootPath",
+  "description" : null,
+  "params" : [ ]
+}, {
+  "controller" : "WebFileSystemController",
+  "method" : "GET",
+  "label" : "/api/webfilesystem/env/uploadPath",
+  "path" : "/api/webfilesystem/env/uploadPath",
+  "description" : null,
+  "params" : [ ]
+}, {
+  "controller" : "WebFileSystemController",
+  "method" : "GET",
+  "label" : "/api/webfilesystem/env/allowedPaths",
+  "path" : "/api/webfilesystem/env/allowedPaths",
+  "description" : null,
+  "params" : [ ]
+}, {
+  "controller" : "WebFileSystemController",
+  "method" : "GET",
+  "label" : "/api/webfilesystem/list",
+  "path" : "/api/webfilesystem/list",
+  "description" : null,
+  "params" : [ {
+    "name" : "pathname",
+    "type" : "String",
+    "required" : true,
+    "defaultValue" : null,
+    "description" : "pathname to list"
+  }, {
+    "name" : "includeDirectory",
+    "type" : "boolean",
+    "required" : false,
+    "defaultValue" : true,
+    "description" : "include directory in the list"
+  }, {
+    "name" : "includeFile",
+    "type" : "boolean",
+    "required" : false,
+    "defaultValue" : true,
+    "description" : "include file in the list"
+  }, {
+    "name" : "extensions",
+    "type" : "String",
+    "required" : false,
+    "defaultValue" : null,
+    "description" : "extenstions for file filter"
+  } ]
+}, {
+  "controller" : "WebFileSystemController",
+  "method" : "GET",
+  "label" : "/api/webfilesystem/fileInfo",
+  "path" : "/api/webfilesystem/fileInfo",
+  "description" : null,
+  "params" : [ {
+    "name" : "pathname",
+    "type" : "String",
+    "required" : true,
+    "defaultValue" : null,
+    "description" : "pathname of the file or directory"
+  } ]
+} ]

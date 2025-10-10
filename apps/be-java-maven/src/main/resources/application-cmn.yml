@@ -1,0 +1,61 @@
+---
+spring:
+    config:
+        activate:
+            on-profile: cmn
+    devtools:
+        livereload:
+            enabled: true
+            port: 35798
+        restart:
+            enabled: true
+    jackson:
+        # serialization:
+            # indent_output: true
+        date-format: yyyy-MM-dd HH:mm:ss
+        time-zone: Asia/Seoul
+    main:
+        allow-bean-definition-overriding: true
+    # mybatis:
+    #     mapper-locations: classpath:mybatis/**/*.xml
+    output:
+        ansi:
+            enabled: always
+    security:
+        user:
+            name: innopam
+            password: innopam#123
+    servlet:
+        multipart:
+            max-file-size: 10GB
+            max-request-size: 10GB
+            file-size-threshold: 10MB
+            # http: for 1.4.x, 1.5.x
+            # maxFileSize=10GB
+            # maxRequestSize=10GB
+            # fileSizeThreshold=10MB
+    thymeleaf:
+        check-template-location: false
+---
+springdoc:
+    default-consumes-media-type: application/json;charset=UTF-8
+    default-produces-media-type: application/json;charset=UTF-8
+    swagger-ui:
+        path: swagger-ui.html
+        tags-sorter: alpha
+        operations-sorter: alpha
+        display-request-duration: true
+        doc-expansion: none
+    api-docs:
+        path: /api-docs/json
+        groups:
+            enabled: true
+    cache:
+        disabled: true
+---
+server:
+    servlet:
+        jsp:
+            init-parameters:
+                listings: false
+---

@@ -1,0 +1,67 @@
+.sidebar-navigation {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    max-height: 100vh; /* 뷰포트 높이로 제한 */
+    background-color: transparent; /* 부모의 배경색 사용 */
+    border: none; /* 중복 보더 제거 */
+    overflow: hidden; /* 자식 요소의 오버플로우 제어 */
+}
+
+.sidebar-section {
+    flex: 1;
+    max-height: 100%; /* 높이 제한 추가 */
+    display: flex;
+    flex-direction: column;
+    min-height: 0; /* 플렉스 축소 허용 */
+    overflow: hidden; /* 자식 요소의 오버플로우 제어 */
+}
+
+.sidebar-section-header {
+    padding: 12px 16px;
+    background-color: #e9ecef;
+    border-bottom: 1px solid #dee2e6;
+    font-weight: 500;
+    font-size: 14px;
+    color: #495057;
+    user-select: none;
+}
+
+.sidebar-section-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.sidebar-section-content {
+    flex: 1;
+    min-height: 0;
+    max-height: 100%; /* 높이 제한 추가 */
+    display: flex;
+    flex-direction: column;
+    overflow: hidden; /* 자식이 스크롤 처리하도록 */
+}
+
+.sidebar-section-content > * {
+    flex: 1;
+    min-height: 0;
+}
+
+/* 스크롤바 스타일링 */
+.sidebar-section-content::-webkit-scrollbar {
+    width: 6px;
+}
+
+.sidebar-section-content::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 3px;
+}
+
+.sidebar-section-content::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 3px;
+}
+
+.sidebar-section-content::-webkit-scrollbar-thumb:hover {
+    background: #a8a8a8;
+}

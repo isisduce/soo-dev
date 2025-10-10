@@ -1,0 +1,29 @@
+{
+    "properties": [
+        {
+            "name": "app.config.cors-json",
+            "type": "java.lang.String",
+            "description": "A description for 'app.config.cors-json'"
+        },
+        {
+            "name": "app.config.api-list-json",
+            "type": "java.lang.String",
+            "description": "A description for 'app.config.api-list-json'"
+        },
+        {
+            "name": "app.config.be-env-json",
+            "type": "java.lang.String",
+            "description": "A description for 'app.config.be-env-json'"
+        },
+        {
+            "name": "app.config.fe-env-json",
+            "type": "java.lang.String",
+            "description": "A description for 'app.config.fe-env-json'"
+        },
+        {
+            "name": "web-filesystem.root-dir",
+            "type": "java.lang.String",
+            "description": "A description for 'web-filesystem.root-dir'"
+        }
+    ]
+}

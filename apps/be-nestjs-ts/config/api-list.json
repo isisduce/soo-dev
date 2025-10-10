@@ -1,0 +1,94 @@
+[
+  {
+    "controller": "ApiController",
+    "method": "GET",
+    "label": "/api/api-list",
+    "path": "/api/api-list",
+    "description": "API List",
+    "params": [
+      {
+        "name": "generate",
+        "type": "boolean",
+        "required": false,
+        "defaultValue": false,
+        "description": "Regenerate the api-list.json file (only in dev mode)"
+      }
+    ]
+  },
+  {
+    "controller": "TemplateController",
+    "method": "GET",
+    "label": "/api/template/alive",
+    "path": "/api/template/alive",
+    "description": "alive",
+    "params": []
+  },
+  {
+    "controller": "TemplateController",
+    "method": "GET",
+    "label": "/api/template/hello",
+    "path": "/api/template/hello",
+    "description": "hello",
+    "params": [
+      {
+        "name": "text",
+        "type": "string",
+        "required": false,
+        "defaultValue": "Hello nestjs",
+        "description": "text for hello"
+      }
+    ]
+  },
+  {
+    "controller": "TemplateController",
+    "method": "GET",
+    "label": "/api/template/hello2",
+    "path": "/api/template/hello2",
+    "description": "hello",
+    "params": [
+      {
+        "name": "text",
+        "type": "string",
+        "required": false,
+        "defaultValue": "Hello nestjs",
+        "description": "text for hello"
+      }
+    ]
+  },
+  {
+    "controller": "TemplateController",
+    "method": "POST",
+    "label": "/api/template/hello3",
+    "path": "/api/template/hello3",
+    "description": "hello3 - POST 방식으로 텍스트와 플래그를 받아 처리",
+    "params": [
+      {
+        "name": "text",
+        "type": "string",
+        "required": false,
+        "defaultValue": "Hello nestjs"
+      },
+      {
+        "name": "on",
+        "type": "boolean",
+        "required": false,
+        "defaultValue": false
+      },
+      {
+        "name": "use",
+        "type": "boolean",
+        "required": false,
+        "defaultValue": true,
+        "description": "use on/off"
+      }
+    ]
+  },
+  {
+    "controller": "TemplateController",
+    "method": "GET",
+    "label": "/api/template/tables",
+    "path": "/api/template/tables",
+    "description": "tables",
+    "params": []
+  }
+]

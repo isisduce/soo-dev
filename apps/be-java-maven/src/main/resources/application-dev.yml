@@ -1,0 +1,45 @@
+server:
+    port: 8098
+---
+spring:
+    config:
+        activate:
+            on-profile: dev
+    datasource.hikari:
+        connection-test-query: SELECT 1;
+        maximum-pool-size: 2
+        minimum-idle: 1
+        connection-timeout: 30000
+        validation-timeout: 5000
+        idle-timeout: 1800000
+        max-lifetime: 3600000
+        keepalive-time: 300000
+        driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+        jdbc-url: jdbc:log4jdbc:postgresql://localhost:5432/soo_web_explorer
+        username: soo
+        password: soo#123
+---
+logging:
+    level:
+        root: info
+        jdbc:
+            sqlonly: off
+            sqltiming: off
+            resultsettable: off
+            audit: off
+            resultset: off
+        connection: off
+---
+app:
+    config:
+        # cors-json:      /nas/soo/apps/web-filesystem/be-java-maven/config/cors.json
+        # api-list-json:  /nas/soo/apps/web-filesystem/be-java-maven/config/api-list.json
+        # be-env-json:    /nas/soo/apps/web-filesystem/be-java-maven/config/env.json
+        # fe-env-json:    /nas/soo/apps/web-filesystem/fe-vite-react-ts/config/env.json
+        cors-json:     /develop/com.soo/web-filesystem/be-java-maven/config/cors.json
+        api-list-json: /develop/com.soo/web-filesystem/be-java-maven/config/api-list.json
+        be-env-json:   /develop/com.soo/web-filesystem/be-java-maven/config/env.json
+        fe-env-json:   /develop/com.soo/web-filesystem/fe-vite-react-ts/public/config/env.json
+---
+web-filesystem:
+    root-dir: /nas

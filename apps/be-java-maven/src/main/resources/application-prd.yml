@@ -1,0 +1,41 @@
+server:
+    port: 8080
+---
+spring:
+    config:
+        activate:
+            on-profile: prd
+    datasource.hikari:
+        connection-test-query: SELECT 1;
+        maximum-pool-size: 10
+        minimum-idle: 10
+        connection-timeout: 30000
+        validation-timeout: 5000
+        idle-timeout: 600000
+        max-lifetime: 3600000
+        keepalive-time: 300000
+        driver-class-name: ${DATABASE_DRV}
+        jdbc-url: ${DATABASE_URL}
+        username: ${DATABASE_USR}
+        password: ${DATABASE_PWD}
+---
+logging:
+    level:
+        root: info
+        jdbc:
+            sqlonly: off
+            sqltiming: ${DATABASE_JDBC_LOGGING}
+            resultsettable: ${DATABASE_JDBC_LOGGING}
+            audit: off
+            resultset: off
+        connection: off
+---
+app:
+    config:
+        cors-json:     ${CORS_JSON}
+        api-list-json: ${API_LIST_JSON}
+        be-env-json:   ${BE_ENV_JSON}
+        fe-env-json:   ${FE_ENV_JSON}
+---
+web-filesystem:
+    root-dir: ${WEB_FILESYSTEM_ROOT_DIR}

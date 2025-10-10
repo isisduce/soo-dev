@@ -1,0 +1,129 @@
+.root-path-selector {
+    background: #ffffff;
+    border: 1px solid #e1e4e8;
+    border-radius: 8px;
+    margin-bottom: 16px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    flex-shrink: 0;
+    max-height: 300px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.root-path-selector-header {
+    padding: 12px 16px;
+    background: #f6f8fa;
+    border-bottom: 1px solid #e1e4e8;
+    border-radius: 8px 8px 0 0;
+}
+
+.root-path-selector-title {
+    font-weight: 600;
+    font-size: 14px;
+    color: #24292e;
+}
+
+.root-path-selector-list {
+    padding: 8px;
+    overflow-y: auto;
+    flex: 1;
+    min-height: 0;
+}
+
+.root-path-item {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 12px;
+    border: none;
+    background: transparent;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: left;
+    margin-bottom: 4px;
+}
+
+.root-path-item:hover {
+    background: #f1f3f4;
+    transform: translateX(2px);
+}
+
+.root-path-item.active {
+    background: #e3f2fd;
+    border: 1px solid #2196f3;
+    box-shadow: 0 2px 4px rgba(33, 150, 243, 0.1);
+}
+
+.root-path-item.active .root-path-name {
+    color: #1976d2;
+    font-weight: 600;
+}
+
+.root-path-icon {
+    font-size: 18px;
+    margin-right: 12px;
+    min-width: 24px;
+}
+
+.root-path-name {
+    font-weight: 500;
+    color: #24292e;
+    margin-right: 8px;
+    flex: 1;
+}
+
+.root-path-path {
+    font-size: 12px;
+    color: #6a737d;
+    font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+    background: #f6f8fa;
+    padding: 2px 6px;
+    border-radius: 3px;
+}
+
+.root-path-selector-info {
+    padding: 8px 16px;
+    background: #f6f8fa;
+    border-top: 1px solid #e1e4e8;
+    border-radius: 0 0 8px 8px;
+}
+
+.root-path-selector-info small {
+    color: #6a737d;
+    font-size: 12px;
+}
+
+/* 스크롤바 스타일링 */
+.root-path-selector-list::-webkit-scrollbar {
+    width: 6px;
+}
+
+.root-path-selector-list::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+.root-path-selector-list::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 3px;
+}
+
+.root-path-selector-list::-webkit-scrollbar-thumb:hover {
+    background: #a1a1a1;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+    .root-path-item {
+        padding: 10px 8px;
+    }
+
+    .root-path-path {
+        display: none;
+    }
+
+    .root-path-name {
+        font-size: 14px;
+    }
+}

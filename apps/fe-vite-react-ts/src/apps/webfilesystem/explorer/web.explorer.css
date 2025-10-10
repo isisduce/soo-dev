@@ -1,0 +1,577 @@
+/* 백드롭은 모달리스에서 제거됨 */
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.web-explorer {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 20px 64px rgba(0, 0, 0, 0.2);
+    min-width: 400px;
+    min-height: 300px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    animation: slideIn 0.3s ease-out;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    transition: transform 0.1s ease;
+    position: fixed;
+}
+
+/* 모달리스 다이얼로그 스타일 */
+.web-explorer.modeless {
+    position: fixed;
+    z-index: 5000; /* AppBar(10000)보다 낮게 설정 */
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    border: 2px solid #e2e8f0;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95) translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+.web-explorer.maximized {
+    width: 100vw;
+    height: 100vh;
+    max-width: none;
+    max-height: none;
+    border-radius: 0;
+    animation: maximizeIn 0.2s ease-out;
+}
+
+@keyframes maximizeIn {
+    from {
+        transform: scale(0.95);
+    }
+    to {
+        transform: scale(1);
+    }
+}
+
+.web-explorer-header {
+    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+    border-bottom: 1px solid #e2e8f0;
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: move;
+    user-select: none;
+    transition: background 0.2s ease;
+}
+
+.web-explorer-header:hover {
+    background: linear-gradient(135deg, #f1f5f9 0%, #cbd5e1 100%);
+}
+
+.web-explorer-header.dragging {
+    background: linear-gradient(135deg, #e2e8f0 0%, #cbd5e1 100%);
+    cursor: grabbing;
+}
+
+.web-explorer-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #1e293b;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.web-explorer-controls {
+    display: flex;
+    gap: 4px;
+}
+
+.dialog-control-button {
+    width: 32px;
+    height: 32px;
+    border: none;
+    border-radius: 6px;
+    background: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    color: #64748b;
+}
+
+.dialog-control-button:hover {
+    background: rgba(0, 0, 0, 0.1);
+    color: #1e293b;
+}
+
+.dialog-control-button.close:hover {
+    background: #ef4444;
+    color: white;
+}
+
+.dialog-control-button.maximize:hover {
+    background: #3b82f6;
+    color: white;
+}
+
+.dialog-control-button.minimize:hover {
+    background: #f59e0b;
+    color: white;
+}
+
+.web-explorer-content {
+    flex: 1;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.web-explorer-content {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.web-explorer-content .webexplorer-content {
+    flex: 1;
+    display: flex;
+    overflow: hidden;
+}
+
+.web-explorer-content .webexplorer-sidebar {
+    min-width: 150px;
+    max-width: 800px;
+    border-right: 1px solid #e1e5e9;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    position: relative;
+    flex-shrink: 0;
+    background-color: #f8f9fa;
+}
+
+.web-explorer-content .sidebar-resize-handle {
+    position: absolute;
+    top: 0;
+    right: -5px;
+    width: 10px;
+    height: 100%;
+    cursor: col-resize;
+    background: transparent;
+    z-index: 10;
+    transition: background-color 0.2s ease;
+}
+
+.web-explorer-content .sidebar-resize-handle:hover {
+    background: linear-gradient(to right, transparent, #0066cc, transparent);
+    opacity: 0.6;
+}
+
+.web-explorer-content .webexplorer-main {
+    flex: 1;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.web-explorer-content .webexplorer-loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 200px;
+    gap: 16px;
+}
+
+.web-explorer-content .loading-spinner {
+    font-size: 24px;
+    animation: spin 1s linear infinite;
+}
+
+.web-explorer-content .loading-text {
+    font-size: 14px;
+    color: #666;
+}
+
+.web-explorer-content .webexplorer-error {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 200px;
+    gap: 16px;
+    color: #dc3545;
+}
+
+.web-explorer-content .error-icon {
+    font-size: 48px;
+}
+
+.web-explorer-content .error-message {
+    font-size: 16px;
+    text-align: center;
+    max-width: 400px;
+}
+
+.web-explorer-content .error-retry {
+    padding: 8px 16px;
+    background: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.web-explorer-content .error-retry:hover {
+    background: #c82333;
+}
+
+/* 다이얼로그 내부 다이얼로그 (새 폴더 생성) */
+.web-explorer-content .dialog-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.web-explorer-content .dialog {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    max-width: 400px;
+    width: 90%;
+    overflow: hidden;
+}
+
+.web-explorer-content .dialog-header {
+    background: #f8f9fa;
+    padding: 16px 20px;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.web-explorer-content .dialog-header h3 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: #212529;
+}
+
+.web-explorer-content .dialog-content {
+    padding: 20px;
+}
+
+.web-explorer-content .dialog-content label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #495057;
+}
+
+.web-explorer-content .dialog-content input {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+.web-explorer-content .dialog-content input:focus {
+    outline: none;
+    border-color: #0066cc;
+    box-shadow: 0 0 0 2px rgba(0, 102, 204, 0.2);
+}
+
+.web-explorer-content .dialog-actions {
+    padding: 16px 20px;
+    background: #f8f9fa;
+    border-top: 1px solid #e9ecef;
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+}
+
+.web-explorer-content .dialog-button-cancel,
+.web-explorer-content .dialog-button-confirm {
+    padding: 8px 16px;
+    border: 1px solid;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.web-explorer-content .dialog-button-cancel {
+    background: white;
+    border-color: #6c757d;
+    color: #6c757d;
+}
+
+.web-explorer-content .dialog-button-cancel:hover {
+    background: #6c757d;
+    color: white;
+}
+
+.web-explorer-content .dialog-button-confirm {
+    background: #0066cc;
+    border-color: #0066cc;
+    color: white;
+}
+
+.web-explorer-content .dialog-button-confirm:hover {
+    background: #0056b3;
+    border-color: #0056b3;
+}
+
+/* 버전별 스타일링 */
+.web-explorer-content.current {
+    /* 현재 버전은 기본 스타일 사용 */
+    opacity: 1;
+}
+
+.web-explorer-content.previous {
+    /* 이전 버전은 약간 다른 색상 톤 */
+    filter: sepia(0.1) saturate(0.9) hue-rotate(10deg);
+}
+
+.web-explorer-content.previous .app-bar {
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+}
+
+/* 반응형 디자인 */
+@media (max-width: 1024px) {
+    .web-explorer {
+        width: 95vw;
+        height: 85vh;
+        min-width: 600px;
+        min-height: 500px;
+    }
+}
+
+@media (max-width: 768px) {
+    .web-explorer {
+        width: 100vw;
+        height: 100vh;
+        border-radius: 0;
+        min-width: unset;
+        min-height: unset;
+    }
+
+    .web-explorer-header {
+        padding: 8px 12px;
+    }
+
+    .web-explorer-title {
+        font-size: 14px;
+    }
+
+    .dialog-control-button {
+        width: 28px;
+        height: 28px;
+    }
+}
+
+/* 드래그 기능을 위한 스타일 */
+.web-explorer-header.dragging {
+    background: linear-gradient(135deg, #e2e8f0 0%, #cbd5e1 100%);
+    cursor: grabbing;
+}
+
+/* 리사이즈 핸들 (향후 구현용) */
+.resize-handle {
+    position: absolute;
+    background: transparent;
+    z-index: 10;
+}
+
+.resize-handle-n {
+    top: 0;
+    left: 8px;
+    right: 8px;
+    height: 4px;
+    cursor: n-resize;
+}
+
+.resize-handle-ne {
+    top: 0;
+    right: 0;
+    width: 8px;
+    height: 8px;
+    cursor: ne-resize;
+}
+
+.resize-handle-e {
+    top: 8px;
+    bottom: 8px;
+    right: 0;
+    width: 4px;
+    cursor: e-resize;
+}
+
+.resize-handle-se {
+    bottom: 0;
+    right: 0;
+    width: 8px;
+    height: 8px;
+    cursor: se-resize;
+}
+
+.resize-handle-s {
+    bottom: 0;
+    left: 8px;
+    right: 8px;
+    height: 4px;
+    cursor: s-resize;
+}
+
+.resize-handle-sw {
+    bottom: 0;
+    left: 0;
+    width: 8px;
+    height: 8px;
+    cursor: sw-resize;
+}
+
+.resize-handle-w {
+    top: 8px;
+    bottom: 8px;
+    left: 0;
+    width: 4px;
+    cursor: w-resize;
+}
+
+.resize-handle-nw {
+    top: 0;
+    left: 0;
+    width: 8px;
+    height: 8px;
+    cursor: nw-resize;
+}
+
+/* 리사이즈 핸들 호버 효과 */
+.resize-handle:hover {
+    background: rgba(59, 130, 246, 0.3);
+}
+
+/* 모서리 리사이즈 핸들 시각적 표시 */
+.resize-handle-se::after {
+    content: '';
+    position: absolute;
+    bottom: 2px;
+    right: 2px;
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-bottom: 6px solid #cbd5e1;
+    opacity: 0.7;
+}
+
+.resize-handle-se:hover::after {
+    border-bottom-color: #3b82f6;
+}
+
+/* 포커스 스타일 */
+.web-explorer:focus-within {
+    box-shadow: 0 20px 64px rgba(0, 0, 0, 0.3), 0 0 0 2px #3b82f6;
+}
+
+/* 모달리스 다이얼로그 포커스 스타일 */
+.web-explorer.modeless:focus-within {
+    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.4), 0 0 0 3px #3b82f6;
+    border-color: #3b82f6;
+}
+
+/* 모달리스 다이얼로그 호버 효과 */
+.web-explorer.modeless:hover {
+    box-shadow: 0 12px 45px rgba(0, 0, 0, 0.35);
+}
+
+/* 다이얼로그 내부의 웹 익스플로러 스타일 조정 */
+.web-explorer-content .web-filesystem {
+    border-radius: 0;
+    box-shadow: none;
+    border: none;
+}
+
+.web-explorer-content .app-bar {
+    border-radius: 0;
+}
+
+/* 다이얼로그 드래그 앤 드롭 스타일 */
+.web-explorer-content.drag-over {
+    position: relative;
+}
+
+.web-explorer-content .drag-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 123, 255, 0.1);
+    border: 3px dashed #007bff;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+}
+
+.web-explorer-content .drag-overlay-content {
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.95);
+    padding: 32px;
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+}
+
+.web-explorer-content .drag-icon {
+    font-size: 48px;
+    margin-bottom: 12px;
+    animation: dragPulse 1.5s infinite;
+}
+
+.web-explorer-content .drag-text {
+    font-size: 18px;
+    font-weight: 600;
+    color: #007bff;
+    margin-bottom: 6px;
+}
+
+.web-explorer-content .drag-path {
+    font-size: 12px;
+    color: #6c757d;
+    word-break: break-all;
+}
+
+@keyframes dragPulse {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.1);
+        opacity: 0.8;
+    }
+}

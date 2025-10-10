@@ -1,0 +1,210 @@
+.directory-tree {
+  height: 100%;
+  max-height: 100%;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.directory-tree-header {
+  padding: 12px 16px;
+  border-bottom: 1px solid #e1e5e9;
+  background-color: #ffffff;
+  font-weight: 600;
+  font-size: 14px;
+  color: #24292f;
+  flex-shrink: 0;
+}
+
+.directory-tree-header h3 {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.directory-tree-content {
+  flex: 1 1 0 !important;
+  min-height: 0 !important; /* 플렉스 축소 허용 */
+  max-height: 100% !important; /* 부모 높이에 맞춤 */
+  overflow-y: auto !important; /* 필요시에만 스크롤바 표시 */
+  overflow-x: hidden !important;
+  padding: 8px 0;
+  position: relative;
+}
+
+/* 스크롤바 스타일링 */
+.directory-tree-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.directory-tree-content::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+
+.directory-tree-content::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 3px;
+}
+
+.directory-tree-content::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+/* Root Path Section */
+.root-path-section {
+  margin-bottom: 8px;
+}
+
+.root-path-item {
+  background-color: #e9ecef;
+  border-left: 3px solid #0066cc;
+  font-weight: 600;
+  color: #495057;
+}
+
+.root-path-item:hover {
+  background-color: #dee2e6;
+}
+
+.root-path-item.active {
+  background-color: #0066cc;
+  color: #ffffff;
+  border-left-color: #004085;
+}
+
+/* 토글 버튼 스타일 */
+.toggle-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: inherit;
+  font-size: 12px;
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 4px;
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+  padding: 0;
+}
+
+.toggle-button:hover {
+  transform: scale(1.2);
+}
+
+.toggle-placeholder {
+  width: 16px;
+  height: 16px;
+  margin-right: 4px;
+  flex-shrink: 0;
+}
+
+/* 루트 아이템 내 요소들 정렬 */
+.root-path-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.root-path-item .directory-icon,
+.root-path-item .directory-name {
+  cursor: pointer;
+}
+
+.root-path-item .directory-name {
+  flex: 1;
+}
+
+.directory-node {
+  margin-bottom: 2px;
+}
+
+.directory-item {
+  display: flex;
+  align-items: center;
+  padding: 6px 8px;
+  cursor: pointer;
+  font-size: 14px;
+  color: #24292f;
+  transition: background-color 0.1s ease;
+  min-height: 28px;
+}
+
+.directory-item:hover {
+  background-color: #f3f4f6;
+}
+
+.directory-item.active {
+  background-color: #dbeafe;
+  color: #1e40af;
+  font-weight: 500;
+}
+
+.directory-toggle {
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 4px;
+  cursor: pointer;
+  font-size: 10px;
+  color: #6b7280;
+  transition: transform 0.1s ease;
+}
+
+.directory-toggle.has-children:hover {
+  color: #374151;
+}
+
+.directory-toggle.expanded {
+  transform: rotate(0deg);
+}
+
+.directory-icon {
+  margin-right: 6px;
+  font-size: 16px;
+}
+
+.directory-name {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* 스크롤바 스타일링 */
+.directory-tree::-webkit-scrollbar,
+.directory-tree-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.directory-tree::-webkit-scrollbar-track,
+.directory-tree-content::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.directory-tree::-webkit-scrollbar-thumb,
+.directory-tree-content::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 3px;
+}
+
+.directory-tree::-webkit-scrollbar-thumb:hover,
+.directory-tree-content::-webkit-scrollbar-thumb:hover {
+  background: #a1a1a1;
+}
+
+.directory-loading {
+  font-size: 12px;
+  color: #6b7280;
+  font-style: italic;
+  padding: 4px 8px;
+  min-height: 24px;
+  display: flex;
+  align-items: center;
+}

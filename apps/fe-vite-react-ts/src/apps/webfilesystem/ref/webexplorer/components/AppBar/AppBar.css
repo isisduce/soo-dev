@@ -1,0 +1,214 @@
+.app-bar {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    z-index: 10000; /* 높은 z-index로 설정하여 항상 최상위에 유지 */
+    position: fixed; /* fixed로 변경하여 스크롤과 무관하게 고정 */
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+}
+
+.app-bar-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 24px;
+    max-width: 100%;
+    margin: 0 auto;
+}
+
+.app-bar-left {
+    flex: 0 0 auto;
+}
+
+.app-title {
+    font-size: 20px;
+    font-weight: 600;
+    margin: 0;
+    color: white;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.app-bar-center {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+}
+
+.version-button {
+    padding: 8px 16px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    backdrop-filter: blur(10px);
+}
+
+.version-button:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.5);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.version-button.current {
+    background: rgba(76, 175, 80, 0.2);
+    border-color: rgba(76, 175, 80, 0.5);
+}
+
+.version-button.current:hover {
+    background: rgba(76, 175, 80, 0.3);
+    border-color: rgba(76, 175, 80, 0.7);
+}
+
+.version-button.previous {
+    background: rgba(255, 193, 7, 0.2);
+    border-color: rgba(255, 193, 7, 0.5);
+}
+
+.version-button.previous:hover {
+    background: rgba(255, 193, 7, 0.3);
+    border-color: rgba(255, 193, 7, 0.7);
+}
+
+.app-bar-right {
+    flex: 0 0 auto;
+}
+
+.menu-container {
+    position: relative;
+}
+
+.menu-button {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s ease;
+}
+
+.menu-button:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.menu-dropdown {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    margin-top: 8px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+    min-width: 250px;
+    overflow: hidden;
+    z-index: 1001;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.menu-section {
+    padding: 12px 0;
+}
+
+.menu-section-title {
+    padding: 8px 16px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #6b7280;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-bottom: 1px solid #f3f4f6;
+    margin-bottom: 4px;
+}
+
+.menu-item {
+    width: 100%;
+    padding: 12px 16px;
+    background: none;
+    border: none;
+    text-align: left;
+    cursor: pointer;
+    font-size: 14px;
+    color: #374151;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition: background-color 0.2s ease;
+}
+
+.menu-item:hover {
+    background: #f9fafb;
+    color: #1f2937;
+}
+
+.menu-item svg {
+    flex-shrink: 0;
+    opacity: 0.7;
+}
+
+.menu-divider {
+    height: 1px;
+    background: #e5e7eb;
+    margin: 0 12px;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+    .app-bar-content {
+        padding: 8px 16px;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .app-bar-center {
+        order: 2;
+        width: 100%;
+    }
+
+    .app-bar-right {
+        order: 1;
+        align-self: flex-end;
+    }
+
+    .app-title {
+        font-size: 18px;
+    }
+
+    .version-button {
+        flex: 1;
+        text-align: center;
+    }
+
+    .menu-dropdown {
+        right: auto;
+        left: 0;
+        width: 100vw;
+        max-width: 300px;
+    }
+}
+
+@media (max-width: 480px) {
+    .app-bar-content {
+        padding: 8px 12px;
+    }
+
+    .app-title {
+        font-size: 16px;
+    }
+
+    .version-button {
+        padding: 6px 12px;
+        font-size: 13px;
+    }
+}

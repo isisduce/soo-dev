@@ -1,0 +1,7 @@
+spring:
+    application:
+        name: web-filesystem-be-java-maven
+    profiles:
+        include: cmn,dev
+    jpa:
+        open-in-view: false
