@@ -1,10 +1,10 @@
-package com.soo.libs.watcher;
+package com.soo.common.watcher;
 
 import java.io.IOException;
 import java.nio.file.*;
 import java.util.function.Consumer;
 
-import com.soo.libs.helper.FileHelper;
+import com.soo.common.helper.FileHelper;
 
 import lombok.extern.slf4j.Slf4j;
 

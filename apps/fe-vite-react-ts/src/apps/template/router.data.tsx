@@ -1,4 +1,4 @@
-import type { RouterData } from '../../libs/router/router.data';
+import type { RouterData } from '../../common/router/router.data';
 import { ApiTest } from './api.test';
 
 export const templateRoutes: RouterData[] = [

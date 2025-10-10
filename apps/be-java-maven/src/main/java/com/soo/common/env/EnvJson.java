@@ -1,4 +1,4 @@
-package com.soo.libs.env;
+package com.soo.common.env;
 
 import java.util.List;
 

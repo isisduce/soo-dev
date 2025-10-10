@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import com.soo.apps.webfilesystem.env.WebFileSystemBeEnvJson.WebFilesystem;
+import com.soo.common.env.Env;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -18,7 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 @Component
 @Getter
 @Setter
-public class WebFileSystemBeEnv extends com.soo.libs.env.Env<WebFileSystemBeEnvJson> {
+public class WebFileSystemBeEnv extends Env<WebFileSystemBeEnvJson> {
 
     // ====================================================================================================
     // ====================================================================================================

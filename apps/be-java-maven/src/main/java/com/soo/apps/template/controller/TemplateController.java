@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.soo.apps.template.service.TemplateService;
-import com.soo.libs.dto.ApiCode;
-import com.soo.libs.dto.ApiResponseDto;
+import com.soo.common.dto.ApiCode;
+import com.soo.common.dto.ApiResponseDto;
 
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;

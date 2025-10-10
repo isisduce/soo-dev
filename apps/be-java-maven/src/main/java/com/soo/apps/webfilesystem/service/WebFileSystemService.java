@@ -25,8 +25,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.soo.apps.webfilesystem.dto.FileInfoDto;
 import com.soo.apps.webfilesystem.env.WebFileSystemBeEnv;
-import com.soo.libs.helper.FileHelper;
-import com.soo.libs.helper.PathHelper;
+import com.soo.common.helper.FileHelper;
+import com.soo.common.helper.PathHelper;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

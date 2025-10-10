@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 import { createWithEqualityFn } from 'zustand/traditional';
-import { defaultEnv, Env } from '../../libs/env/env';
-import { UrlHelper } from '../../libs/helper/url.helper';
-import { SseManager } from '../../libs/env/sse.manager';
+import { defaultEnv, Env } from '../../common/env/env';
+import { UrlHelper } from '../../common/helper/url.helper';
+import { SseManager } from '../../common/env/sse.manager';
 
 export interface AppEnv extends Env {
     apps?: {

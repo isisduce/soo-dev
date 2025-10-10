@@ -1,4 +1,4 @@
-package com.soo.libs.helper;
+package com.soo.common.helper;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.StringUtils;

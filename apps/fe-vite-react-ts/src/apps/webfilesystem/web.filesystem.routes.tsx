@@ -1,4 +1,4 @@
-import type { RouterData } from '../../libs/router/router.data';
+import type { RouterData } from '../../common/router/router.data';
 import { WebFileSystemPage } from './web.filesystem.page';
 
 export const webFileSystemRoutes: RouterData[] = [

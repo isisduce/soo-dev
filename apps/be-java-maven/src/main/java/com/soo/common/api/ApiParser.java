@@ -1,4 +1,4 @@
-package com.soo.libs.api;
+package com.soo.common.api;
 
 import java.io.File;
 import java.nio.file.Path;
@@ -9,8 +9,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.soo.libs.dto.ApiInfoDto;
-import com.soo.libs.dto.ApiParamDto;
+import com.soo.common.dto.ApiInfoDto;
+import com.soo.common.dto.ApiParamDto;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

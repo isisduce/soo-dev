@@ -1,7 +1,7 @@
 import { Controller, Logger, Body, Get, HttpStatus, Post, Query, Res, UploadedFiles, UseInterceptors } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { Response } from 'express';
-import { ApiCode, ApiResponse, ApiResponseDTO } from 'src/libs/dto/api.response.dto';
+import { ApiCode, ApiResponse, ApiResponseDTO } from 'src/common/dto/api.response.dto';
 import { WebFileSystemService } from '../service/web.file.system.service';
 import { WebFileSystemBeEnv } from '../env/web.file.system.be.env';
 import { WebFileSystemFeEnvWatchService } from '../env/web.file.system.fe.env.watch.service';

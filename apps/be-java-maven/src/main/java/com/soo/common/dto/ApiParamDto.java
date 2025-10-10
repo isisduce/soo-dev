@@ -1,4 +1,4 @@
-package com.soo.libs.dto;
+package com.soo.common.dto;
 
 import java.io.Serializable;
 

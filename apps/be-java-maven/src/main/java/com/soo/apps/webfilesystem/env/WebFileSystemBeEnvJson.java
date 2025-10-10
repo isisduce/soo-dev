@@ -3,6 +3,7 @@ package com.soo.apps.webfilesystem.env;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.soo.common.env.EnvJson;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -10,7 +11,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class WebFileSystemBeEnvJson extends com.soo.libs.env.EnvJson {
+public class WebFileSystemBeEnvJson extends EnvJson {
 
     @Getter
     @Setter

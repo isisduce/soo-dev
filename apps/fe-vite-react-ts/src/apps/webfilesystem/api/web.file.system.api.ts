@@ -1,4 +1,4 @@
-import { ApiCode, ApiResponse, type ApiResponseDTO } from '../../../libs/dto/api.response.dto';
+import { ApiCode, ApiResponse, type ApiResponseDTO } from '../../../common/dto/api.response.dto';
 import type { DirectoryContents, FileInfoDto } from '../types/web.file.system.types';
 
 export const FileType = {

@@ -1,5 +1,5 @@
 import { Controller, Get, Param, Post, Query, Body } from "@nestjs/common";
-import { ApiResponse, ApiResponseDTO } from "../../../libs/dto/api.response.dto";
+import { ApiResponse, ApiResponseDTO } from "../../../common/dto/api.response.dto";
 import { TemplateService } from "../service/template.service";
 
 export class Hello3Dto {

@@ -24,15 +24,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.soo.libs.dto.ApiCode;
-import com.soo.libs.dto.ApiResponseDto;
-import com.soo.libs.helper.FileHelper;
-import com.soo.libs.helper.PathHelper;
-import com.soo.libs.helper.StringHelper;
 import com.soo.apps.webfilesystem.dto.FileInfoDto;
 import com.soo.apps.webfilesystem.env.WebFileSystemBeEnvJson;
 import com.soo.apps.webfilesystem.env.WebFileSystemBeEnv;
 import com.soo.apps.webfilesystem.service.WebFileSystemService;
+import com.soo.common.dto.ApiCode;
+import com.soo.common.dto.ApiResponseDto;
+import com.soo.common.helper.FileHelper;
+import com.soo.common.helper.PathHelper;
+import com.soo.common.helper.StringHelper;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

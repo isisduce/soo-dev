@@ -1,7 +1,7 @@
 import { Controller, Get, Query } from '@nestjs/common';
 import { join } from 'path';
-import { ApiParser } from '../../../libs/api/api.parser';
-import { ApiInfoDto } from '../../../libs/dto/api.dto';
+import { ApiParser } from '../../../common/api/api.parser';
+import { ApiInfoDto } from '../../../common/dto/api.dto';
 import { ConfigService } from '@nestjs/config';
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'fs';
 import { isAbsolute } from 'path';

@@ -14,9 +14,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.soo.appmain.PackageConfig;
-import com.soo.libs.api.ApiParser;
-import com.soo.libs.dto.ApiCode;
-import com.soo.libs.dto.ApiInfoDto;
+import com.soo.common.api.ApiParser;
+import com.soo.common.dto.ApiCode;
+import com.soo.common.dto.ApiInfoDto;
 
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;

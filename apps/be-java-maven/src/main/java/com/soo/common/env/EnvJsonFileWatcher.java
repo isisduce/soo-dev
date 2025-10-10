@@ -1,6 +1,6 @@
-package com.soo.libs.env;
+package com.soo.common.env;
 
-import com.soo.libs.watcher.FileWatcher;
+import com.soo.common.watcher.FileWatcher;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -10,7 +10,7 @@ import lombok.extern.slf4j.Slf4j;
  * 사용 예: new EnvJsonFileWatcher<>(env, "경로").startWatching();
  */
 @Slf4j
-public class EnvJsonFileWatcher<T extends com.soo.libs.env.Env<?>> {
+public class EnvJsonFileWatcher<T extends Env<?>> {
 
     private final FileWatcher fileWatcher;
 

@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { create } from 'zustand';
-import { defaultEnv, Env } from '../../libs/env/env';
-import { UrlHelper } from '../../libs/helper/url.helper';
+import { defaultEnv, Env } from '../../common/env/env';
+import { UrlHelper } from '../../common/helper/url.helper';
 
 export interface AppEnv extends Env {
     apps?: {

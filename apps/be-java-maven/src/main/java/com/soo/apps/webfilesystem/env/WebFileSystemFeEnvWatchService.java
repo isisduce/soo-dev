@@ -2,7 +2,7 @@ package com.soo.apps.webfilesystem.env;
 
 import org.springframework.stereotype.Service;
 
-import com.soo.libs.watcher.FileWatcher;
+import com.soo.common.watcher.FileWatcher;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;

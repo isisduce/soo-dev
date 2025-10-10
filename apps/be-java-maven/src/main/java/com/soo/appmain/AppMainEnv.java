@@ -10,7 +10,7 @@ import lombok.Setter;
 @Component
 @Getter
 @Setter
-public class AppMainEnv extends com.soo.libs.env.Env<com.soo.libs.env.EnvJson> {
+public class AppMainEnv extends com.soo.common.env.Env<com.soo.common.env.EnvJson> {
 
     private String envJsonPathname;
 
@@ -18,7 +18,7 @@ public class AppMainEnv extends com.soo.libs.env.Env<com.soo.libs.env.EnvJson> {
     public void setEnvJsonPathname(String envJsonPathname) {
         this.envJsonPathname = envJsonPathname;
         setFilePath(envJsonPathname);
-        setClazz(com.soo.libs.env.EnvJson.class);
+        setClazz(com.soo.common.env.EnvJson.class);
         load();
     }
 

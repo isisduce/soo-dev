@@ -3,8 +3,8 @@ import type { FileInfoDto } from "../types/web.file.system.types";
 import { PathHelper } from "../helper/path.helper";
 import { Box, Typography } from "@mui/material";
 import { FileHelper } from "../helper/file.helper";
-import DateHelper from "../../../libs/helper/date.helper";
-import { NumberHelper } from "../../../libs/helper/number.helper";
+import DateHelper from "../../../common/helper/date.helper";
+import { NumberHelper } from "../../../common/helper/number.helper";
 
 interface WebFileSystemListComponentProps {
     setCurrentPath?: (value: string) => void;

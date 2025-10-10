@@ -1,4 +1,4 @@
-package com.soo.libs.helper;
+package com.soo.common.helper;
 
 import java.util.ArrayList;
 
