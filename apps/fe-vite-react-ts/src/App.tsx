@@ -3,10 +3,10 @@ import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import reactLogo from './assets/react.svg';
 import viteLogo from '/vite.svg';
 import './App.css';
-import { templateRoutes } from './apps/template/router.data';
-import { AppEnv as TemplateEnv } from './apps/template/app.env';
-import { webFileSystemRoutes } from './apps/webfilesystem/web.filesystem.routes';
-import { AppEnv as WebExplorerEnv } from './apps/webfilesystem/app.env';
+import { AppEnv } from './appmain/app.env';
+import { routerData as apiRouterData } from './apps/api/routerData';
+import { routerData as cmvRouterData } from './apps/coolmove/routerData';
+import { routerData as wfsRouterData } from './apps/webfilesystem/routerData';
 
 function Home() {
     const [count, setCount] = useState(0);
@@ -32,14 +32,22 @@ function Home() {
             <p className="read-the-docs">
                 Click on the Vite and React logos to learn more
             </p>
-            {templateRoutes.map(route => (
-                <Link key={route.path} to={route.path} style={{ display: 'block', margin: '8px 0' }}>
-                    {route.label}
+            {apiRouterData.map(router => (
+                router.label &&
+                <Link key={router.path} to={router.path} style={{ display: 'block', margin: '8px 0' }}>
+                    {router.label}
                 </Link>
             ))}
-            {webFileSystemRoutes.map(route => (
-                <Link key={route.path} to={route.path} style={{ display: 'block', margin: '8px 0' }}>
-                    {route.label}
+            {cmvRouterData.map(router => (
+                router.label &&
+                <Link key={router.path} to={router.path} style={{ display: 'block', margin: '8px 0' }}>
+                    {router.label}
+                </Link>
+            ))}
+            {wfsRouterData.map(router => (
+                router.label &&
+                <Link key={router.path} to={router.path} style={{ display: 'block', margin: '8px 0' }}>
+                    {router.label}
                 </Link>
             ))}
         </>
@@ -47,17 +55,19 @@ function Home() {
 }
 
 function App() {
-    TemplateEnv.useInitEnv('/config/env.json');
-    WebExplorerEnv.useInitEnv('/config/env.json');
+    AppEnv.useInitEnv('/config/env.json');
     return (
         <BrowserRouter>
             <Routes>
                 <Route path="/" element={<Home />} />
-                {templateRoutes.map(route => (
-                    <Route key={route.path} path={route.path} element={route.element} />
+                {apiRouterData.map(router => (
+                    <Route key={router.path} path={router.path} element={router.element} />
                 ))}
-                {webFileSystemRoutes.map(route => (
-                    <Route key={route.path} path={route.path} element={route.element} />
+                {cmvRouterData.map(router => (
+                    <Route key={router.path} path={router.path} element={router.element} />
+                ))}
+                {wfsRouterData.map(router => (
+                    <Route key={router.path} path={router.path} element={router.element} />
                 ))}
             </Routes>
         </BrowserRouter>

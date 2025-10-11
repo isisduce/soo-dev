@@ -6,7 +6,7 @@ spring:
     devtools:
         livereload:
             enabled: true
-            port: 35798
+            port: 35790
         restart:
             enabled: true
     jackson:

@@ -1,7 +1,8 @@
 import { useState } from 'react';
-import { useAppEnvStore } from './app.env';
+import { useAppEnvStore } from '../../appmain/app.env';
 import { ApiTestResult } from './api.test.result';
 import { ApiList } from './api.test.list';
+import { Select } from '@mui/material';
 
 export interface ApiServerProps {
     label: string;
@@ -33,7 +34,7 @@ export const ApiTest = () => {
         <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', alignItems: 'flex-start', justifyContent: 'flex-start', width: '1024px', height: '100%', }}>
             <div style={{ display: 'flex', alignItems: 'center', backgroundColor: '#f0f0f0', marginBottom: 0, width: '100%', height: '50px' }}>
                 <h2 style={{ margin: 0, textAlign: 'center', flex: 1 }}>API Test</h2>
-                <select
+                <Select
                     style={{ marginLeft: 16, fontSize: 16, padding: '4px 8px' }}
                     value={selectedServerIdx}
                     onChange={e => setSelectedServerIdx(Number(e.target.value))}
@@ -41,7 +42,7 @@ export const ApiTest = () => {
                     {serverOptions.map((s, idx) => (
                         <option key={s.label} value={idx}>{s.label} ({s.url})</option>
                     ))}
-                </select>
+                </Select>
             </div>
             <div style={{ display: 'flex', gap: '10px', width: '100%', alignItems: 'flex-start' }}>
                 {/* left api table */}

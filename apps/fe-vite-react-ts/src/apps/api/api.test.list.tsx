@@ -1,4 +1,6 @@
 import { useState, useEffect } from 'react';
+import { Box, Link } from '@mui/material';
+import './api.test.list.css';
 
 export interface ApiListProps {
     label: string;
@@ -56,11 +58,12 @@ export const ApiList = (props: ApiListProps) => {
         const fetchApiList = async () => {
             if (!apiServer) return;
             try {
-                const res = await fetch(`${apiServer}/api/api-list`);
+                const res = await fetch(`${apiServer}/api/list`);
                 const data = await res.json();
-                setApiList(data);
+                setApiList(Array.isArray(data) ? data : []);
             } catch (error) {
                 console.error('Error fetching API list:', error);
+                setApiList([]);
             }
         };
         fetchApiList();
@@ -172,19 +175,19 @@ export const ApiList = (props: ApiListProps) => {
     };
 
     return (
-        <div style={{ padding: 0, width: styleWidth, height: styleHeight, backgroundColor: bgColor, display: 'flex', flexDirection: 'column' }}>
-            <div key={label} style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
-                <div style={{ display: 'flex', alignItems: 'center', justifyItems: 'center', height: 30, padding: '4px 8px', backgroundColor: '#bbb' }}>
-                    <h4 style={{ margin: 0, textAlign: 'left', width: '100%', fontSize: 16 }}>{label + ` (${apiServer})`}</h4>
-                </div>
-                <div style={{ flex: 1, width: '100%', height: `calc(${styleHeight} - 30px)`, overflow: 'auto', backgroundColor: bgColor }}>
-                    <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: 8 }}>
+        <Box style={{ padding: 0, width: styleWidth, height: styleHeight, backgroundColor: bgColor, display: 'flex', flexDirection: 'column' }}>
+            <Box key={label} style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+                <Box style={{ display: 'flex', alignItems: 'center', justifyItems: 'center', height: 30, padding: '4px 8px', backgroundColor: '#bbb' }}>
+                    <h4 className="api-list-header">{label + ` (${apiServer})`}</h4>
+                </Box>
+                <Box style={{ flex: 1, width: '100%', height: `calc(${styleHeight} - 30px)`, overflow: 'auto', backgroundColor: bgColor }}>
+                    <table className="api-list-table">
                         <thead>
-                            <tr style={{ background: '#ddd' }}>
-                                <th style={{ fontSize: 12, fontWeight: 'bold', width: 1, border: '1px solid #ddd', padding: 4 }}>method</th>
-                                <th style={{ fontSize: 12, fontWeight: 'bold', width: 1, border: '1px solid #ddd', padding: 4 }}>desc</th>
-                                <th style={{ fontSize: 12, fontWeight: 'bold', width: 300, border: '1px solid #ddd', padding: 4 }}>path</th>
-                                <th style={{ fontSize: 12, fontWeight: 'bold', width: 1, border: '1px solid #ddd', padding: 4 }}>run</th>
+                            <tr className="api-list-table-header-row">
+                                <th>method</th>
+                                <th>desc</th>
+                                <th>path</th>
+                                <th>run</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -194,26 +197,18 @@ export const ApiList = (props: ApiListProps) => {
                                 const apiKey = `${apiServer}${api.method}_${api.path}`;
                                 const rowKey = `${api.method}_${api.path}`;
                                 const rows = [
-                                    <tr key={rowKey} style={{ background: bgColor }}>
+                                    <tr key={rowKey} className="api-list-table-row" style={{ backgroundColor: bgColor }}>
                                         <td style={{ fontSize: 14, fontWeight: 'bold', border: '1px solid #ddd', padding: 4, textAlign: 'center' }}>{api.method || 'GET'}</td>
                                         <td style={{ fontSize: 11, border: '1px solid #ddd', width: 30, padding: 0, textAlign: 'center' }}>
-                                            <a
+                                            <Link
                                                 href="#"
-                                                style={{
-                                                    fontSize: 11,
-                                                    marginRight: 0,
-                                                    padding: 0,
-                                                    color: !apiInfo?.description ? '#aaa' : '#007bff',
-                                                    cursor: !apiInfo?.description ? 'not-allowed' : 'pointer',
-                                                    pointerEvents: !apiInfo?.description ? 'none' : 'auto',
-                                                    fontWeight: showApiDesc[apiKey] ? 'bold' : 'normal'
-                                                }}
+                                                className={`api-desc-link${showApiDesc[apiKey] ? ' active' : ''}${!apiInfo?.description ? ' disabled' : ''}`}
                                                 onClick={e => {
                                                     e.preventDefault();
                                                     if (apiInfo?.description) toggleApiDesc(apiKey);
                                                 }}
-                                                aria-disabled={!apiInfo?.description}
-                                            >desc</a>
+                                                aria-disabled={apiInfo && typeof apiInfo.description === 'string' && apiInfo.description.trim() !== '' ? 'false' : 'true'}
+                                            >desc</Link>
                                         </td>
                                         <td style={{ fontSize: 12, fontWeight: 'inherit', border: '1px solid #ddd', padding: 4, fontFamily: 'monospace', textAlign: 'left' }}>
                                             <div>
@@ -224,22 +219,16 @@ export const ApiList = (props: ApiListProps) => {
                                                 >
                                                     {api.path}
                                                 </span>
-                                                <a
+                                                <span>&nbsp;</span>
+                                                <Link
                                                     href="#"
-                                                    style={{
-                                                        fontSize: 12,
-                                                        marginLeft: 8,
-                                                        color: !(Array.isArray(params) && params.length > 0) ? '#aaa' : '#007bff',
-                                                        cursor: !(Array.isArray(params) && params.length > 0) ? 'not-allowed' : 'pointer',
-                                                        pointerEvents: !(Array.isArray(params) && params.length > 0) ? 'none' : 'auto',
-                                                        fontWeight: showApiParam[apiKey] ? 'bold' : 'normal'
-                                                    }}
+                                                    className={`api-param-link${showApiParam[apiKey] ? ' active' : ''}${!(Array.isArray(params) && params.length > 0) ? ' disabled' : ''}`}
                                                     onClick={e => {
                                                         e.preventDefault();
                                                         toggleApiParam(apiKey);
                                                     }}
-                                                    aria-disabled={!(Array.isArray(params) && params.length > 0)}
-                                                >params</a>
+                                                    aria-disabled={(Array.isArray(params) && params.length > 0) ? 'false' : 'true'}
+                                                >params</Link>
                                             </div>
                                             {showApiDesc[apiKey] && apiInfo?.description && (
                                                 <div style={{ fontSize: 11, color: '#666', padding: '0 0 0 10px', marginTop: 4, textAlign: 'left' }}>
@@ -274,9 +263,9 @@ export const ApiList = (props: ApiListProps) => {
                                 ];
                                 if (showApiParam[apiKey] && params.length > 0) {
                                     rows.push(
-                                        <tr key={rowKey + '_params'} style={{ background: bgColor }}>
-                                            <td style={{ border: '1px solid #ddd', padding: 0, background: bgColor }}></td>
-                                            <td colSpan={3} style={{ border: '1px solid #ddd', padding: 0, background: bgColor }}>
+                                        <tr key={rowKey + '_params'} className="api-list-table-row" style={{ backgroundColor: bgColor }}>
+                                            <td style={{ border: '1px solid #ddd', padding: 0, backgroundColor: bgColor }}></td>
+                                            <td colSpan={3} style={{ border: '1px solid #ddd', padding: 0, backgroundColor: bgColor }}>
                                                 <form style={{ margin: 0 }}
                                                     onSubmit={e => {
                                                         e.preventDefault();
@@ -288,7 +277,7 @@ export const ApiList = (props: ApiListProps) => {
                                                             {params.map((param, i) => [
                                                                 <tr key={rowKey + '_param_' + i}>
                                                                     <td style={{ fontSize: 11, border: '1px solid #fff', width: '30px', textAlign: 'center' }}>
-                                                                        <a
+                                                                        <Link
                                                                             href="#"
                                                                             style={{
                                                                                 fontSize: 11,
@@ -302,8 +291,8 @@ export const ApiList = (props: ApiListProps) => {
                                                                                 e.preventDefault();
                                                                                 toggleParamDesc(apiKey, param.name);
                                                                             }}
-                                                                            aria-disabled={!param.description}
-                                                                        >desc</a>
+                                                                            aria-disabled={param.description ? 'false' : 'true'}
+                                                                        >desc</Link>
                                                                     </td>
                                                                     <td style={{ fontSize: 12, border: '1px solid #fff', padding: '0px', width: '100px', textAlign: 'left' }}>
                                                                         {param.required ? <span style={{ color: 'red', marginRight: 2 }}>*</span> : null}
@@ -322,6 +311,7 @@ export const ApiList = (props: ApiListProps) => {
                                                                                 }
                                                                                 onChange={e => handleParamChange(apiKey, param.name, e.target.value)}
                                                                                 style={{ width: '100%' }}
+                                                                                aria-label={`${param.name} parameter value`}
                                                                             >
                                                                                 <option value="true">true</option>
                                                                                 <option value="false">false</option>
@@ -336,6 +326,8 @@ export const ApiList = (props: ApiListProps) => {
                                                                                 }
                                                                                 onChange={e => handleParamChange(apiKey, param.name, e.target.value)}
                                                                                 style={{ width: '100%' }}
+                                                                                aria-label={`${param.name} parameter value`}
+                                                                                placeholder={param.defaultValue ? `Default: ${param.defaultValue}` : `Enter ${param.name}`}
                                                                             />
                                                                         )}
                                                                     </td>
@@ -360,9 +352,9 @@ export const ApiList = (props: ApiListProps) => {
                             })}
                         </tbody>
                     </table>
-                </div>
-            </div>
-        </div>
+                </Box>
+            </Box>
+        </Box>
     );
 
 };

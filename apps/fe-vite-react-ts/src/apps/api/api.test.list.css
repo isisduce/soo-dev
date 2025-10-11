@@ -1,0 +1,55 @@
+.api-list-header {
+    margin: 0;
+    text-align: left;
+    width: 100%;
+    font-size: 16px;
+}
+
+.api-list-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 8px;
+}
+.api-list-table th {
+    font-size: 12px;
+    font-weight: bold;
+    width: 1%;
+    border: 1px solid #ddd;
+    padding: 4px;
+}
+.api-list-table-row {
+    background-color: var(--row-bg-color, #fff); /* CSS 변수 사용 */
+}
+.api-list-table td {
+    font-size: 12px;
+    border: 1px solid #ddd;
+    padding: 4px;
+    vertical-align: top;
+}
+.api-list-table tr:nth-child(even) {
+    background: #f9f9f9;
+}
+
+.api-desc-link {
+    font-size: 11px;
+    margin-right: 0;
+    padding: 0;
+    color: #007bff;
+    cursor: pointer;
+    pointer-events: auto;
+    font-weight: normal;
+    text-decoration: underline;
+    background: none;
+    border: none;
+}
+
+.api-desc-link.disabled {
+    color: #aaa;
+    cursor: not-allowed;
+    pointer-events: none;
+    text-decoration: none;
+}
+
+.api-desc-link.active {
+    font-weight: bold;
+}

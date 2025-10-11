@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Button } from '@mui/material';
+import { Box, Button } from '@mui/material';
 import { shallow } from 'zustand/shallow';
 import './coolmove.page.css';
 // import { useAppEnvStore } from './app.env';
@@ -67,14 +67,14 @@ export const CoolmovePage: React.FC = () => {
     // }, [envChanged, envChangeMessage]);
 
     return (
-        <div className="coolmove-page">
+        <Box className="coolmove-page">
             <h1>Coolmove</h1>
             {/* {envChanged && (
                 <div className="web-explorer-notice">
                     {envChangeMessage}
                 </div>
             )} */}
-            <div className="coolmove-btn-group-outer">
+            <Box className="coolmove-btn-group-outer">
                 {/* <div className="coolmove-btn-group-inner">
                     <Button variant="contained" color="primary" onClick={() => { setApiServer(env.apps?.urlApiServerJava || ''); setRootPath(rootPathJava); handleOpenWebExplorerDialog(); }} >(Java) Web Explorer</Button>
                     <Button variant="contained" color="primary" onClick={() => { setApiServer(env.apps?.urlApiServerJava || ''); setRootPath(rootPathJava); handleOpenFileOpenDialogOld(); }} >(Java) Web File Open Dialog</Button>
@@ -85,7 +85,7 @@ export const CoolmovePage: React.FC = () => {
                     <Button variant="contained" color="primary" onClick={() => { setApiServer(env.apps?.urlApiServerNest || ''); setRootPath(rootPathNest); handleOpenFileOpenDialogOld(); }} >(Nest) Web File Open Dialog</Button>
                     <Button variant="contained" color="primary" onClick={() => { setApiServer(env.apps?.urlApiServerNest || ''); setRootPath(rootPathNest); setDialogOpenFileOpenNew(true); }} >(Nest) Web File Open Dialog</Button>
                 </div> */}
-            </div>
+            </Box>
 
             {/* <WebExplorer
                 open={dialogOpenWebExplorer}
@@ -129,6 +129,6 @@ export const CoolmovePage: React.FC = () => {
                 showTree={true}
                 showList={true}
             /> */}
-        </div>
+        </Box>
     );
 };
