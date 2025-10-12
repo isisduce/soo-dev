@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { useAppEnvStore } from '../../../appmain/app.env';
-import defaultUserImg from '../styles/images/user-img-120.png';
-import dragHandle from '../styles/images/ico-list-24.svg';
+import defaultUserImg from '/styles/images/user-img-120.png';
+import dragHandle from '/styles/images/ico-list-24.svg';
 import type { DtoCandidateItem } from '../dto/dto';
 
 interface CandidateItemProps {

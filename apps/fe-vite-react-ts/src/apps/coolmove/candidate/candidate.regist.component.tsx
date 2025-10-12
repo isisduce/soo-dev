@@ -8,6 +8,8 @@ import { coolmoveApi } from '../api/coolmove.api';
 import { emptyCandidateMast, type DtoCandidateMast } from '../dto/dto';
 import { CandidateItem } from '../candidate/candidate-item.component';
 import headerLogoImg from '/styles/images/header-logo.svg';
+import { CandidateItemPreviewComponent } from './candidate-item.preview.component';
+import { Box } from '@mui/material';
 
 interface CandidateRegistComponentProps {
     onLogout?: () => void;
@@ -230,91 +232,25 @@ export const CandidateRegistComponent: React.FC<CandidateRegistComponentProps> =
                 {/* 구분선, 미리보기 영역 등은 필요시 추가 구현 */}
                 {/* 구분선 */}
                 <div className="between-fake-area"></div>
-                <div className="between-area">
+                <Box className="between-area">
                     <span>
                         [임시저장]을 클릭하면<br />미리보기 화면이 제공됩니다
                     </span>
                     <span className="double-arrow"></span>
-                </div>
+                </Box>
 
                 {/* 미리보기 */}
-                <div className="side-contents">
+                <Box className="side-contents">
                     <div className="contents-tit inner-sub-txt">
                         <h2>미리보기</h2>
                         <span className="sub-txt">좋아하는 후보자를 선택해주세요</span>
                     </div>
                     <div className="contents-input-group gap36">
                         {/* 후보자 1 미리보기 */}
-                        {/* <div className="candidate-list case-01">
-                            <div className="candidate-area">
-                                <img src={candidate1.photo} alt="후보자 사진" />
-                                <div>
-                                    <span className="candidate-group">
-                                        {candidate1.group || "입력한 소속"}
-                                    </span>
-                                    <span className="candidate-name">
-                                        {candidate1.name || "입력한 이름"}
-                                    </span>
-                                </div>
-                            </div>
-                            <div className="input-group">
-                                {candidate1.pledges.map((pledge, index) => (
-                                    <div key={index}>
-                                        <input
-                                            type="text"
-                                            placeholder={pledge || `입력한 공약 ${index + 1}`}
-                                            value={pledge}
-                                            readOnly
-                                        />
-                                    </div>
-                                ))}
-                            </div>
-                            <div className="like-group">
-                                <button type="button" className="btn primary large">
-                                    좋아요
-                                </button>
-                                <div className="like-number">
-                                    <span><em></em>0</span>
-                                </div>
-                            </div>
-                        </div> */}
-
-                        {/* 후보자 2 미리보기 */}
-                        {/* <div className="candidate-list case-02">
-                            <div className="candidate-area">
-                                <img src={candidate2.photo} alt="후보자 사진" />
-                                <div>
-                                    <span className="candidate-group">
-                                        {candidate2.group || "입력한 소속"}
-                                    </span>
-                                    <span className="candidate-name">
-                                        {candidate2.name || "입력한 이름"}
-                                    </span>
-                                </div>
-                            </div>
-                            <div className="input-group">
-                                {candidate2.pledges.map((pledge, index) => (
-                                    <div key={index}>
-                                        <input
-                                            type="text"
-                                            placeholder={pledge || `입력한 공약 ${index + 1}`}
-                                            value={pledge}
-                                            readOnly
-                                        />
-                                    </div>
-                                ))}
-                            </div>
-                            <div className="like-group">
-                                <button type="button" className="btn primary large">
-                                    좋아요
-                                </button>
-                                <div className="like-number">
-                                    <span><em></em>0</span>
-                                </div>
-                            </div>
-                        </div> */}
+                        <CandidateItemPreviewComponent candidate={candidateMast.candidates[0]} />
+                        <CandidateItemPreviewComponent candidate={candidateMast.candidates[1]} />
                     </div>
-                </div>
+                </Box>
             </section>
         </div>
     );
