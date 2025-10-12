@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.soo.apps.coolmove.mapper.CoolmoveMapper">
+
+	<!-- ==================================================================================================== -->
+	<!-- ==================================================================================================== -->
+
+	<select id="selectTableNames" parameterType="HashMap" resultType="string">
+SELECT	table_name
+FROM	information_schema.tables
+WHERE	table_schema = 'public' and table_type = 'BASE TABLE'
+	</select>
+
+	<!-- ==================================================================================================== -->
+	<!-- ==================================================================================================== -->
+
+	<select id="candidateMastSelect" parameterType="HashMap" resultType="com.soo.apps.coolmove.entity.EntityCandidateMast">
+SELECT
+		seq				AS seq
+	,	uuid			AS uuid
+	,	mast_nm			AS mastNm
+	,	period			AS period
+	,	beg_dt			AS begDt
+	,	end_dt			AS endDt
+	,	voters_path_nm	AS votersPathNm
+	,	voters_ognl_nm	AS votersOgnlNm
+	,	pub_yn			AS pubYn
+	,	reg_user_id		AS regUserId
+	,	reg_dt			AS regDt
+	,	mod_user_id		AS modUserId
+	,	mod_dt			AS modDt
+FROM	candidate_mast
+WHERE	1=1
+<if test="uuid	!= null and !uuid	.equals('')">AND uuid	= #{uuid}::UUID</if>
+ORDER BY seq desc
+	</select>
+
+	<insert id="candidateMastInsert" parameterType="com.soo.apps.coolmove.entity.EntityCandidateMast">
+INSERT INTO candidate_mast (
+		uuid
+	,	mast_nm
+	,	period
+	,	beg_dt
+	,	end_dt
+	,	voters_path_nm
+	,	voters_ognl_nm
+	,	pub_yn
+	,	reg_user_id
+	,	reg_dt
+) VALUES (
+		#{uuid}::UUID
+	,	#{mastNm}
+	,	#{period}
+	,	#{begDt}::TIMESTAMP
+	,	#{endDt}::TIMESTAMP
+	,	#{votersPathNm}
+	,	#{votersOgnlNm}
+	,	#{pubYn}
+	,	#{regUserId}
+	,	now()
+)
+	</insert>
+
+	<update id="candidateMastUpdate" parameterType="com.soo.apps.coolmove.entity.EntityCandidateMast">
+UPDATE	candidate_mast
+SET		mast_nm			= #{mastNm}
+	,	period			= #{period}
+	,	beg_dt			= #{begDt}::TIMESTAMP
+	,	end_dt			= #{endDt}::TIMESTAMP
+	,	voters_path_nm	= #{votersPathNm}
+	,	voters_ognl_nm	= #{votersOgnlNm}
+	,	pub_yn			= #{pubYn}
+	,	mod_user_id		= #{modUserId}
+	,	mod_dt			= now()
+WHERE	uuid			= #{uuid}::UUID
+	</update>
+
+	<!-- ==================================================================================================== -->
+
+	<select id="candidateItemSelect" parameterType="HashMap" resultType="com.soo.apps.coolmove.entity.EntityCandidateItem">
+SELECT
+		seq				AS seq
+	,	uuid			AS uuid
+	,	index			AS index
+	,	club_nm			AS clubNm
+	,	player_nm		AS playerNm
+	,	photo_path_nm	AS photoPathNm
+	,	photo_ognl_nm	AS photoOgnlNm
+	,	reg_user_id		AS regUserId
+	,	reg_dt			AS regDt
+	,	mod_user_id		AS modUserId
+	,	mod_dt			AS modDt
+FROM	candidate_item
+WHERE	1=1
+<if test="uuid	!= null and !uuid	.equals('')">AND uuid	= #{uuid}::UUID</if>
+<if test="index	!= null and !index	.equals('')">AND index	= #{index}::NUMERIC</if>
+ORDER BY uuid, index
+	</select>
+
+	<insert id="candidateItemInsert" parameterType="com.soo.apps.coolmove.entity.EntityCandidateItem">
+INSERT INTO candidate_item (
+		uuid
+	,	index
+	,	club_nm
+	,	player_nm
+	,	photo_path_nm
+	,	photo_ognl_nm
+	,	reg_user_id
+	,	reg_dt
+) VALUES (
+		#{uuid}::UUID
+	,	#{index}::NUMERIC
+	,	#{clubNm}
+	,	#{playerNm}
+	,	#{photoPathNm}
+	,	#{photoOgnlNm}
+	,	#{regUserId}
+	,	now()
+)
+	</insert>
+
+	<update id="candidateItemUpdate" parameterType="com.soo.apps.coolmove.entity.EntityCandidateItem">
+UPDATE	candidate_item
+SET		club_nm			= #{clubNm}
+	,	player_nm		= #{playerNm}
+	,	photo_path_nm	= #{photoPathNm}
+	,	photo_ognl_nm	= #{photoOgnlNm}
+	,	mod_user_id		= #{modUserId}
+	,	mod_dt			= now()
+WHERE	uuid			= #{uuid}::UUID
+	AND	index			= #{index}::NUMERIC
+	</update>
+
+	<!-- ==================================================================================================== -->
+
+	<select id="candidatePledgeSelect" parameterType="HashMap" resultType="com.soo.apps.coolmove.entity.EntityCandidatePledge">
+SELECT
+		seq				AS seq
+	,	uuid			AS uuid
+	,	index			AS index
+	,	no				AS no
+	,	pledge			AS pledge
+	,	reg_user_id		AS regUserId
+	,	reg_dt			AS regDt
+	,	mod_user_id		AS modUserId
+	,	mod_dt			AS modDt
+FROM	candidate_pledges
+WHERE	1=1
+<if test="uuid	!= null and !uuid	.equals('')">AND uuid	= #{uuid}::UUID</if>
+<if test="index	!= null and !index	.equals('')">AND index	= #{index}::NUMERIC</if>
+<if test="no	!= null and !no		.equals('')">AND no		= #{no}::NUMERIC</if>
+ORDER BY uuid, index, no
+	</select>
+
+	<insert id="candidatePledgeInsert" parameterType="String">
+INSERT INTO candidate_pledges (
+		uuid
+	,	index
+	,	no
+	,	pledge
+	,	reg_user_id
+	,	reg_dt
+) VALUES (
+		#{uuid}::UUID
+	,	#{index}::NUMERIC
+	,	#{no}::NUMERIC
+	,	#{pledge}
+	,	#{regUserId}
+	,	now()
+)
+	</insert>
+
+	<update id="candidatePledgeUpdate" parameterType="String">
+UPDATE	candidate_pledges
+SET		pledge			= #{pledge}
+	,	mod_user_id		= #{modUserId}
+	,	mod_dt			= now()
+WHERE	1=1
+<if test="uuid	!= null and !uuid	.equals('')">AND uuid	= #{uuid}::UUID</if>
+<if test="index	!= null and !index	.equals('')">AND index	= #{index}::NUMERIC</if>
+<if test="no	!= null and !no		.equals('')">AND no		= #{no}::NUMERIC</if>
+ORDER BY uuid, index, no
+	</update>
+
+	<!-- ==================================================================================================== -->
+
+	<!-- ==================================================================================================== -->
+	<!-- ==================================================================================================== -->
+
+</mapper>

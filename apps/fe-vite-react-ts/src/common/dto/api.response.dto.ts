@@ -12,6 +12,9 @@ export const ApiCode = {
         ERROR_SERVER: 500100, ERROR_SERVER_MSG: 'Internal Server Error',
         ERROR_SERVICE_UNAVAILABLE: 503000, ERROR_SERVICE_UNAVAILABLE_MSG: 'Service Unavailable',
         ERROR_GATEWAY_TIMEOUT: 504000, ERROR_GATEWAY_TIMEOUT_MSG: 'Gateway Timeout',
+        //
+        ERROR_INVALID_API_SERVER: 600001, ERROR_INVALID_API_SERVER_MSG: 'Invalid API Server',
+        ERROR_LOGIN_FAILURE: 600002, ERROR_LOGIN_FAILURE_MSG: 'Login Failure',
     } as const,
 };
 

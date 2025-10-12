@@ -1,0 +1,56 @@
+package com.soo.apps.coolmove.entity;
+
+import java.util.List;
+
+import com.soo.common.helper.StringHelper;
+
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
+
+@Builder
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class EntityCandidateItem {
+
+    private String seq;
+    // KEY
+    private String uuid;
+    private String index;
+    //
+    private String clubNm;
+    private String playerNm;
+    private String photoPathNm;
+    private String photoOgnlNm;
+    private List<String> pledges;
+    //
+    private String sysUserId;
+    private String regUserId;
+    private String regDt;
+    private String modUserId;
+    private String modDt;
+
+    public boolean isEqual(EntityCandidateItem other) {
+        if (other == null) return false;
+        if (StringHelper.IsNotEqual(this.clubNm, other.clubNm)) return false;
+        if (StringHelper.IsNotEqual(this.playerNm, other.playerNm)) return false;
+        if (StringHelper.IsNotEqual(this.photoPathNm, other.photoPathNm)) return false;
+        if (StringHelper.IsNotEqual(this.photoOgnlNm, other.photoOgnlNm)) return false;
+        if (this.pledges == null && other.pledges != null) return false;
+        if (this.pledges != null && other.pledges == null) return false;
+        if (this.pledges != null && other.pledges != null) {
+            if (this.pledges.size() != other.pledges.size()) return false;
+            for (int i = 0; i < this.pledges.size(); i++) {
+                if (StringHelper.IsNotEqual(this.pledges.get(i), other.pledges.get(i))) return false;
+            }
+        }
+        return true;
+    }
+
+    public boolean isNotEqual(EntityCandidateItem other) {
+        return !isEqual(other);
+    }
+
+}

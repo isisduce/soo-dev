@@ -1,0 +1,21 @@
+/* SUITE font */
+@font-face {
+    font-family: "Suite";
+    font-style: normal;
+    font-weight: normal;
+    src: url(../font/suite/SUITE-Regular.ttf);
+}
+
+@font-face {
+    font-family: "Suite";
+    font-style: normal;
+    font-weight: 500;
+    src: url(../font/suite/SUITE-Medium.ttf);
+}
+
+@font-face {
+    font-family: "Suite";
+    font-style: normal;
+    font-weight: bold;
+    src: url(../font/suite/SUITE-Bold.ttf);
+}

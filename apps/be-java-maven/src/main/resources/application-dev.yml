@@ -15,7 +15,7 @@ spring:
         max-lifetime: 3600000
         keepalive-time: 300000
         driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
-        jdbc-url: jdbc:log4jdbc:postgresql://localhost:5432/soo_web_explorer
+        jdbc-url: jdbc:log4jdbc:postgresql://localhost:5432/soo_coolmove
         username: soo
         password: soo#123
 ---

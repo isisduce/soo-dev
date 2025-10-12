@@ -141,8 +141,8 @@ export const webFileSystemApi = {
             const result = await webFileSystemApi.getDirectoryContents(rootPath);
             if (result.code === 200000 && result.result) {
                 return ApiResponse.successWithMessage<FileInfoDto[]>(
+                    result.result.directories,
                     'Directory tree fetched successfully',
-                    result.result.directories
                 );
             } else {
                 return ApiResponse.failure<FileInfoDto[]>(

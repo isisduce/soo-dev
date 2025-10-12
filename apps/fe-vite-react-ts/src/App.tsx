@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
+import { Box } from '@mui/material';
 import reactLogo from './assets/react.svg';
 import viteLogo from '/vite.svg';
 import './App.css';
@@ -32,24 +33,18 @@ function Home() {
             <p className="read-the-docs">
                 Click on the Vite and React logos to learn more
             </p>
-            {apiRouterData.map(router => (
-                router.label &&
-                <Link key={router.path} to={router.path} style={{ display: 'block', margin: '8px 0' }}>
-                    {router.label}
-                </Link>
-            ))}
-            {cmvRouterData.map(router => (
-                router.label &&
-                <Link key={router.path} to={router.path} style={{ display: 'block', margin: '8px 0' }}>
-                    {router.label}
-                </Link>
-            ))}
-            {wfsRouterData.map(router => (
-                router.label &&
-                <Link key={router.path} to={router.path} style={{ display: 'block', margin: '8px 0' }}>
-                    {router.label}
-                </Link>
-            ))}
+            <p />
+            <Box>
+                <Box>
+                    <Link to="/api">API Test</Link>
+                </Box>
+                <Box>
+                    <Link to="/wfs">Web File System</Link>
+                </Box>
+                <Box>
+                    <Link to="/coolmove">Coolmove</Link>
+                </Box>
+            </Box>
         </>
     );
 }

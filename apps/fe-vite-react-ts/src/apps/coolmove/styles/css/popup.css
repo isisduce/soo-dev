@@ -1,0 +1,301 @@
+/* pop_regi_date_setting.html */
+.popup-container {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 60%);
+}
+
+.small-popup {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background: #FFF;
+    width: 586px;
+    border-radius: 8px;
+    box-shadow: 0 0 12px 0 rgba(0, 0, 0, 12%);
+    padding: 16px;
+}
+
+.pop-close {
+    display: flex;
+    justify-content: end;
+}
+
+.pop-tit {
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+.pop-tit h2 {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.pop-tit span {
+    display: block;
+    margin: 16px 0 28px;
+    font-weight: 500;
+}
+
+.pop-contents {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.regi-date-area {
+    display: flex;
+    gap: 8px;
+    width: 284px;
+    margin-bottom: 8px;
+}
+
+.select-area.year-select {
+    flex: 1;
+}
+
+.select-area.month-select {
+    width: 98px;
+}
+
+.regi-period-select {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    width: 284px;
+    margin-bottom: 24px;
+}
+
+.regi-period-select div {
+    flex: 1;
+}
+
+.regi-period-select span {
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.regi-period-select ul {
+    border: 1px solid #D9DCE0;
+    border-radius: 999px;
+    padding: 4px;
+    display: flex;
+    gap: 4px;
+}
+
+.regi-period-select ul li {
+    display: inline-block;
+    flex: 1;
+}
+
+.regi-period-select ul li a {
+    display: block;
+    height: 28px;
+    line-height: 28px;
+    text-align: center;
+    color: #C2C7CC;
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 999px;
+}
+
+.regi-period-select ul li a:hover {
+    transition: all .2s;
+    color: #B1B3B5;
+}
+
+.regi-period-select ul li a.active {
+    color: #FFF;
+    font-weight: bold;
+    background: #022490;
+}
+
+.regi-calendar-area {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 8px;
+}
+
+.regi-calendar-area>span {
+    font-size: 16px;
+}
+
+.regi-time-select {
+    width: 296px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.regi-time-select>span {
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.regi-time-select .time-select {
+    flex: 1;
+}
+
+.time-select .select-box ul {
+    height: 72px;
+    overflow-y: auto;
+}
+
+
+/* 모바일 팝업 */
+.mo-popup {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: calc(100% - 38px);
+    border-radius: 8px;
+    background: #FFF;
+    box-shadow: 0 0 12px 0 rgba(0, 0, 0, 12%);
+    padding: 16px;
+}
+
+.mo-popup .pop-contents .simple-txt {
+    margin: 40px 0;
+}
+
+.mo-popup .pop-contents button {
+    width: 100%;
+}
+
+.mo-bottom-popup {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: #FFF;
+    border-radius: 8px 8px 0 0;
+    box-shadow: 0 0 12px 0 rgba(0, 0, 0, 12%);
+    padding-top: 48px;
+}
+
+.mo-bottom-popup>button {
+    width: 100%;
+    border-radius: 0;
+}
+
+.mo-bottom-popup .access-group {
+    display: flex;
+    gap: 20px;
+    flex-direction: column;
+    padding: 0 16px;
+    margin-bottom: 60px;
+}
+
+.mo-bottom-popup .access-group>div {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.mo-bottom-popup .access-group h3 {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.mo-bottom-popup .access-group>div span {
+    font-size: 12px;
+    color: #6E7B8F;
+}
+
+.mo-bottom-popup .access-group .camera .camera-icon {
+    display: block;
+    background: #EEE url('../images/ico-camera.svg') no-repeat center center;
+    background-size: 24px;
+    width: 40px;
+    height: 40px;
+    border-radius: 999px;
+}
+
+.mo-bottom-popup .access-group .gallery .gallery-icon {
+    display: block;
+    background: #EEE url('../images/ico-image.svg') no-repeat center center;
+    background-size: 24px;
+    width: 40px;
+    height: 40px;
+    border-radius: 999px;
+}
+
+.mo-bottom-popup .access-group .audio .audio-icon {
+    display: block;
+    background: #EEE url('../images/ico-recode.svg') no-repeat center center;
+    background-size: 24px;
+    width: 40px;
+    height: 40px;
+    border-radius: 999px;
+}
+
+.mo-bottom-popup .access-group .location .location-icon {
+    display: block;
+    background: #EEE url('../images/ico-map-pin.svg') no-repeat center center;
+    background-size: 24px;
+    width: 40px;
+    height: 40px;
+    border-radius: 999px;
+}
+
+.mo-bottom-popup .access-btn-group {
+    display: flex;
+    gap: 8px;
+    flex-direction: column;
+    padding: 0 16px;
+    margin-bottom: 16px;
+}
+
+
+
+
+
+@media (max-width: 900px) {
+    .small-popup {
+        width: 328px;
+    }
+
+    .regi-date-area,
+    .regi-period-select,
+    .regi-time-select {
+        width: 264px;
+    }
+
+    .regi-period-select span,
+    .regi-calendar-area>span,
+    .regi-time-select>span {
+        font-size: 14px;
+    }
+
+    .flatpickr-calendar {
+        width: 264px;
+    }
+
+    .dayContainer {
+        min-width: 246.4px;
+        max-width: 246.4px;
+    }
+
+    .flatpickr-day {
+        height: 35.2px;
+        line-height: 35.2px;
+    }
+
+    .flatpickr-day.inRange::before {
+        left: -10px;
+        height: 35.2px
+    }
+
+    .flatpickr-day.inRange::after {
+        height: 35.2px
+    }
+}

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.soo.apps.coolmove.mapper.CoolmoveTableMapper">
+
+	<!-- ==================================================================================================== -->
+	<!-- ==================================================================================================== -->
+
+	<select id="selectTableNames" resultType="String">
+WITH
+	need_tables AS (
+		SELECT	table_name
+		FROM 	(
+					SELECT 'candidate_pledges'			AS table_name
+			UNION	SELECT 'candidate_item'
+			UNION	SELECT 'candidate_mast'
+		) t
+	)
+SELECT	*
+FROM	need_tables nt
+	</select>
+
+	<!-- ==================================================================================================== -->
+
+	<update id="createTableCandidateMast">
+CREATE	TABLE		IF NOT	EXISTS	candidate_mast (
+		seq					SERIAL		UNIQUE	not	null
+	,	uuid				UUID		UNIQUE	not	null
+	,	mast_nm				VARCHAR(30)				null
+	,	period				VARCHAR(30)				null
+	,	beg_dt				TIMESTAMP				null
+	,	end_dt				TIMESTAMP				null
+	,	voters_path_nm		VARCHAR(300)			null
+	,	voters_ognl_nm		VARCHAR(300)			null
+	,	pub_yn				VARCHAR(1)				null
+	,	reg_user_id			VARCHAR(30)			not	null
+	,	reg_dt				TIMESTAMP			not	null	default	now()
+	,	mod_user_id			VARCHAR(30)				null
+	,	mod_dt				TIMESTAMP				null
+	,	CONSTRAINT candidate_mast_pkey			primary key (uuid)
+);
+	</update>
+
+	<update id="createTableCandidateItem">
+CREATE	TABLE		IF NOT	EXISTS	candidate_item (
+		seq					SERIAL		UNIQUE	not	null
+	,	uuid				UUID				not	null
+	,	index				NUMERIC(1)			not	null
+	,	club_nm				VARCHAR(30)				null
+	,	player_nm			VARCHAR(30)				null
+	,	photo_path_nm		VARCHAR(300)			null
+	,	photo_ognl_nm		VARCHAR(300)			null
+	,	reg_user_id			VARCHAR(30)			not	null
+	,	reg_dt				TIMESTAMP			not	null	default	now()
+	,	mod_user_id			VARCHAR(30)				null
+	,	mod_dt				TIMESTAMP				null
+	,	CONSTRAINT candidate_item_pkey			primary key (uuid, index)
+);
+	</update>
+
+	<update id="createTableCandidatePledge">
+CREATE	TABLE		IF NOT	EXISTS	candidate_pledges (
+		seq					SERIAL		UNIQUE	not	null
+	,	uuid				UUID				not	null
+	,	index				NUMERIC(1)			not	null
+	,	no					NUMERIC(1)			not	null
+	,	pledge				VARCHAR(50)				null
+	,	reg_user_id			VARCHAR(30)			not	null
+	,	reg_dt				TIMESTAMP			not	null	default	now()
+	,	mod_user_id			VARCHAR(30)				null
+	,	mod_dt				TIMESTAMP				null
+	,	CONSTRAINT candidate_pledges_pkey			primary key (uuid, index, no)
+);
+	</update>
+
+	<!-- ==================================================================================================== -->
+	<!-- ==================================================================================================== -->
+
+</mapper>

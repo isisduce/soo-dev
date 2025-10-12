@@ -1,0 +1,77 @@
+package com.soo.apps.coolmove.dto;
+
+import java.util.List;
+
+import com.soo.apps.coolmove.entity.EntityCandidateItem;
+
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
+
+@Builder
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class DtoCandidateItem {
+
+    private String seq;
+    // KEY
+    private String uuid;
+    private String index;
+    //
+    private String clubNm;
+    private String playerNm;
+    private String photoPathNm;
+    private String photoOgnlNm;
+    private List<String> pledges;
+    //
+    private String sysUserId;
+    private String regUserId;
+    private String regDt;
+    private String modUserId;
+    private String modDt;
+
+    public static DtoCandidateItem fromEntity(EntityCandidateItem entity) {
+        if (entity == null) {
+            return null;
+        }
+        return DtoCandidateItem.builder()
+                .seq(entity.getSeq())
+                .uuid(entity.getUuid())
+                .index(entity.getIndex())
+                .clubNm(entity.getClubNm())
+                .playerNm(entity.getPlayerNm())
+                .photoPathNm(entity.getPhotoPathNm())
+                .photoOgnlNm(entity.getPhotoOgnlNm())
+                .pledges(entity.getPledges())
+                .sysUserId(entity.getSysUserId())
+                .regUserId(entity.getRegUserId())
+                .regDt(entity.getRegDt())
+                .modUserId(entity.getModUserId())
+                .modDt(entity.getModDt())
+                .build();
+    }
+
+    static public EntityCandidateItem toEntity(DtoCandidateItem dto) {
+        if (dto == null) {
+            return null;
+        }
+        return EntityCandidateItem.builder()
+                .seq(dto.seq)
+                .uuid(dto.uuid)
+                .clubNm(dto.clubNm)
+                .index(dto.index)
+                .playerNm(dto.playerNm)
+                .photoPathNm(dto.photoPathNm)
+                .photoOgnlNm(dto.photoOgnlNm)
+                .pledges(dto.pledges)
+                .sysUserId(dto.sysUserId)
+                .regUserId(dto.regUserId)
+                .regDt(dto.regDt)
+                .modUserId(dto.modUserId)
+                .modDt(dto.modDt)
+                .build();
+    }
+
+}

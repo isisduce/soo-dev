@@ -28,12 +28,8 @@ public class CoolmoveConfig extends PackageConfig {
         return "/soo/apps/coolmove";
     }
 
-    public String getRootUploadPlayer() {
-        return getAppRoot() + "/upload/promise/player";
-    }
-
-    public String getRootUploadPromiseMast() {
-        return getAppRoot() + "/upload/promise/mast";
+    public String getRootCandidate() {
+        return getAppRoot() + "/candidate";
     }
 
 }

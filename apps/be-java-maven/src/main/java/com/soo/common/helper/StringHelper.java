@@ -33,6 +33,33 @@ public class StringHelper {
 
     // ====================================================================================================
 
+    public static boolean IsEqual(String a, String b) {
+        return (a == null && b == null) || (a != null && a.equals(b));
+    }
+
+    public static boolean IsNotEqual(String s0, String s1) {
+        return (IsEqual(s0, s1) == false);
+    }
+
+    public static boolean IsEqual(ArrayList<String> a, ArrayList<String> b) {
+        if (a == null && b == null) { return true; }
+        if (a == null && b != null) { return false; }
+        if (a != null && b == null) { return false; }
+        if (a != null && b != null) {
+            if (a.size() != b.size()) { return false; }
+            for (int i = 0; i < a.size(); i++) {
+                if (b.contains(a.get(i)) == false) { return false; }
+            }
+        }
+        return true;
+    }
+
+    public static boolean IsNotEqual(ArrayList<String> a, ArrayList<String> b) {
+        return (IsEqual(a, b) == false);
+    }
+
+    // ====================================================================================================
+
     public static boolean IsSubstring(String str, ArrayList<String> list) {
         boolean b = false;
         if (list != null) {
