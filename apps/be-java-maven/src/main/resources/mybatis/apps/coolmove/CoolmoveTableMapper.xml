@@ -10,9 +10,10 @@ WITH
 	need_tables AS (
 		SELECT	table_name
 		FROM 	(
-					SELECT 'candidate_pledges'			AS table_name
+					SELECT 'candidate_mast'			AS table_name
 			UNION	SELECT 'candidate_item'
-			UNION	SELECT 'candidate_mast'
+			UNION	SELECT 'candidate_pledges'
+			UNION	SELECT 'candidate_votes'
 		) t
 	)
 SELECT	*
@@ -44,7 +45,7 @@ CREATE	TABLE		IF NOT	EXISTS	candidate_mast (
 CREATE	TABLE		IF NOT	EXISTS	candidate_item (
 		seq					SERIAL		UNIQUE	not	null
 	,	uuid				UUID				not	null
-	,	index				NUMERIC(1)			not	null
+	,	id					NUMERIC(1)			not	null
 	,	club_nm				VARCHAR(30)				null
 	,	player_nm			VARCHAR(30)				null
 	,	photo_path_nm		VARCHAR(300)			null
@@ -53,7 +54,7 @@ CREATE	TABLE		IF NOT	EXISTS	candidate_item (
 	,	reg_dt				TIMESTAMP			not	null	default	now()
 	,	mod_user_id			VARCHAR(30)				null
 	,	mod_dt				TIMESTAMP				null
-	,	CONSTRAINT candidate_item_pkey			primary key (uuid, index)
+	,	CONSTRAINT candidate_item_pkey			primary key (uuid, id)
 );
 	</update>
 
@@ -61,14 +62,29 @@ CREATE	TABLE		IF NOT	EXISTS	candidate_item (
 CREATE	TABLE		IF NOT	EXISTS	candidate_pledges (
 		seq					SERIAL		UNIQUE	not	null
 	,	uuid				UUID				not	null
-	,	index				NUMERIC(1)			not	null
+	,	id					NUMERIC(1)			not	null
 	,	no					NUMERIC(1)			not	null
 	,	pledge				VARCHAR(50)				null
 	,	reg_user_id			VARCHAR(30)			not	null
 	,	reg_dt				TIMESTAMP			not	null	default	now()
 	,	mod_user_id			VARCHAR(30)				null
 	,	mod_dt				TIMESTAMP				null
-	,	CONSTRAINT candidate_pledges_pkey			primary key (uuid, index, no)
+	,	CONSTRAINT candidate_pledges_pkey			primary key (uuid, id, no)
+);
+	</update>
+
+	<update id="createTableCandidateVotes">
+CREATE	TABLE		IF NOT	EXISTS	candidate_votes (
+		seq					SERIAL		UNIQUE	not	null
+	,	uuid				UUID				not	null
+	,	user_id				VARCHAR(30)			not	null
+	,	id					NUMERIC(1)			not	null
+	,	no					NUMERIC(1)				null
+	,	reg_user_id			VARCHAR(30)			not	null
+	,	reg_dt				TIMESTAMP			not	null	default	now()
+	,	mod_user_id			VARCHAR(30)				null
+	,	mod_dt				TIMESTAMP				null
+	,	CONSTRAINT candidate_votes_pkey				primary key (uuid, user_id)
 );
 	</update>
 

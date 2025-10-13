@@ -9,8 +9,9 @@ public interface CoolmoveTableMapper {
 
     ArrayList<String> selectTableNames();
 
-    void createTableCandidatePledge();
-    void createTableCandidateItem();
     void createTableCandidateMast();
+    void createTableCandidateItem();
+    void createTableCandidatePledge();
+    void createTableCandidateVotes();
 
 }

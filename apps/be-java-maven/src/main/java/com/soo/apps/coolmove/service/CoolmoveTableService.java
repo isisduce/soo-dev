@@ -29,9 +29,10 @@ public class CoolmoveTableService {
 
     public boolean createTables() {
         try {
-            coolmoveTableMapper.createTableCandidatePledge();
-            coolmoveTableMapper.createTableCandidateItem();
             coolmoveTableMapper.createTableCandidateMast();
+            coolmoveTableMapper.createTableCandidateItem();
+            coolmoveTableMapper.createTableCandidatePledge();
+            coolmoveTableMapper.createTableCandidateVotes();
             return true;
         } catch (Exception e) {
             log.error("Error creating tables: " + e.getMessage(), e);

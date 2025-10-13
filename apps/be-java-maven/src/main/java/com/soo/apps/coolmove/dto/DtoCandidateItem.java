@@ -18,7 +18,7 @@ public class DtoCandidateItem {
     private String seq;
     // KEY
     private String uuid;
-    private String index;
+    private String id;
     //
     private String clubNm;
     private String playerNm;
@@ -39,7 +39,7 @@ public class DtoCandidateItem {
         return DtoCandidateItem.builder()
                 .seq(entity.getSeq())
                 .uuid(entity.getUuid())
-                .index(entity.getIndex())
+                .id(entity.getId())
                 .clubNm(entity.getClubNm())
                 .playerNm(entity.getPlayerNm())
                 .photoPathNm(entity.getPhotoPathNm())
@@ -61,7 +61,7 @@ public class DtoCandidateItem {
                 .seq(dto.seq)
                 .uuid(dto.uuid)
                 .clubNm(dto.clubNm)
-                .index(dto.index)
+                .id(dto.id)
                 .playerNm(dto.playerNm)
                 .photoPathNm(dto.photoPathNm)
                 .photoOgnlNm(dto.photoOgnlNm)

@@ -1,27 +1,26 @@
+import type { CoolmoveStatus, CoolmoveType } from "../types/types";
+
 export interface DtoCandidateItem {
     seq?: number;
     // KEY
     uuid?: string;
-    index?: number;
+    id?: number;
     //
     clubNm: string;
     playerNm: string;
     photoPathNm?: string;
     photoOgnlNm?: string;
     photoFile?: File;
+    //
+    promises?: string[];
     pledges?: string[];
+    votersCount?: number[];
     //
     sysUserId?: string | null;
     regUserId?: string;
     regDt?: Date;
     modUserId?: string;
     modDt?: Date;
-}
-
-export interface DtoCandidateStatus {
-    type: 'active' | 'draft' | 'end' | 'empty';
-    participants?: number;
-    date?: string;
 }
 
 export interface DtoCandidateMast {
@@ -32,12 +31,14 @@ export interface DtoCandidateMast {
     no: number;
     mastNm?: string;
     //
+    type?: CoolmoveType;
     candidates: DtoCandidateItem[];
     period?: string;
     begDt?: string;
     endDt?: string;
     //
-    status?: DtoCandidateStatus;
+    status?: CoolmoveStatus;
+    votersCount?: number;
     //
     votersPathNm?: string;
     votersOgnlNm?: string;
@@ -55,14 +56,15 @@ export interface DtoCandidateMast {
 export const emptyCandidateItem: DtoCandidateItem = {
     clubNm: '',
     playerNm: '',
-    photoPathNm: '',
-    photoOgnlNm: '',
     pledges: ['', '', '', '', ''],
     sysUserId: localStorage.getItem('userid'),
 };
 
 export const emptyCandidateMast: DtoCandidateMast = {
     no: 0,
-    candidates: [emptyCandidateItem, emptyCandidateItem],
+    candidates: [
+        { ...emptyCandidateItem, id: 1, pledges: [...(emptyCandidateItem.pledges ?? [])] },
+        { ...emptyCandidateItem, id: 2, pledges: [...(emptyCandidateItem.pledges ?? [])] },
+    ],
     sysUserId: localStorage.getItem('userid'),
 };

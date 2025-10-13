@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { LoginComponent } from './login.component'
 import { useAppEnvStore } from '../../../appmain/app.env';
 import { coolmoveApi } from '../api/coolmove.api';
-import { routerConst } from '../routerConst';
+import { routerConst } from '../routerData';
 
 export const LoginContainer: React.FC = () => {
 

@@ -5,8 +5,8 @@ import '../styles/css/common.css';
 import '../styles/css/main.css';
 import { useAppEnvStore } from '../../../appmain/app.env';
 import { coolmoveApi } from '../api/coolmove.api';
-import { emptyCandidateMast, type DtoCandidateMast } from '../dto/dto';
-import { CandidateItem } from '../candidate/candidate-item.component';
+import { emptyCandidateMast, type DtoCandidateMast } from '../dto/dto.candidate';
+import { CandidateItemComponent } from '../candidate/candidate-item.component';
 import headerLogoImg from '/styles/images/header-logo.svg';
 import { CandidateItemPreviewComponent } from './candidate-item.preview.component';
 import { Box } from '@mui/material';
@@ -58,6 +58,7 @@ export const CandidateRegistComponent: React.FC<CandidateRegistComponentProps> =
             candidates: candidateMast.candidates.map(({ photoFile, ...c }) => c),
             votersFile: undefined,
         };
+        console.log(candidateMastPayload);
         await coolmoveApi.candidateMastInsert(
             apiServer,
             token,
@@ -141,8 +142,7 @@ export const CandidateRegistComponent: React.FC<CandidateRegistComponentProps> =
                         <h2>후보자 등록</h2>
                     </div>
                     <div className="candidate-cont">
-                        <CandidateItem
-                            candidateNumber={1}
+                        <CandidateItemComponent
                             candidate={candidateMast.candidates[0]}
                             onCandidateChange={candidate => setCandidateMast(prev => {
                                 if (!prev) return prev;
@@ -150,8 +150,7 @@ export const CandidateRegistComponent: React.FC<CandidateRegistComponentProps> =
                                 return { ...prev, candidates: newCandidates };
                             })}
                         />
-                        <CandidateItem
-                            candidateNumber={2}
+                        <CandidateItemComponent
                             candidate={candidateMast.candidates[1]}
                             onCandidateChange={candidate => setCandidateMast(prev => {
                                 if (!prev) return prev;

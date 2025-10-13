@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { ApiCode, ApiResponse, type ApiResponseDTO } from '../../../common/dto/api.response.dto';
-import type { DtoCandidateMast } from '../dto/dto';
+import type { DtoCandidateMast } from '../dto/dto.candidate';
 
 export const FileType = {
     DIRECTORY: 'directory',
@@ -87,6 +87,7 @@ export const coolmoveApi = {
                 }
             });
             const data = await response.data;
+            console.log('candidateMastSelect data:', data);
             return data;
         } catch (error) {
             console.error('Failed to load candidate API:', error);

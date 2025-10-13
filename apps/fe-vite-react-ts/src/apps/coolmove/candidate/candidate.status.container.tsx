@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { useAppEnvStore } from '../../../appmain/app.env';
 import { coolmoveApi } from '../api/coolmove.api';
 import { CandidateStatus } from './candidate.status.component';
-import { routerConst } from '../routerConst';
-import type { DtoCandidateMast } from '../dto/dto';
+import { routerConst } from '../routerData';
+import type { DtoCandidateMast } from '../dto/dto.candidate';
 
 export const CandidateStatusContainer: React.FC = () => {
 

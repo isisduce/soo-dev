@@ -116,7 +116,6 @@ public class CoolmoveController {
             dto.setNo(Integer.toString(entityList.size() - i));
             dtoList.add(dto);
         }
-
         log.info(apiPath + " => " + ApiCode.SUCCESS_MSG);
         return ResponseEntity.ok(ApiResponseDto.success(dtoList));
     }

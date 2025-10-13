@@ -3,9 +3,10 @@ import '../styles/css/reset.css';
 import '../styles/css/font.css';
 import '../styles/css/common.css';
 import '../styles/css/main.css';
-import type { DtoCandidateMast } from '../dto/dto';
-import headerLogoImg from '/styles/images/header-logo.svg';
 import { useAppEnvStore } from '../../../appmain/app.env';
+import headerLogoImg from '/styles/images/header-logo.svg';
+import type { DtoCandidateMast } from '../dto/dto.candidate';
+import { CoolmoveCode } from "../types/types";
 
 interface CandidateStatusProps {
     onNewAdd?: () => void;
@@ -55,31 +56,31 @@ export const CandidateStatus: React.FC<CandidateStatusProps> = ({
         onRowClick?.(row);
     };
 
-    const renderStatus = (status: DtoCandidateMast['status']) => {
-        switch (status?.type) {
-            case 'active':
+    const renderStatus = (row: DtoCandidateMast) => {
+        switch (row.status) {
+            case CoolmoveCode.STATUS.DRAFT:
+                return (
+                    <>
+                        <div>{row.begDt}</div>
+                        <span className="badge draft">임시저장</span>
+                    </>
+                );
+            case CoolmoveCode.STATUS.ACTIVATE:
                 return (
                     <a
                         href="#"
                         onClick={(e) => {
                             e.preventDefault();
-                            onStatusClick?.(status);
+                            onStatusClick?.(row.status);
                         }}
                     >
-                        {formatParticipants(status.participants || 0)} 참여
+                        {formatParticipants(row.votersCount || 0)} 참여
                     </a>
                 );
-            case 'draft':
+            case CoolmoveCode.STATUS.FINISHED:
                 return (
                     <>
-                        <div>{status.date}</div>
-                        <span className="badge draft">임시저장</span>
-                    </>
-                );
-            case 'end':
-                return (
-                    <>
-                        <div>{status.date}</div>
+                        <div>{row.endDt}</div>
                         <span className="badge end">종료</span>
                     </>
                 );
@@ -169,7 +170,7 @@ export const CandidateStatus: React.FC<CandidateStatusProps> = ({
                     <div className="contents-input-group gap36">
                         {selectedCandidateMast?.candidates.map((candidate, index) => (
                             <div
-                                key={candidate.index}
+                                key={candidate.id}
                                 className={`candidate-list ${index === 0 ? 'case-01' : 'case-02'}`}
                             >
                                 <div className="candidate-area">
@@ -267,7 +268,7 @@ export const CandidateStatus: React.FC<CandidateStatusProps> = ({
                                             ) : (row.endDt === undefined ? '' : '-')}
                                         </td>
                                         <td onClick={(e) => e.stopPropagation()}>
-                                            {renderStatus(row.status)}
+                                            {renderStatus(row)}
                                         </td>
                                         <td onClick={(e) => e.stopPropagation()}>
                                             {row.votersPathNm ? (
@@ -277,7 +278,7 @@ export const CandidateStatus: React.FC<CandidateStatusProps> = ({
                                                     title="엑셀 다운로드"
                                                     onClick={() => onExcelDownload?.(row.no)}
                                                 />
-                                            ) : (!row.votersPathNm && row.status?.type !== 'empty' ? '-' : '')}
+                                            ) : (!row.votersPathNm && row.status !== CoolmoveCode.STATUS.EMPTY ? '-' : '')}
                                         </td>
                                         <td onClick={(e) => e.stopPropagation()}>
                                             {row.pubYn === 'Y' && (

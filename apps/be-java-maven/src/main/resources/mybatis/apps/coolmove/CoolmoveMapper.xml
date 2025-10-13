@@ -75,13 +75,18 @@ SET		mast_nm			= #{mastNm}
 WHERE	uuid			= #{uuid}::UUID
 	</update>
 
+	<update id="candidateMastRemove" parameterType="String">
+DELETE	FROM	candidate_mast
+WHERE	uuid	= #{uuid}::UUID
+	</update>
+
 	<!-- ==================================================================================================== -->
 
 	<select id="candidateItemSelect" parameterType="HashMap" resultType="com.soo.apps.coolmove.entity.EntityCandidateItem">
 SELECT
 		seq				AS seq
 	,	uuid			AS uuid
-	,	index			AS index
+	,	id				AS id
 	,	club_nm			AS clubNm
 	,	player_nm		AS playerNm
 	,	photo_path_nm	AS photoPathNm
@@ -93,14 +98,14 @@ SELECT
 FROM	candidate_item
 WHERE	1=1
 <if test="uuid	!= null and !uuid	.equals('')">AND uuid	= #{uuid}::UUID</if>
-<if test="index	!= null and !index	.equals('')">AND index	= #{index}::NUMERIC</if>
-ORDER BY uuid, index
+<if test="id	!= null and !id		.equals('')">AND id		= #{id}::NUMERIC</if>
+ORDER BY uuid, id
 	</select>
 
 	<insert id="candidateItemInsert" parameterType="com.soo.apps.coolmove.entity.EntityCandidateItem">
 INSERT INTO candidate_item (
 		uuid
-	,	index
+	,	id
 	,	club_nm
 	,	player_nm
 	,	photo_path_nm
@@ -109,7 +114,7 @@ INSERT INTO candidate_item (
 	,	reg_dt
 ) VALUES (
 		#{uuid}::UUID
-	,	#{index}::NUMERIC
+	,	#{id}::NUMERIC
 	,	#{clubNm}
 	,	#{playerNm}
 	,	#{photoPathNm}
@@ -128,7 +133,13 @@ SET		club_nm			= #{clubNm}
 	,	mod_user_id		= #{modUserId}
 	,	mod_dt			= now()
 WHERE	uuid			= #{uuid}::UUID
-	AND	index			= #{index}::NUMERIC
+	AND	id				= #{id}::NUMERIC
+	</update>
+
+	<update id="candidateItemRemove" parameterType="HashMap">
+DELETE	FROM	candidate_item
+WHERE	uuid	= #{uuid}::UUID
+<if test="id	!= null and !id		.equals('')">AND id		= #{id}::NUMERIC</if>
 	</update>
 
 	<!-- ==================================================================================================== -->
@@ -137,7 +148,7 @@ WHERE	uuid			= #{uuid}::UUID
 SELECT
 		seq				AS seq
 	,	uuid			AS uuid
-	,	index			AS index
+	,	id				AS id
 	,	no				AS no
 	,	pledge			AS pledge
 	,	reg_user_id		AS regUserId
@@ -147,22 +158,22 @@ SELECT
 FROM	candidate_pledges
 WHERE	1=1
 <if test="uuid	!= null and !uuid	.equals('')">AND uuid	= #{uuid}::UUID</if>
-<if test="index	!= null and !index	.equals('')">AND index	= #{index}::NUMERIC</if>
+<if test="id	!= null and !id		.equals('')">AND id		= #{id}::NUMERIC</if>
 <if test="no	!= null and !no		.equals('')">AND no		= #{no}::NUMERIC</if>
-ORDER BY uuid, index, no
+ORDER BY uuid, id, no
 	</select>
 
 	<insert id="candidatePledgeInsert" parameterType="String">
 INSERT INTO candidate_pledges (
 		uuid
-	,	index
+	,	id
 	,	no
 	,	pledge
 	,	reg_user_id
 	,	reg_dt
 ) VALUES (
 		#{uuid}::UUID
-	,	#{index}::NUMERIC
+	,	#{id}::NUMERIC
 	,	#{no}::NUMERIC
 	,	#{pledge}
 	,	#{regUserId}
@@ -176,10 +187,21 @@ SET		pledge			= #{pledge}
 	,	mod_user_id		= #{modUserId}
 	,	mod_dt			= now()
 WHERE	1=1
-<if test="uuid	!= null and !uuid	.equals('')">AND uuid	= #{uuid}::UUID</if>
-<if test="index	!= null and !index	.equals('')">AND index	= #{index}::NUMERIC</if>
-<if test="no	!= null and !no		.equals('')">AND no		= #{no}::NUMERIC</if>
-ORDER BY uuid, index, no
+	AND uuid	= #{uuid}::UUID
+	AND id		= #{id}::NUMERIC
+	AND no		= #{no}::NUMERIC
+	</update>
+
+	<update id="candidatePledgeRemove" parameterType="HashMap">
+DELETE	FROM	candidate_pledges
+WHERE	1=1
+	AND	uuid	= #{uuid}::UUID
+<if test="id	!= null and !id		.equals('')">
+	AND id		= #{id}::NUMERIC
+	<if test="no	!= null and !no		.equals('')">
+	AND no		= #{no}::NUMERIC
+	</if>
+</if>
 	</update>
 
 	<!-- ==================================================================================================== -->

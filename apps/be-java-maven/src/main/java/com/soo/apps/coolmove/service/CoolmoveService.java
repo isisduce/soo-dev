@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.soo.apps.coolmove.config.CoolmoveConfig;
+import com.soo.apps.coolmove.dto.DtoCandidateItem;
 import com.soo.apps.coolmove.dto.DtoCandidateMast;
 import com.soo.apps.coolmove.entity.EntityCandidateItem;
 import com.soo.apps.coolmove.entity.EntityCandidateMast;
@@ -95,7 +96,7 @@ public class CoolmoveService {
 
     public void entityCandidateItemBuild(EntityCandidateItem entity) {
         if (entity != null) {
-            ArrayList<EntityCandidatePledge> list = candidatePledgeSelect(entity.getUuid(), entity.getIndex());
+            ArrayList<EntityCandidatePledge> list = candidatePledgeSelect(entity.getUuid(), entity.getId());
             List<String> pledges = new ArrayList<>();
             for (EntityCandidatePledge item : list) {
                 pledges.add(item.getPledge());
@@ -108,10 +109,10 @@ public class CoolmoveService {
         return candidateItemSelect(uuid, null);
     }
 
-    public ArrayList<EntityCandidateItem> candidateItemSelect(String uuid, String index) {
+    public ArrayList<EntityCandidateItem> candidateItemSelect(String uuid, String id) {
         HashMap<String,Object> params = new HashMap<>();
         ParamHelper.addParam(params, "uuid", uuid);
-        ParamHelper.addParam(params, "index", index);
+        ParamHelper.addParam(params, "id", id);
         return candidateItemSelect(params);
     }
 
@@ -126,14 +127,14 @@ public class CoolmoveService {
         return candidatePledgeSelect(uuid, null, null);
     }
 
-    public ArrayList<EntityCandidatePledge> candidatePledgeSelect(String uuid, String index) {
-        return candidatePledgeSelect(uuid, index, null);
+    public ArrayList<EntityCandidatePledge> candidatePledgeSelect(String uuid, String id) {
+        return candidatePledgeSelect(uuid, id, null);
     }
 
-    public ArrayList<EntityCandidatePledge> candidatePledgeSelect(String uuid, String index, String no) {
+    public ArrayList<EntityCandidatePledge> candidatePledgeSelect(String uuid, String id, String no) {
         HashMap<String,Object> params = new HashMap<>();
         ParamHelper.addParam(params, "uuid", uuid);
-        ParamHelper.addParam(params, "index", index);
+        ParamHelper.addParam(params, "id", id);
         ParamHelper.addParam(params, "no", no);
         return candidatePledgeSelect(params);
     }
@@ -183,8 +184,8 @@ public class CoolmoveService {
                 if (StringHelper.IsEmpty(candidate.getUuid())) {
                     candidate.setUuid(uuid);
                 }
-                String index = Integer.toString(i + 1);
-                candidate.setIndex(index);
+                String id = Integer.toString(i + 1);
+                candidate.setId(id);
                 candidate.setRegUserId(entity.getRegUserId());
                 candidateItemInsert(candidate);
             }
@@ -199,11 +200,11 @@ public class CoolmoveService {
         }
         if (coolmoveMapper.candidateItemInsert(entity)) {
             String uuid = entity.getUuid();
-            String index = entity.getIndex();
+            String id = entity.getId();
             for (int i = 0; i < entity.getPledges().size(); i++) {
                 String pledge = entity.getPledges().get(i);
                 String no = Integer.toString(i + 1);
-                coolmoveMapper.candidatePledgeInsert(uuid, index, no, pledge, entity.getRegUserId());
+                coolmoveMapper.candidatePledgeInsert(uuid, id, no, pledge, entity.getRegUserId());
             }
             return true;
         }
@@ -239,7 +240,7 @@ public class CoolmoveService {
         if (coolmoveMapper.candidateMastUpdate(entity)) {
             for (int i = 0; i < entity.getCandidates().size(); i++) {
                 EntityCandidateItem candidate = entity.getCandidates().get(i);
-                candidate.setIndex(Integer.toString(i + 1));
+                candidate.setId(Integer.toString(i + 1));
                 candidate.setModUserId(entity.getModUserId());
                 candidateItemUpdate(candidate);
             }
@@ -254,16 +255,54 @@ public class CoolmoveService {
         }
         if (coolmoveMapper.candidateItemUpdate(entity)) {
             String uuid = entity.getUuid();
-            String index = entity.getIndex();
+            String id = entity.getId();
             for (int i = 0; i < entity.getPledges().size(); i++) {
                 String pledge = entity.getPledges().get(i);
-                coolmoveMapper.candidatePledgeUpdate(uuid, index, Integer.toString(i + 1), pledge, entity.getModUserId());
+                coolmoveMapper.candidatePledgeUpdate(uuid, id, Integer.toString(i + 1), pledge, entity.getModUserId());
             }
             return true;
         }
         return false;
     }
 
+    // ====================================================================================================
+
+    public boolean candidateMastRemove(DtoCandidateMast dto) {
+        if (dto == null) {
+            log.warn("candidateMastRemove : candidateMast is null");
+            return false;
+        }
+        String uuid = dto.getUuid();
+        if (StringHelper.IsEmpty(uuid)) {
+            log.warn("candidateMastRemove : uuid is empty");
+            return false;
+        }
+        coolmoveMapper.candidateMastRemove(uuid);
+        for (DtoCandidateItem item : dto.getCandidates()) {
+            String id = item.getId();
+            candidateItemRemove(uuid, id);
+        }
+        return true;
+    }
+
+    public boolean candidateItemRemove(String uuid, String id) {
+        if (StringHelper.IsEmpty(uuid) || StringHelper.IsEmpty(id)) {
+            log.warn("candidateItemRemove : uuid or id is empty");
+            return false;
+        }
+        coolmoveMapper.candidateItemRemove(uuid, id);
+        candidatePledgeRemove(uuid, id, null);
+        return true;
+    }
+
+    public boolean candidatePledgeRemove(String uuid, String id, String no) {
+        if (StringHelper.IsEmpty(uuid) || StringHelper.IsEmpty(id) || StringHelper.IsEmpty(no)) {
+            log.warn("candidatePledgeRemove : uuid or id or no is empty");
+            return false;
+        }
+        coolmoveMapper.candidatePledgeRemove(uuid, id, no);
+        return true;
+    }
 
     // ====================================================================================================
     // ====================================================================================================

@@ -3,7 +3,7 @@ import '../styles/css/font.css';
 import '../styles/css/common.css';
 import '../styles/css/main.css';
 import { useAppEnvStore } from '../../../appmain/app.env';
-import type { DtoCandidateItem } from '../dto/dto';
+import type { DtoCandidateItem } from '../dto/dto.candidate';
 import defaultUserImg from '/styles/images/user-img-120.png';
 
 interface CandidateItemPreviewComponentProps {

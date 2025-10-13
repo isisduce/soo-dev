@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
-import { CandidateItem } from './candidate-item.component';
-import { emptyCandidateItem, type DtoCandidateItem } from '../dto/dto';
+import { CandidateItemComponent } from './candidate-item.component';
+import { emptyCandidateItem, type DtoCandidateItem } from '../dto/dto.candidate';
 
 export const CandidateComponent: React.FC = () => {
     const [candidate1, setCandidate1] = useState<DtoCandidateItem>(emptyCandidateItem);
@@ -15,14 +15,12 @@ export const CandidateComponent: React.FC = () => {
 
     return (
         <div className="candidate-cont">
-            <CandidateItem
-                candidateNumber={1}
+            <CandidateItemComponent
                 candidate={candidate1}
                 onCandidateChange={setCandidate1}
             />
 
-            <CandidateItem
-                candidateNumber={2}
+            <CandidateItemComponent
                 candidate={candidate2}
                 onCandidateChange={setCandidate2}
             />

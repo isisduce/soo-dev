@@ -1,8 +1,8 @@
 import React, {  } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { CandidateRegistComponent } from './candidate.regist.component';
-import type { DtoCandidateMast } from '../dto/dto';
-import { routerConst } from '../routerConst';
+import type { DtoCandidateMast } from '../dto/dto.candidate';
+import { routerConst } from '../routerData';
 // import { PopRegiDateSetting } from './popup/PopRegiDateSetting';
 
 export const CandidateRegistContainer: React.FC = () => {

@@ -18,7 +18,7 @@ public class EntityCandidateItem {
     private String seq;
     // KEY
     private String uuid;
-    private String index;
+    private String id;
     //
     private String clubNm;
     private String playerNm;
