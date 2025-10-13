@@ -6,7 +6,7 @@ spring:
         activate:
             on-profile: dev
     datasource.hikari:
-        connection-test-query: SELECT 1;
+        # connection-test-query: SELECT 1;
         maximum-pool-size: 2
         minimum-idle: 1
         connection-timeout: 30000
@@ -20,14 +20,16 @@ spring:
         password: soo#123
 ---
 logging:
+    # config: classpath:log4j2.xml
     level:
         root: info
         jdbc:
-            sqlonly: off
+            sqlonly: info
+            resultsettable: info
             sqltiming: off
-            resultsettable: off
             audit: off
             resultset: off
+        log4jdbc.log4j2: warn
         connection: off
 ---
 app:

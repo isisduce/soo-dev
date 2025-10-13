@@ -24,10 +24,11 @@ logging:
         root: info
         jdbc:
             sqlonly: off
-            sqltiming: ${DATABASE_JDBC_LOGGING}
             resultsettable: ${DATABASE_JDBC_LOGGING}
+            sqltiming: ${DATABASE_JDBC_LOGGING}
             audit: off
             resultset: off
+        log4jdbc.log4j2: warn
         connection: off
 ---
 app:

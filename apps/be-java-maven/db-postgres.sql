@@ -12,5 +12,5 @@ create user soo password 'soo#123' superuser;
 alter user soo with password 'soo#123';
 
 -- database
-create database soo_web_explorer encoding 'UTF8';
-alter database soo_web_explorer owner to soo;
+create database soo_database encoding 'UTF8';
+alter database soo_database owner to soo;
