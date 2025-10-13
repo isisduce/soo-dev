@@ -8,7 +8,7 @@ export const CoolmoveCode = {
     } as const,
 
     TYPE: {
-        PLEDGES: 'pledges',
+        PROMISE: 'promise',
         PRIMARY: 'primary',
     } as const,
 

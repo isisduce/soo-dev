@@ -3,15 +3,16 @@ import { CoolmovePage } from './coolmove.page';
 import { LoginContainer } from './login/login.container';
 import { CandidateRegistContainer } from './candidate/candidate.regist.container';
 import { CandidateStatusContainer } from './candidate/candidate.status.container';
-import { PledgeMain } from './candidate/pledge.main';
+import { PromiseMain } from './promise/promise.main';
 
 export const routerConst = {
     BASE: '/coolmove',
     LOGIN: '/coolmove/login',
-    PLEDGE_MAIN: '/coolmove/main',
-    PLEDGE_STATUS: '/coolmove/pledge',
-    PLEDGE_REGIST: '/coolmove/pledge/regist',
-    PRIMARY_STATUS: '/coolmove/primary',
+    PROMISE_MAIN: '/coolmove/promise/main',
+    PROMISE_STATUS: '/coolmove/promise/status',
+    PROMISE_REGIST: '/coolmove/promise/regist',
+    PRIMARY_MAIN: '/coolmove/primary/main',
+    PRIMARY_STATUS: '/coolmove/primary/status',
     PRIMARY_REGIST: '/coolmove/primary/regist',
     CANDIDATE_REGIST: '/coolmove/candidate/regist',
     CANDIDATE_STATUS: '/coolmove/candidate/status',
@@ -21,10 +22,11 @@ export const routerData: RouterData[] = [
     { path: routerConst.BASE,               element: <CoolmovePage />,              label: 'Coolmove', },
     { path: routerConst.LOGIN,              element: <LoginContainer />,            label: 'Login', },
     //
-    { path: routerConst.PLEDGE_MAIN,        element: <PledgeMain />,      label: 'Pledge Main', },
-    // { path: routerConst.PLEDGE_STATUS,      element: <PledgeStatusContainer />,  label: 'Pledge Status', },
-    // { path: routerConst.PLEDGE_REGIST,      element: <PledgeRegistContainer />,  label: 'Pledge Registration', },
+    { path: routerConst.PROMISE_MAIN,        element: <PromiseMain />,              label: 'Promise Main', },
+    // { path: routerConst.PROMISE_STATUS,      element: <PromiseStatusContainer />,  label: 'Promise Status', },
+    // { path: routerConst.PROMISE_REGIST,      element: <PromiseRegistContainer />,  label: 'Promise Registration', },
     //
+    // { path: routerConst.PRIMARY_MAIN,        element: <PrimaryMainContainer />,    label: 'Primary Main', },
     // { path: routerConst.PRIMARY_STATUS,      element: <PrimaryStatusContainer />,  label: 'Primary Status', },
     // { path: routerConst.PRIMARY_REGIST,      element: <PrimaryRegistContainer />,  label: 'Primary Registration', },
     //

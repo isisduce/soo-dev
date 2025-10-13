@@ -18,9 +18,10 @@ export const CandidateStatusContainer: React.FC = () => {
     const [selectedCandidateMast, setSelectedCandidateMast] = useState<DtoCandidateMast | undefined>();
 
     useEffect(() => {
-        // 컴포넌트 마운트 시 데이터 로드
-        loadCandidateMast();
-    }, []);
+        if (apiServer) {
+            loadCandidateMast();
+        }
+    }, [apiServer]);
 
     const loadCandidateMast = async () => {
         try {

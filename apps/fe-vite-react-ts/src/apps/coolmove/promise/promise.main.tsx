@@ -25,7 +25,7 @@ interface TableRowData {
     hasReportDownload?: boolean;
 }
 
-interface RegiMainProps {
+interface PromiseMainProps {
     onLogout?: () => void;
     onUserSetting?: () => void;
     onNewRegistration?: () => void;
@@ -43,7 +43,7 @@ interface RegiMainProps {
     tableData?: TableRowData[];
 }
 
-export const PledgeMain: React.FC<RegiMainProps> = ({
+export const PromiseMain: React.FC<PromiseMainProps> = ({
     onLogout,
     onUserSetting,
     onNewRegistration,
