@@ -11,10 +11,10 @@ export interface DtoCandidateItem {
     photoPathNm?: string;
     photoOgnlNm?: string;
     photoFile?: File;
+    selectedVotersCount?: number;
     //
-    promises?: string[];
     pledges?: string[];
-    votersCount?: number[];
+    pledgeSelectedCounts?: number[];
     //
     sysUserId?: string | null;
     regUserId?: string;

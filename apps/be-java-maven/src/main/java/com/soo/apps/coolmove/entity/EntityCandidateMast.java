@@ -21,10 +21,14 @@ public class EntityCandidateMast {
     //
     private String mastNm;
     //
+    private String type;
     private List<EntityCandidateItem> candidates;
     private String period;
     private String begDt;
     private String endDt;
+    //
+    private String status;
+    private String votersCount;
     //
     private String votersPathNm;
     private String votersOgnlNm;

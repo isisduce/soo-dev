@@ -24,7 +24,10 @@ public class EntityCandidateItem {
     private String playerNm;
     private String photoPathNm;
     private String photoOgnlNm;
+    private String selectedVotersCount;
+    //
     private List<String> pledges;
+    private List<String> pledgeSelectedCounts;
     //
     private String sysUserId;
     private String regUserId;

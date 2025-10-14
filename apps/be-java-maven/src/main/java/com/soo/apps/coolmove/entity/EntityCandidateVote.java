@@ -13,8 +13,8 @@ public class EntityCandidateVote {
 
     private String seq;
     // KEY
-    private String uuid;
     private String userId;
+    private String uuid;
     //
     private String id;
     private String no;

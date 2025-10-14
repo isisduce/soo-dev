@@ -24,7 +24,10 @@ public class DtoCandidateItem {
     private String playerNm;
     private String photoPathNm;
     private String photoOgnlNm;
+    private String selectedVotersCount;
+    //
     private List<String> pledges;
+    private List<String> pledgeSelectedCounts;
     //
     private String sysUserId;
     private String regUserId;
@@ -44,7 +47,9 @@ public class DtoCandidateItem {
                 .playerNm(entity.getPlayerNm())
                 .photoPathNm(entity.getPhotoPathNm())
                 .photoOgnlNm(entity.getPhotoOgnlNm())
+                .selectedVotersCount(entity.getSelectedVotersCount())
                 .pledges(entity.getPledges())
+                .pledgeSelectedCounts(entity.getPledgeSelectedCounts())
                 .sysUserId(entity.getSysUserId())
                 .regUserId(entity.getRegUserId())
                 .regDt(entity.getRegDt())
@@ -65,7 +70,9 @@ public class DtoCandidateItem {
                 .playerNm(dto.playerNm)
                 .photoPathNm(dto.photoPathNm)
                 .photoOgnlNm(dto.photoOgnlNm)
+                .selectedVotersCount(dto.selectedVotersCount)
                 .pledges(dto.pledges)
+                .pledgeSelectedCounts(dto.pledgeSelectedCounts)
                 .sysUserId(dto.sysUserId)
                 .regUserId(dto.regUserId)
                 .regDt(dto.regDt)

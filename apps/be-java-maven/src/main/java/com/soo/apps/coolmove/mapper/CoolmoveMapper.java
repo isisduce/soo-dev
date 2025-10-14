@@ -30,8 +30,8 @@ public interface CoolmoveMapper {
     boolean candidatePledgeRemove(String uuid, String id, String no);
 
     ArrayList<EntityCandidateVote> candidateVoteSelect(HashMap<String, Object> params);
-    boolean candidateVoteInsert(String uuid, String userId, String id, String no, String regUserId);
-    boolean candidateVoteUpdate(String uuid, String userId, String id, String no, String modUserId);
-    boolean candidateVoteRemove(String uuid, String userId, String id);
+    boolean candidateVoteInsert(String userId, String uuid, String id, String no, String regUserId);
+    boolean candidateVoteUpdate(String userId, String uuid, String id, String no, String modUserId);
+    boolean candidateVoteRemove(String userId, String uuid, String id);
 
 }

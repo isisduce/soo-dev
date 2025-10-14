@@ -19,9 +19,16 @@ SELECT
 		seq				AS seq
 	,	uuid			AS uuid
 	,	mast_nm			AS mastNm
+	,	type			AS type
 	,	period			AS period
 	,	beg_dt			AS begDt
 	,	end_dt			AS endDt
+	,	status			AS status
+	,	(
+			SELECT	count(*)
+			FROM	candidate_votes
+			WHERE	uuid = cm.uuid
+		)				AS votersCount
 	,	voters_path_nm	AS votersPathNm
 	,	voters_ognl_nm	AS votersOgnlNm
 	,	pub_yn			AS pubYn
@@ -29,7 +36,7 @@ SELECT
 	,	reg_dt			AS regDt
 	,	mod_user_id		AS modUserId
 	,	mod_dt			AS modDt
-FROM	candidate_mast
+FROM	candidate_mast cm
 WHERE	1=1
 <if test="uuid	!= null and !uuid	.equals('')">AND uuid	= #{uuid}::UUID</if>
 ORDER BY seq desc
@@ -39,9 +46,11 @@ ORDER BY seq desc
 INSERT INTO candidate_mast (
 		uuid
 	,	mast_nm
+	,	type
 	,	period
 	,	beg_dt
 	,	end_dt
+	,	status
 	,	voters_path_nm
 	,	voters_ognl_nm
 	,	pub_yn
@@ -50,9 +59,11 @@ INSERT INTO candidate_mast (
 ) VALUES (
 		#{uuid}::UUID
 	,	#{mastNm}
+	,	#{type}
 	,	#{period}
 	,	#{begDt}::TIMESTAMP
 	,	#{endDt}::TIMESTAMP
+	,	#{status}
 	,	#{votersPathNm}
 	,	#{votersOgnlNm}
 	,	#{pubYn}
@@ -63,10 +74,13 @@ INSERT INTO candidate_mast (
 
 	<update id="candidateMastUpdate" parameterType="com.soo.apps.coolmove.entity.EntityCandidateMast">
 UPDATE	candidate_mast
-SET		mast_nm			= #{mastNm}
+SET
+		type			= #{type}
+	,	mast_nm			= #{mastNm}
 	,	period			= #{period}
 	,	beg_dt			= #{begDt}::TIMESTAMP
 	,	end_dt			= #{endDt}::TIMESTAMP
+	,	status			= #{status}
 	,	voters_path_nm	= #{votersPathNm}
 	,	voters_ognl_nm	= #{votersOgnlNm}
 	,	pub_yn			= #{pubYn}
@@ -91,11 +105,16 @@ SELECT
 	,	player_nm		AS playerNm
 	,	photo_path_nm	AS photoPathNm
 	,	photo_ognl_nm	AS photoOgnlNm
+	,	(
+			SELECT	count(*)
+			FROM	candidate_votes
+			WHERE	uuid = ci.uuid AND id = ci.id
+		)				AS votersCount
 	,	reg_user_id		AS regUserId
 	,	reg_dt			AS regDt
 	,	mod_user_id		AS modUserId
 	,	mod_dt			AS modDt
-FROM	candidate_item
+FROM	candidate_item ci
 WHERE	1=1
 <if test="uuid	!= null and !uuid	.equals('')">AND uuid	= #{uuid}::UUID</if>
 <if test="id	!= null and !id		.equals('')">AND id		= #{id}::NUMERIC</if>
@@ -151,11 +170,16 @@ SELECT
 	,	id				AS id
 	,	no				AS no
 	,	pledge			AS pledge
+	,	(
+			SELECT	count(*)
+			FROM	candidate_votes
+			WHERE	uuid = cp.uuid AND id = cp.id AND no = cp.no
+		)				AS votersCount
 	,	reg_user_id		AS regUserId
 	,	reg_dt			AS regDt
 	,	mod_user_id		AS modUserId
 	,	mod_dt			AS modDt
-FROM	candidate_pledges
+FROM	candidate_pledges cp
 WHERE	1=1
 <if test="uuid	!= null and !uuid	.equals('')">AND uuid	= #{uuid}::UUID</if>
 <if test="id	!= null and !id		.equals('')">AND id		= #{id}::NUMERIC</if>
@@ -205,6 +229,61 @@ WHERE	1=1
 	</update>
 
 	<!-- ==================================================================================================== -->
+
+	<select id="candidateVoteSelect" parameterType="HashMap" resultType="com.soo.apps.coolmove.entity.EntityCandidateVote">
+SELECT
+		seq				AS seq
+	,	user_id			AS userId
+	,	uuid			AS uuid
+	,	id				AS id
+	,	no				AS no
+	,	reg_user_id		AS regUserId
+	,	reg_dt			AS regDt
+	,	mod_user_id		AS modUserId
+	,	mod_dt			AS modDt
+FROM	candidate_votes
+WHERE	1=1
+<if test="userId	!= null and !userId	.equals('')">AND user_id	= #{userId}</if>
+<if test="uuid		!= null and !uuid	.equals('')">AND uuid		= #{uuid}::UUID</if>
+<if test="id		!= null and !id		.equals('')">AND id			= #{id}::NUMERIC</if>
+ORDER BY user_id, uuid, id
+	</select>
+
+	<insert id="candidateVoteInsert" parameterType="String">
+INSERT INTO candidate_votes (
+		user_id
+	,	uuid
+	,	id
+	,	no
+	,	reg_user_id
+	,	reg_dt
+) VALUES (
+		#{userId}
+	,	#{uuid}::UUID
+	,	#{id}::NUMERIC
+	,	#{no}::NUMERIC
+	,	#{regUserId}
+	,	now()
+)
+	</insert>
+	<update id="candidateVoteUpdate" parameterType="String">
+UPDATE	candidate_votes
+SET
+		id 				= #{id}::NUMERIC
+	,	no				= #{no}::NUMERIC
+	,	mod_user_id		= #{modUserId}
+	,	mod_dt			= now()
+WHERE	1=1
+	AND	user_id	= #{userId}
+	AND	uuid	= #{uuid}::UUID
+	</update>
+
+	<update id="candidateVoteRemove" parameterType="HashMap">
+DELETE	FROM	candidate_votes
+WHERE	1=1
+	AND	user_id	= #{userId}
+	AND	uuid	= #{uuid}::UUID
+	</update>
 
 	<!-- ==================================================================================================== -->
 	<!-- ==================================================================================================== -->

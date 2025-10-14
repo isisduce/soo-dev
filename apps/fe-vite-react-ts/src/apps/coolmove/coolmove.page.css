@@ -1,8 +1,8 @@
-.web-filesystem-page {
+.coolmove-page {
     padding: 20px;
 }
 
-.web-explorer-notice {
+.coolmove-notice {
     position: fixed;
     top: 10px;
     right: 10px;
@@ -13,14 +13,14 @@
     z-index: 9999;
 }
 
-.web-filesystem-btn-group-outer {
+.coolmove-btn-group-outer {
     display: flex;
     flex-direction: column;
     gap: 10px;
     margin-bottom: 20px;
 }
 
-.web-filesystem-btn-group-inner {
+.coolmove-btn-group-inner {
     display: flex;
     flex-direction: row;
     gap: 10px;

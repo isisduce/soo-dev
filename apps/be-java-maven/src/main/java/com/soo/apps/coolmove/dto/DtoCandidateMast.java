@@ -22,10 +22,14 @@ public class DtoCandidateMast {
     private String no;
     private String mastNm;
     //
+    private String type;
     private List<DtoCandidateItem> candidates;
     private String period;
     private String begDt;
     private String endDt;
+    //
+    private String status;
+    private String votersCount;
     //
     private String votersPathNm;
     private String votersOgnlNm;
@@ -46,12 +50,15 @@ public class DtoCandidateMast {
                 .seq(entity.getSeq())
                 .uuid(entity.getUuid())
                 .mastNm(entity.getMastNm())
+                .type(entity.getType())
                 .candidates(entity.getCandidates() != null ? entity.getCandidates().stream()
                     .map(DtoCandidateItem::fromEntity)
                     .toList() : null)
                 .period(entity.getPeriod())
                 .begDt(entity.getBegDt())
                 .endDt(entity.getEndDt())
+                .status(entity.getStatus())
+                .votersCount(entity.getVotersCount())
                 .votersPathNm(entity.getVotersPathNm())
                 .votersOgnlNm(entity.getVotersOgnlNm())
                 .pubYn(entity.getPubYn())
@@ -71,12 +78,15 @@ public class DtoCandidateMast {
                 .seq(dto.seq)
                 .uuid(dto.uuid)
                 .mastNm(dto.mastNm)
+                .type(dto.type)
                 .candidates(dto.candidates != null ? dto.candidates.stream()
                     .map(DtoCandidateItem::toEntity)
                     .toList() : null)
                 .period(dto.period)
                 .begDt(dto.begDt)
                 .endDt(dto.endDt)
+                .status(dto.status)
+                .votersCount(dto.votersCount)
                 .votersPathNm(dto.votersPathNm)
                 .votersOgnlNm(dto.votersOgnlNm)
                 .pubYn(dto.pubYn)

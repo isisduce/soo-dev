@@ -4,8 +4,6 @@ import '../styles/css/font.css';
 import '../styles/css/common.css';
 import '../styles/css/main.css';
 
-// npm install @dnd-kit/core @dnd-kit/sortable @dnd-kit/utilities
-
 interface PledgeData {
     id: number;
     text: string;

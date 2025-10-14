@@ -27,9 +27,11 @@ CREATE	TABLE		IF NOT	EXISTS	candidate_mast (
 		seq					SERIAL		UNIQUE	not	null
 	,	uuid				UUID		UNIQUE	not	null
 	,	mast_nm				VARCHAR(30)				null
+	,	type				VARCHAR(30)				null
 	,	period				VARCHAR(30)				null
 	,	beg_dt				TIMESTAMP				null
 	,	end_dt				TIMESTAMP				null
+	,	status				VARCHAR(30)				null
 	,	voters_path_nm		VARCHAR(300)			null
 	,	voters_ognl_nm		VARCHAR(300)			null
 	,	pub_yn				VARCHAR(1)				null
@@ -76,15 +78,15 @@ CREATE	TABLE		IF NOT	EXISTS	candidate_pledges (
 	<update id="createTableCandidateVotes">
 CREATE	TABLE		IF NOT	EXISTS	candidate_votes (
 		seq					SERIAL		UNIQUE	not	null
-	,	uuid				UUID				not	null
 	,	user_id				VARCHAR(30)			not	null
+	,	uuid				UUID				not	null
 	,	id					NUMERIC(1)			not	null
 	,	no					NUMERIC(1)				null
 	,	reg_user_id			VARCHAR(30)			not	null
 	,	reg_dt				TIMESTAMP			not	null	default	now()
 	,	mod_user_id			VARCHAR(30)				null
 	,	mod_dt				TIMESTAMP				null
-	,	CONSTRAINT candidate_votes_pkey				primary key (uuid, user_id)
+	,	CONSTRAINT candidate_votes_pkey				primary key (user_id, uuid)
 );
 	</update>
 
