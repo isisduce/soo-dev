@@ -3,14 +3,14 @@ import { CoolmovePage } from './coolmove.page';
 import { LoginContainer } from './login/login.container';
 import { CandidateRegistContainer } from './candidate/candidate.regist.container';
 import { CandidateStatusContainer } from './candidate/candidate.status.container';
-import { PromiseMain } from './promise/promise.main';
+import { PromiseContainer } from './promise/promise.container';
 import { PromiseMast } from './promise/promise.mast';
 import { PrimaryMast } from './primary/primary.mast';
 
 export const routerConst = {
     BASE: '/coolmove',
     LOGIN: '/coolmove/login',
-    PROMISE_MAIN: '/coolmove/promise/main',
+    PROMISE_CONTAINER: '/coolmove/promise/container',
     PROMISE_MAST: '/coolmove/promise/mast',
     PROMISE_STATUS: '/coolmove/promise/status',
     PROMISE_REGIST: '/coolmove/promise/regist',
@@ -26,9 +26,8 @@ export const routerData: RouterData[] = [
     { path: routerConst.BASE,               element: <CoolmovePage />,              label: 'Coolmove', },
     { path: routerConst.LOGIN,              element: <LoginContainer />,            label: 'Login', },
     //
-    { path: routerConst.PROMISE_MAIN,        element: <PromiseMain />,              label: 'Promise Main', },
-    { path: routerConst.PROMISE_MAST,        element: <PromiseMast />,              label: 'Promise Mast', },
-    // { path: routerConst.PROMISE_STATUS,      element: <PromiseStatusContainer />,  label: 'Promise Status', },
+    { path: routerConst.PROMISE_CONTAINER,  element: <PromiseContainer />,          label: 'Promise Container', },
+    { path: routerConst.PROMISE_MAST,       element: <PromiseMast />,               label: 'Promise Mast', },
     // { path: routerConst.PROMISE_REGIST,      element: <PromiseRegistContainer />,  label: 'Promise Registration', },
     //
     // { path: routerConst.PRIMARY_MAIN,        element: <PrimaryMainContainer />,    label: 'Primary Main', },
