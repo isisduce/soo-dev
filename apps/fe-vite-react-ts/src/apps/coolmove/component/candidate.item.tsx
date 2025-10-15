@@ -45,7 +45,7 @@ export const CandidateItem: React.FC<CandidateItemProps> = (props: CandidateItem
     const status = props.status ?? CoolmoveCode.STATUS.DRAFT;
 
     return (
-        <Box sx={{ width: '100%', backgroundColor: '#ffffff', padding: 0 }}>
+        <Box sx={{ width: '100%', backgroundColor: '#ffffff', padding: 1 }}>
             <CandidatePlayer
                 type={type}
                 status={status}

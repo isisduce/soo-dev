@@ -81,7 +81,7 @@ export const CandidatePlayer: React.FC<CandidatePlayerProps> = (props: Candidate
     };
 
     return (
-        <Box sx={{ display: 'flex', flexDirection: 'column', backgroundColor: '#EFF9FF', padding: 1, gap: 1 }}>
+        <Box sx={{ display: 'flex', flexDirection: 'column', backgroundColor: '#EFF9FF', padding: 2, gap: 1 }}>
             <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', width: '100%' }}>
                 <Box sx={{ width: `${playerHeadWidth}px`, marginRight: 1, whiteSpace: 'nowrap' }}>소속</Box>
                 <Box sx={{ width: '100%' }}>

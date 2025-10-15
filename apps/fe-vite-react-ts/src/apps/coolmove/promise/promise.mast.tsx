@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Box } from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
 import { defaultCandidateVote, emptyPromiseMast, type DtoCandidateItem, type DtoCandidateMast, type DtoCandidateVote } from '../dto/dto.candidate';
 import { CoolmoveCode, type CoolmoveStatus, type CoolmoveType } from '../types/types';
 import { CandidateItem } from '../component/candidate.item';
@@ -49,6 +49,22 @@ export const PromiseMast: React.FC<PromiseMastProps> = (props: PromiseMastProps)
         }
     }
 
+    const handleSave = () => {
+        alert('임시 저장');
+    }
+
+    const handleView = () => {
+        alert('미리 보기');
+    }
+
+    const handleDone = () => {
+        alert('등록 완료');
+    }
+
+    const handleShow = () => {
+        alert('스마트폰에 공개');
+    }
+
     const type = candidateMast?.type ?? CoolmoveCode.TYPE.PROMISE;
     const status = candidateMast?.status ?? CoolmoveCode.STATUS.DRAFT;
 
@@ -75,6 +91,52 @@ export const PromiseMast: React.FC<PromiseMastProps> = (props: PromiseMastProps)
                 candidateMast={candidateMast}
                 onCandidateMastChange={props.onCandidateMastChange}
             />
+            <Box sx={{ height: 12 }} />
+            <Typography variant="body2" color="textSecondary">
+                공개기간과 유권자 목록은 선거가 시작된 후에는 변경할 수 없습니다.
+            </Typography>
+            <Box sx={{ height: 12 }} />
+            <Box sx={{ width: '100%', justifyContent: 'space-between', justifyItems: 'center', display: 'flex', gap: 2 }}>
+                <Button
+                    variant="outlined"
+                    color="primary"
+                    disabled={status !== CoolmoveCode.STATUS.DRAFT}
+                    sx={{ width: '35%' }}
+                    onClick={handleSave}
+                >
+                    임시 저장
+                </Button>
+                <Button
+                    variant="contained"
+                    color="primary"
+                    disabled={status === CoolmoveCode.STATUS.DRAFT}
+                    sx={{ width: '40%' }}
+                    onClick={handleView}
+                >
+                    미리 보기
+                </Button>
+                <Button
+                    variant="contained"
+                    color="primary"
+                    disabled={status === CoolmoveCode.STATUS.DRAFT}
+                    sx={{ width: '25%' }}
+                    onClick={handleDone}
+                >
+                    등록 완료
+                </Button>
+            </Box>
+            <Box sx={{ height: 6 }} />
+            <Box sx={{ width: '100%', justifyContent: 'space-between', justifyItems: 'center', display: 'flex', gap: 2 }}>
+                <Button
+                    variant="contained"
+                    color="primary"
+                    disabled={status === CoolmoveCode.STATUS.DRAFT}
+                    sx={{ width: '100%' }}
+                    onClick={handleShow}
+                >
+                    스마트폰에 공개
+                </Button>
+            </Box>
         </Box>
     );
 };

@@ -70,7 +70,7 @@ export const CandidatePledge: React.FC<CandidatePledgeProps> = (props: Candidate
     };
 
     return (
-        <Box sx={{ width: '100%', backgroundColor: '#EFF9FF', padding: 1, borderRadius: 1, marginBottom: 0 }}>
+        <Box sx={{ width: '100%', backgroundColor: '#EFF9FF', padding: 2, borderRadius: 1, marginBottom: 0 }}>
             {/* <Box sx={{ width: '100%', display: 'flex', flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}> */}
                 <label>
                     {props.status === CoolmoveCode.STATUS.DRAFT && (

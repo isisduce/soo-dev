@@ -45,14 +45,14 @@ export const PeriodVoters: React.FC<PeriodVotersProps> = (props: PeriodVotersPro
     };
 
     return (
-        <Box sx={{ width: '100%', padding: 1, backgroundColor: '#EFF9FF', borderRadius: 1 }}>
+        <Box sx={{ width: '100%', backgroundColor: '#EFF9FF', padding: 2, borderRadius: 1 }}>
             <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', width: '100%', gap: 1 }}>
                 <Box sx={{ width: `${publicHeadWidth}px`, marginRight: 1, whiteSpace: 'nowrap' }}>공개기간</Box>
                 <input
                     disabled={props.status !== CoolmoveCode.STATUS.DRAFT}
                     readOnly
                     type="text"
-                    placeholder={'공개 기간 설정'}
+                    placeholder={'공개기간을 설정하세요'}
                     value={candidateMast?.period}
                     style={{ width: '100%' }}
                 />
@@ -72,8 +72,8 @@ export const PeriodVoters: React.FC<PeriodVotersProps> = (props: PeriodVotersPro
                     disabled={props.status !== CoolmoveCode.STATUS.DRAFT}
                     readOnly
                     type="text"
-                    placeholder={'유권자 목록 파일 선택'}
-                    value={candidateMast.votersOgnlNm}
+                    placeholder={'유권자 목록 파일을 선택하세요'}
+                    value={candidateMast.votersPathNm}
                     style={{ width: '100%' }}
                 />
                 <button
