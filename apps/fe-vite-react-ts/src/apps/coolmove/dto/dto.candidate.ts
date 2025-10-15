@@ -1,4 +1,4 @@
-import type { CoolmoveStatus, CoolmoveType } from "../types/types";
+import { CoolmoveCode, type CoolmoveStatus, type CoolmoveType } from "../types/types";
 
 export interface DtoCandidateItem {
     seq?: number;
@@ -14,6 +14,7 @@ export interface DtoCandidateItem {
     selectedVotersCount?: number;
     //
     pledges?: string[];
+    pledgeOrder?: number[];
     pledgeSelectedCounts?: number[];
     //
     sysUserId?: string | null;
@@ -53,6 +54,13 @@ export interface DtoCandidateMast {
     modDt?: Date;
 }
 
+export interface DtoCandidateVote {
+    userId: string;
+    candidateUuid: string;
+    candidateId?: number;
+    pledgeNo?: number;
+}
+
 export const emptyCandidateItem: DtoCandidateItem = {
     clubNm: '',
     playerNm: '',
@@ -68,3 +76,27 @@ export const emptyCandidateMast: DtoCandidateMast = {
     ],
     sysUserId: localStorage.getItem('userid'),
 };
+
+export const emptyPrimaryMast: DtoCandidateMast = {
+    no: 0,
+    type: CoolmoveCode.TYPE.PRIMARY,
+    candidates: [
+        { ...emptyCandidateItem, id: 1, pledges: [...(emptyCandidateItem.pledges ?? [])] },
+        { ...emptyCandidateItem, id: 2, pledges: [...(emptyCandidateItem.pledges ?? [])] },
+    ],
+    sysUserId: localStorage.getItem('userid'),
+};
+
+export const emptyPromiseMast: DtoCandidateMast = {
+    no: 0,
+    type: CoolmoveCode.TYPE.PROMISE,
+    candidates: [
+        { ...emptyCandidateItem, id: 1, pledges: [...(emptyCandidateItem.pledges ?? [])] },
+    ],
+    sysUserId: localStorage.getItem('userid'),
+};
+
+export const defaultCandidateVote: DtoCandidateVote = {
+    userId: localStorage.getItem('userid') || '',
+    candidateUuid: '',
+}
