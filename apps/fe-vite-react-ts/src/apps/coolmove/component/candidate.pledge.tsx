@@ -1,17 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Box, Radio } from '@mui/material';
 import dragHandle from '/styles/images/ico-list-24.svg';
 import { type CoolmoveStatus, type CoolmoveType, CoolmoveCode } from '../types/types';
-import { emptyCandidateItem, type DtoCandidateItem, type DtoCandidateVote } from '../dto/dto.candidate';
+import { type DtoCandidateItem, type DtoCandidateVote } from '../dto/dto.candidate';
 
 interface CandidatePledgeProps {
     type?: CoolmoveType;
     status?: CoolmoveStatus;
     candidateItem?: DtoCandidateItem;
-    onCandidateItemChange?: (candidate: DtoCandidateItem) => void;
-    onPhotoUpload?: () => void;
+    setCandidateItem?: (candidateItem: DtoCandidateItem) => void;
     candidateVote?: DtoCandidateVote;
-    onCandidateVoteChange?: (vote: DtoCandidateVote) => void;
+    setCandidateVote?: (candidateVote: DtoCandidateVote) => void;
 }
 
 export const CandidatePledge: React.FC<CandidatePledgeProps> = (props: CandidatePledgeProps) => {
@@ -19,20 +18,12 @@ export const CandidatePledge: React.FC<CandidatePledgeProps> = (props: Candidate
     const pledgeMaxCount = 5;
     const pledgeMaxLength = 40;
 
-    const [candidateItem, setCandidateItem] = useState<DtoCandidateItem | undefined>(emptyCandidateItem);
-    useEffect(() => {
-        setCandidateItem(props.candidateItem ?? emptyCandidateItem);
-    }, [props.candidateItem]);
-
     const handlePledgeChange = (index: number, value: string) => {
-        const newPledges = candidateItem?.pledges?.map((pledge, i) =>
+        const newPledges = props.candidateItem?.pledges?.map((pledge, i) =>
             i === index ? value : pledge
         );
-        if (candidateItem) {
-            setCandidateItem({ ...candidateItem, pledges: newPledges });
-            if (props.onCandidateItemChange) {
-                props.onCandidateItemChange({ ...candidateItem, pledges: newPledges });
-            }
+        if (props.candidateItem) {
+            props.setCandidateItem?.({ ...props.candidateItem, pledges: newPledges });
         }
     };
 
@@ -49,14 +40,11 @@ export const CandidatePledge: React.FC<CandidatePledgeProps> = (props: Candidate
 
     const handleDrop = (index: number) => {
         if (draggedIndex === null || draggedIndex === index) return;
-        const newPledges = candidateItem?.pledges ? [...candidateItem.pledges] : [];
+        const newPledges = props.candidateItem?.pledges ? [...props.candidateItem.pledges] : [];
         const [removed] = newPledges.splice(draggedIndex, 1);
         newPledges.splice(index, 0, removed);
-        if (candidateItem) {
-            setCandidateItem({ ...candidateItem, pledges: newPledges });
-            if (props.onCandidateItemChange) {
-                props.onCandidateItemChange({ ...candidateItem, pledges: newPledges });
-            }
+        if (props.candidateItem) {
+            props.setCandidateItem?.({ ...props.candidateItem, pledges: newPledges });
         }
         setDraggedIndex(null);
     };
@@ -97,7 +85,7 @@ export const CandidatePledge: React.FC<CandidatePledgeProps> = (props: Candidate
                 </label>
             {/* </Box> */}
             <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', fontSize: 12, color: '#888' }}>
-                {candidateItem?.pledges?.map((pledge, index) => (
+                {props.candidateItem?.pledges?.map((pledge, index) => (
                     <Box key={index} sx={{ width: '100%', display: 'flex', flexDirection: 'row'}}>
                         <Box sx={{ width: '100%',position: 'relative' }}>
                             <textarea
@@ -107,7 +95,7 @@ export const CandidatePledge: React.FC<CandidatePledgeProps> = (props: Candidate
                                 placeholder={
                                     props.status === CoolmoveCode.STATUS.DRAFT ? `공약을 ${pledgeMaxLength}자 이내로 입력해 주세요.` : '공약 없음'
                                 }
-                                value={pledge}
+                                value={pledge ?? ''}
                                 onChange={(e) => handlePledgeChange(index, e.target.value)}
                             />
                             { props.status === CoolmoveCode.STATUS.DRAFT && (
@@ -146,9 +134,9 @@ export const CandidatePledge: React.FC<CandidatePledgeProps> = (props: Candidate
                                     checked={props.candidateVote?.pledgeNo === index}
                                     value={index}
                                     onClick={() => {
-                                        if (props.candidateVote && props.onCandidateVoteChange) {
+                                        if (props.candidateVote && props.setCandidateVote) {
                                             const newVote = { ...props.candidateVote, pledgeNo: index };
-                                            props.onCandidateVoteChange(newVote);
+                                            props.setCandidateVote(newVote);
                                         }
                                     }}
                                 />
@@ -158,16 +146,16 @@ export const CandidatePledge: React.FC<CandidatePledgeProps> = (props: Candidate
                             <Box sx={{ width: '50px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
                                 <Box>
                                     <span style={{ fontSize: '16px', color: '#888', fontWeight: 'bold', marginRight: 2 }}>
-                                        {candidateItem?.pledgeOrder && candidateItem.pledgeOrder[index] !== undefined ?
-                                            candidateItem.pledgeOrder[index] : index + 1}
+                                        {props.candidateItem?.pledgeOrder && props.candidateItem.pledgeOrder[index] !== undefined ?
+                                            props.candidateItem.pledgeOrder[index] : index + 1}
                                     </span>
                                     <span style={{ fontSize: '12px', color: '#888' }}>
                                             위
                                     </span>
                                 </Box>
                                 <span>
-                                    {candidateItem?.pledgeSelectedCounts && candidateItem.pledgeSelectedCounts[index] !== undefined ? (
-                                        <em style={{ fontSize: '14px', color: '#000' }}>{candidateItem.pledgeSelectedCounts[index]}</em>
+                                    {props.candidateItem?.pledgeSelectedCounts && props.candidateItem.pledgeSelectedCounts[index] !== undefined ? (
+                                        <em style={{ fontSize: '14px', color: '#000' }}>{props.candidateItem.pledgeSelectedCounts[index]}</em>
                                     ) : (
                                         <em style={{ fontSize: '14px', color: '#000' }}>0</em>
                                     )}

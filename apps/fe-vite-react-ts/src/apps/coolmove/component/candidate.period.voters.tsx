@@ -1,27 +1,20 @@
-import { useEffect, useState } from 'react';
-import { Box } from '@mui/material';
-import { emptyPrimaryMast, type DtoCandidateMast } from '../dto/dto.candidate';
+import { Box, Typography } from '@mui/material';
+import { type DtoCandidateMast } from '../dto/dto.candidate';
 import { CoolmoveCode, type CoolmoveStatus, type CoolmoveType } from '../types/types';
 
-interface PeriodVotersProps {
+interface CandidatePeriodVotersProps {
     type?: CoolmoveType;
     status?: CoolmoveStatus;
     candidateMast?: DtoCandidateMast;
-    onCandidateMastChange?: (candidateMast: DtoCandidateMast) => void;
-    onVotersUpload?: () => void;
+    setCandidateMast?: (candidateMast: DtoCandidateMast) => void;
 }
 
-export const PeriodVoters: React.FC<PeriodVotersProps> = (props: PeriodVotersProps) => {
+export const CandidatePeriodVoters: React.FC<CandidatePeriodVotersProps> = (props: CandidatePeriodVotersProps) => {
 
     const publicHeadWidth = 80;
 
-    const [candidateMast, setCandidateMast] = useState<DtoCandidateMast>(emptyPrimaryMast);
-    useEffect(() => {
-        setCandidateMast(props.candidateMast ?? emptyPrimaryMast);
-    }, [props.candidateMast]);
-
     const handlePeriodChange = () => {
-        // setCandidateMast(prev => ({ ...prev, period: value }));
+        // props.setCandidateMast?.(prev => ({ ...prev, period: value }));
         // if (props.onCandidateMastChange) {
             // props.onCandidateMastChange({ ...candidateMast, period: value });
         // }
@@ -34,11 +27,13 @@ export const PeriodVoters: React.FC<PeriodVotersProps> = (props: PeriodVotersPro
         input.onchange = (e) => {
             const file = (e.target as HTMLInputElement).files?.[0];
             if (file) {
-                setCandidateMast(prev => ({
-                    ...prev,
-                    votersPathNm: file.name,
-                    votersFile: file
-                }));
+                if (props.candidateMast) {
+                    props.setCandidateMast?.({
+                        ...props.candidateMast,
+                        votersPathNm: file.name,
+                        votersFile: file,
+                    });
+                }
             }
         };
         input.click();
@@ -53,7 +48,7 @@ export const PeriodVoters: React.FC<PeriodVotersProps> = (props: PeriodVotersPro
                     readOnly
                     type="text"
                     placeholder={'공개기간을 설정하세요'}
-                    value={candidateMast?.period}
+                    value={props.candidateMast?.period}
                     style={{ width: '100%' }}
                 />
                 <button
@@ -73,7 +68,7 @@ export const PeriodVoters: React.FC<PeriodVotersProps> = (props: PeriodVotersPro
                     readOnly
                     type="text"
                     placeholder={'유권자 목록 파일을 선택하세요'}
-                    value={candidateMast.votersPathNm}
+                    value={props.candidateMast?.votersPathNm}
                     style={{ width: '100%' }}
                 />
                 <button
@@ -86,6 +81,10 @@ export const PeriodVoters: React.FC<PeriodVotersProps> = (props: PeriodVotersPro
                     파일
                 </button>
             </Box>
+            <Box sx={{ height: 12 }} />
+            <Typography variant="body2" color='warning' >
+                공개기간과 유권자 목록은 선거가 시작된 후에는 변경할 수 없습니다.
+            </Typography>
         </Box>
     );
 };

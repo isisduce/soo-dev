@@ -1,16 +1,15 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import { Box } from '@mui/material';
 import { useAppEnvStore } from '../../../appmain/app.env';
 import defaultUserImg from '/styles/images/user-img-120.png';
 import { CoolmoveCode, type CoolmoveStatus, type CoolmoveType } from '../types/types';
-import { emptyCandidateItem, type DtoCandidateItem } from '../dto/dto.candidate';
+import { type DtoCandidateItem } from '../dto/dto.candidate';
 
 interface CandidatePlayerProps {
     type?: CoolmoveType;
     status?: CoolmoveStatus;
     candidateItem?: DtoCandidateItem;
-    onCandidateItemChange?: (candidate: DtoCandidateItem) => void;
-    onPhotoUpload?: () => void;
+    setCandidateItem?: (candidateItem: DtoCandidateItem) => void;
 }
 
 export const CandidatePlayer: React.FC<CandidatePlayerProps> = (props: CandidatePlayerProps) => {
@@ -24,39 +23,24 @@ export const CandidatePlayer: React.FC<CandidatePlayerProps> = (props: Candidate
     const photoHeight = props.type === CoolmoveCode.TYPE.PRIMARY ? 60 : 240;
     const photoBorderRadius = props.type === CoolmoveCode.TYPE.PRIMARY ? 999 : 4;
 
-    const [candidateItem, setCandidateItem] = useState<DtoCandidateItem | undefined>(emptyCandidateItem);
-    useEffect(() => {
-        setCandidateItem(props.candidateItem ?? emptyCandidateItem);
-    }, [props.candidateItem]);
-
     const fileInputRef = useRef<HTMLInputElement>(null);
 
     const handleClubNmChange = (value: string) => {
-        if (candidateItem) {
-            setCandidateItem({ ...candidateItem, clubNm: value });
-            if (props.onCandidateItemChange) {
-                props.onCandidateItemChange({ ...candidateItem, clubNm: value });
-            }
+        if (props.setCandidateItem && props.candidateItem) {
+            props.setCandidateItem({ ...props.candidateItem, clubNm: value });
         }
     };
 
     const handlePlayerNmChange = (value: string) => {
-        if (candidateItem) {
-            setCandidateItem({ ...candidateItem, playerNm: value });
-            if (props.onCandidateItemChange) {
-                props.onCandidateItemChange({ ...candidateItem, playerNm: value });
-            }
+        if (props.setCandidateItem && props.candidateItem) {
+            props.setCandidateItem({ ...props.candidateItem, playerNm: value });
         }
     };
 
     const handlePhotoUpload = () => {
-        if (props.onPhotoUpload) {
-            props.onPhotoUpload();
-        } else {
-            if (fileInputRef.current) {
-                fileInputRef.current.value = '';
-                fileInputRef.current.click();
-            }
+        if (fileInputRef.current) {
+            fileInputRef.current.value = '';
+            fileInputRef.current.click();
         }
     };
 
@@ -65,13 +49,9 @@ export const CandidatePlayer: React.FC<CandidatePlayerProps> = (props: Candidate
         if (file) {
             const reader = new FileReader();
             reader.onload = () => {
-                setCandidateItem(prev => {
-                    const next = prev ? { ...prev, photoFile: file } : { ...emptyCandidateItem, photoFile: file };
-                    if (props.onCandidateItemChange) {
-                        props.onCandidateItemChange(next);
-                    }
-                    return next;
-                });
+                if (props.setCandidateItem && props.candidateItem) {
+                    props.setCandidateItem({ ...props.candidateItem, photoFile: file });
+                }
             };
             reader.onerror = (e) => {
                 console.error('FileReader Error:', e);
@@ -90,7 +70,7 @@ export const CandidatePlayer: React.FC<CandidatePlayerProps> = (props: Candidate
                         type="text"
                         placeholder={`${playerNameMaxLength}자 이내`}
                         maxLength={playerNameMaxLength}
-                        value={candidateItem?.clubNm}
+                        value={props.candidateItem?.clubNm ?? ''}
                         onChange={(e) => handleClubNmChange(e.target.value)}
                         style={{ width: '100%', minWidth: '150px' }}
                     />
@@ -104,7 +84,7 @@ export const CandidatePlayer: React.FC<CandidatePlayerProps> = (props: Candidate
                         type="text"
                         placeholder={`${playerNameMaxLength}자 이내`}
                         maxLength={playerNameMaxLength}
-                        value={candidateItem?.playerNm}
+                        value={props.candidateItem?.playerNm ?? ''}
                         onChange={(e) => handlePlayerNmChange(e.target.value)}
                         style={{ width: '100%' }}
                     />
@@ -116,10 +96,10 @@ export const CandidatePlayer: React.FC<CandidatePlayerProps> = (props: Candidate
                     {props.status !== CoolmoveCode.STATUS.DRAFT && (
                         <>
                             <img src={
-                                candidateItem?.photoFile && candidateItem.photoFile instanceof File
-                                    ? URL.createObjectURL(candidateItem.photoFile)
-                                    : candidateItem?.photoPathNm && candidateItem.photoPathNm.trim() !== ''
-                                        ? imgServer + candidateItem.photoPathNm
+                                props.candidateItem?.photoFile && props.candidateItem.photoFile instanceof File
+                                    ? URL.createObjectURL(props.candidateItem.photoFile)
+                                    : props.candidateItem?.photoPathNm && props.candidateItem.photoPathNm.trim() !== ''
+                                        ? imgServer + props.candidateItem.photoPathNm
                                         : defaultUserImg
                             }
                                 alt="Candidate"
@@ -142,10 +122,10 @@ export const CandidatePlayer: React.FC<CandidatePlayerProps> = (props: Candidate
                                 aria-label={`후보자 사진 업로드`}
                                 style={{
                                     backgroundImage:
-                                        candidateItem?.photoFile && candidateItem.photoFile instanceof File
-                                            ? `url(${URL.createObjectURL(candidateItem.photoFile)})`
-                                            : candidateItem?.photoPathNm && candidateItem.photoPathNm.trim() !== ''
-                                                ? `url(${imgServer}${candidateItem.photoPathNm})`
+                                        props.candidateItem?.photoFile && props.candidateItem.photoFile instanceof File
+                                            ? `url(${URL.createObjectURL(props.candidateItem.photoFile)})`
+                                            : props.candidateItem?.photoPathNm && props.candidateItem.photoPathNm.trim() !== ''
+                                                ? `url(${imgServer}${props.candidateItem.photoPathNm})`
                                                 : `url(${defaultUserImg})`,
                                     backgroundSize: 'cover',
                                     backgroundPosition: 'center',
@@ -155,7 +135,7 @@ export const CandidatePlayer: React.FC<CandidatePlayerProps> = (props: Candidate
                                     border: '1px solid #D1D5DB'
                                 }}
                             >
-                                {candidateItem?.photoPathNm === defaultUserImg ? '사진 업로드' : ''}
+                                {props.candidateItem?.photoPathNm === defaultUserImg ? '사진 업로드' : ''}
                             </button>
                             <input
                                 ref={fileInputRef}
@@ -163,7 +143,7 @@ export const CandidatePlayer: React.FC<CandidatePlayerProps> = (props: Candidate
                                 accept="image/*"
                                 style={{ display: 'none' }}
                                 onChange={handlePhotoChange}
-                                aria-label={`후보자 ${candidateItem?.id} 사진 업로드`}
+                                aria-label={`후보자 ${props.candidateItem?.id} 사진 업로드`}
                             />
                         </>
                     )}

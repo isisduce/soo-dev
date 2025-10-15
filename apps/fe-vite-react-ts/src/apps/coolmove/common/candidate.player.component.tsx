@@ -81,7 +81,7 @@ export const CandidatePlayerComponent: React.FC<CandidatePlayerComponentProps> =
                             type="text"
                             placeholder="20자 이내"
                             maxLength={20}
-                            value={candidate?.clubNm}
+                            value={candidate?.clubNm ?? ""}
                             onChange={(e) => handleClubNmChange(e.target.value)}
                             style={{ width: '100%' }}
                         />
@@ -96,7 +96,7 @@ export const CandidatePlayerComponent: React.FC<CandidatePlayerComponentProps> =
                             type="text"
                             placeholder="20자 이내"
                             maxLength={20}
-                            value={candidate?.playerNm}
+                            value={candidate?.playerNm ?? ""}
                             onChange={(e) => handlePlayerNmChange(e.target.value)}
                             style={{ width: '100%' }}
                         />
