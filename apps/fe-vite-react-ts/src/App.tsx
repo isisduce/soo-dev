@@ -8,6 +8,7 @@ import { AppEnv } from './appmain/app.env';
 import { routerData as apiRouterData } from './apps/api/routerData';
 import { routerData as cmvRouterData } from './apps/coolmove/routerData';
 import { routerData as wfsRouterData } from './apps/webfilesystem/routerData';
+import { routerData as stdRouterData } from './apps/standard/routerData';
 
 function Home() {
     const [count, setCount] = useState(0);
@@ -44,6 +45,9 @@ function Home() {
                 <Box>
                     <Link to="/coolmove">Coolmove</Link>
                 </Box>
+                <Box>
+                    <Link to="/standard">Standard</Link>
+                </Box>
             </Box>
         </>
     );
@@ -62,6 +66,9 @@ function App() {
                     <Route key={router.path} path={router.path} element={router.element} />
                 ))}
                 {wfsRouterData.map(router => (
+                    <Route key={router.path} path={router.path} element={router.element} />
+                ))}
+                {stdRouterData.map(router => (
                     <Route key={router.path} path={router.path} element={router.element} />
                 ))}
             </Routes>

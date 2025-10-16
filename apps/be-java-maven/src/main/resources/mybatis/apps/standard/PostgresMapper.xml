@@ -1,0 +1,1445 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.soo.apps.standard.mapper.PostgresMapper">
+
+	<!-- ========================================================================================== -->
+
+	<!-- <select id="createExtension" resultType="string">
+		<![CDATA[
+			create extension #{extname}
+		]]>
+	</select>
+
+	<select id="searchExtension" resultType="string">
+		<![CDATA[
+			select extname from pg_extension where extname = #{extname}
+		]]>
+	</select>
+
+	<select id="searchTables" resultType="string">
+		<![CDATA[
+			select * from information_schema.tables where table_schema = 'public' and table_type = 'BASE TABLE';
+		]]>
+	</select>
+
+	<select id="searchTable" resultType="string">
+		<![CDATA[
+			select * from information_schema.tables where table_schema = 'public' and table_type = 'BASE TABLE' and table_name = #{tblNm};
+		]]>
+	</select> -->
+
+	<!-- ========================================================================================== -->
+
+	<!-- <select id="createTableStdWord" resultType="void">
+		<![CDATA[
+			create table 	STD_WORD (
+					REV_NO				VARCHAR(30)					null
+				,	WORD_NM				VARCHAR(200)			not	null
+				,	WORD_DESC			VARCHAR(4000)				null
+				,	WORD_EN_ABRV_NM		VARCHAR(200)			not	null
+				,	WORD_EN_NM			VARCHAR(200)				null
+				,	FORM_WORD_YN		VARCHAR(1)					null
+				,	DOMN_CLASS_NM		VARCHAR(200)				null
+				,	ALIAS_WORD_LIST		VARCHAR(200)				null
+				,	FORBD_WORD_LIST		VARCHAR(200)				null
+				,	STD_KIND			VARCHAR(40)					null
+				,	USE_YN				VARCHAR(1)					null default 'Y'::character varying
+				,	constraint STD_WORD_PKEY 					primary key (WORD_NM, WORD_EN_ABRV_NM)
+			);
+			comment on table	STD_WORD					is '표준단어테이블';
+			comment on column	STD_WORD.REV_NO				is '제정차수';
+			comment on column	STD_WORD.WORD_NM			is '단어명';
+			comment on column	STD_WORD.WORD_DESC			is '단어설명';
+			comment on column	STD_WORD.WORD_EN_ABRV_NM	is '영문약어명';
+			comment on column	STD_WORD.WORD_EN_NM			is '영문명';
+			comment on column	STD_WORD.FORM_WORD_YN		is '형식단어여부';
+			comment on column	STD_WORD.DOMN_CLASS_NM		is '도메인분류명';
+			comment on column	STD_WORD.ALIAS_WORD_LIST	is '이음동의어목록';
+			comment on column	STD_WORD.FORBD_WORD_LIST	is '금칙어목록';
+			comment on column	STD_WORD.STD_KIND			is '표준구분';
+			comment on column	STD_WORD.USE_YN				is '사용여부';
+		]]>
+	</select>
+
+	<select id="createTableStdTerm" resultType="void">
+		<![CDATA[
+			create table 	STD_TERM (
+					REV_NO				VARCHAR(30)					null
+				,	TERM_NM				VARCHAR(200)			not	null
+				,	TERM_DESC			VARCHAR(4000)				null
+				,	TERM_EN_ABRV_NM		VARCHAR(200)			not	null
+				,	TERM_EN_NM			VARCHAR(200)				null
+				,	DOMN_NM				VARCHAR(200)			not	null
+				,	ALLOWED_VALUE		VARCHAR(500)				null
+				,	STD_CD_NM			VARCHAR(200)				null
+				,	MNG_DEPT_NM			VARCHAR(200)				null
+				,	WORK_FLD			VARCHAR(40)					null
+				,	STD_KIND			VARCHAR(40)					null
+				,	USE_YN				VARCHAR(1)					null default 'Y'::character varying
+				,	constraint STD_TERM_PKEY 					primary key (TERM_NM)
+			);
+			comment on table	STD_TERM					is '표준용어테이블';
+			comment on column	STD_TERM.REV_NO				is '제정차수';
+			comment on column	STD_TERM.TERM_NM			is '용어명';
+			comment on column	STD_TERM.TERM_DESC			is '용어설명';
+			comment on column	STD_TERM.TERM_EN_ABRV_NM	is '영문약어명';
+			comment on column	STD_TERM.TERM_EN_NM			is '영문명';
+			comment on column	STD_TERM.DOMN_NM			is '도메인명';
+			comment on column	STD_TERM.ALLOWED_VALUE		is '허용값';
+			comment on column	STD_TERM.STD_CD_NM			is '표준코드명';
+			comment on column	STD_TERM.MNG_DEPT_NM		is '관리부서명';
+			comment on column	STD_TERM.WORK_FLD			is '업무분야';
+			comment on column	STD_TERM.STD_KIND			is '표준구분';
+			comment on column	STD_TERM.USE_YN				is '사용여부';
+		]]>
+	</select>
+
+	<select id="createTableStdDomn" resultType="void">
+		<![CDATA[
+			create table 	STD_DOMN (
+					REV_NO				VARCHAR(30)					null
+				,	DOMN_GROUP_NM		VARCHAR(200)			not	null
+				,	DOMN_CLASS_NM		VARCHAR(200)			not	null
+				,	DOMN_NM				VARCHAR(200)			not	null
+				,	DOMN_DESC			VARCHAR(4000)				null
+				,	DATA_TYPE			VARCHAR(20)				not	null
+				,	DATA_LEN			VARCHAR(10)					null
+				,	DATA_SCALE			VARCHAR(10)					null
+				,	SAVE_FMT			VARCHAR(100)				null
+				,	DISP_FMT			VARCHAR(100)				null
+				,	UNIT				VARCHAR(20)					null
+				,	ALLOWED_VALUE		VARCHAR(300)				null
+				,	STD_KIND			VARCHAR(40)					null
+				,	USE_YN				VARCHAR(1)					null default 'Y'::character varying
+				,	constraint STD_DOMN_PKEY 					primary key (DOMN_NM)
+			);
+			comment on table	STD_DOMN					is '표준도메인테이블';
+			comment on column	STD_DOMN.REV_NO				is '제정차수';
+			comment on column	STD_DOMN.DOMN_GROUP_NM		is '도메인그룹명';
+			comment on column	STD_DOMN.DOMN_CLASS_NM		is '도메인분류명';
+			comment on column	STD_DOMN.DOMN_NM			is '도메인명';
+			comment on column	STD_DOMN.DOMN_DESC			is '도메인설명';
+			comment on column	STD_DOMN.DATA_TYPE			is '데이터타입';
+			comment on column	STD_DOMN.DATA_LEN			is '데이터길이';
+			comment on column	STD_DOMN.DATA_SCALE			is '소수점길이';
+			comment on column	STD_DOMN.SAVE_FMT			is '저장형식';
+			comment on column	STD_DOMN.DISP_FMT			is '표현형식';
+			comment on column	STD_DOMN.UNIT				is '단위';
+			comment on column	STD_DOMN.ALLOWED_VALUE		is '허용값';
+			comment on column	STD_DOMN.STD_KIND			is '표준구분';
+			comment on column	STD_DOMN.USE_YN				is '사용여부';
+		]]>
+	</select> -->
+
+	<!-- ========================================================================================== -->
+
+	<select id="getStdWordColumns" resultType="com.soo.apps.standard.dto.TableHeaderDto">
+		<![CDATA[
+			select accessorKey, header, size
+			from (
+						select '01' as seq,	'revNo'			as accessorKey, '제정차수'		as header, '100' as size
+				union	select '02' as seq,	'wordNm'		as accessorKey, '단어명'		as header, '100' as size
+			--	union	select '03' as seq,	'wordDesc'		as accessorKey, '단어설명'		as header, '100' as size
+				union	select '04' as seq,	'wordEnAbrvNm'	as accessorKey, '단어약어명'	as header, '100' as size
+				union	select '05' as seq,	'wordEnNm'		as accessorKey, '단어영어명'	as header, '100' as size
+			--	union	select '06' as seq,	'formWordYn'	as accessorKey, '형식단어여부'	as header, '100' as size
+				union	select '07' as seq,	'domnClassNm'	as accessorKey, '도메인분류명'	as header, '100' as size
+				union	select '08' as seq,	'aliasWordList'	as accessorKey, '동음이의어'	as header, '100' as size
+				union	select '09' as seq,	'forbdWordList'	as accessorKey, '금칙어목록'	as header, '100' as size
+				union	select '10' as seq,	'stdKind'		as accessorKey, '표준구분'		as header, '100' as size
+				union	select '11' as seq,	'useYn'			as accessorKey, '사용여부'		as header, '100' as size
+			) t
+			order by seq
+		]]>
+	</select>
+
+	<select id="getStdWordList" resultType="com.soo.apps.standard.dto.StdWordDto">
+		<![CDATA[
+			select
+						REV_NO				as revNo
+					,	WORD_NM				as wordNm
+					,	WORD_DESC			as wordDesc
+					,	WORD_EN_ABRV_NM		as wordEnAbrvNm
+					,	WORD_EN_NM			as wordEnNm
+					,	FORM_WORD_YN		as formWordYn
+					,	DOMN_CLASS_NM		as domnClassNm
+					,	ALIAS_WORD_LIST		as aliasWordList
+					,	FORBD_WORD_LIST		as forbdWordList
+					,	STD_KIND			as stdKind
+					,	USE_YN				as useYn
+			from (
+					select	*
+					from	std_word
+					where	1=1
+					order by
+							case
+								when (ascii(      left(word_nm, 1))  between ascii('0') and ascii('9')) then	nullif(regexp_replace(word_nm, '\D', '', 'g'), '')::int
+								when (ascii(upper(left(word_nm, 1))) between ascii('A') and ascii('Z')) then	ascii(upper(left(word_nm, 1))) + 10000
+								else																			ascii(upper(left(word_nm, 1)))
+							end
+						,	nullif(regexp_replace(word_nm, '[0-9]',	'', 'g'), word_nm) collate "C"
+						,	word_nm collate "C"
+				) t
+			where	1=1
+			and (
+		]]>
+				<choose>
+			<when test="cond != null and !cond.equals('0')">
+						<![CDATA[
+							1=0
+						]]>
+						<if
+					test="word != null and !word.equals('')"><![CDATA[or word_nm			like concat('%', #{word}, '%')]]></if>
+						<if
+					test="abrv != null and !abrv.equals('')"><![CDATA[or word_en_abrv_nm	like concat('%', #{abrv}, '%')]]></if>
+						<if
+					test="name != null and !name.equals('')"><![CDATA[or word_en_nm			like concat('%', #{name}, '%')]]></if>
+			</when>
+			<otherwise>
+						<![CDATA[
+							1=1
+						]]>
+					</otherwise>
+		</choose>
+		<![CDATA[
+				)
+		]]>
+	</select>
+
+	<!-- ========================================================================================== -->
+
+	<select id="getStdTermColumns" resultType="com.soo.apps.standard.dto.TableHeaderDto">
+		<![CDATA[
+			select accessorKey, header, size
+			from (
+						select '01' as seq,	'revNo'			as accessorKey, '제정차수'		as header, '100' as size
+				union	select '02' as seq,	'termNm'		as accessorKey, '용어명'		as header, '100' as size
+			--	union	select '03' as seq,	'termDesc'		as accessorKey, '용어설명'		as header, '100' as size
+				union	select '04' as seq,	'termEnNm'		as accessorKey, '용어영문명'	as header, '100' as size
+				union	select '05' as seq,	'termEnAbrvNm'	as accessorKey, '용어약어명'	as header, '100' as size
+				union	select '06' as seq,	'domnNm'		as accessorKey, '도메인명'		as header, '100' as size
+				union	select '07' as seq,	'allowedValue'	as accessorKey, '허용값'		as header, '100' as size
+			--	union	select '08' as seq,	'stdCdNm'		as accessorKey, '표준코드명'	as header, '100' as size
+			--	union	select '09' as seq,	'mngDeptNm'		as accessorKey, '관리부서명'	as header, '100' as size
+			--	union	select '10' as seq,	'wordFld'		as accessorKey, '업무분야'		as header, '100' as size
+				union	select '11' as seq,	'stdKind'		as accessorKey, '표준구분'		as header, '100' as size
+				union	select '12' as seq,	'useYn'			as accessorKey, '사용여부'		as header, '50' as size
+			) t
+			order by seq
+		]]>
+	</select>
+
+	<select id="getStdTermList" resultType="com.soo.apps.standard.dto.StdTermDto">
+		<![CDATA[
+		select
+					REV_NO				as revNo
+				,	TERM_NM				as termNm
+			--	,	TERM_DESC			as termDesc
+				,	TERM_EN_NM			as termEnNm
+				,	TERM_EN_ABRV_NM		as termEnAbrvNm
+				,	DOMN_NM				as domnNm
+				,	ALLOWED_VALUE		as allowedValue
+				,	STD_CD_NM			as stdCdNm
+				,	MNG_DEPT_NM			as mngDeptNm
+				,	WORK_FLD			as wordFld
+				,	STD_KIND			as stdKind
+				,	USE_YN				as useYn
+		from (
+				select	*
+				from	std_term
+				where	1=1
+				order by
+						term_nm collate "C"
+			) t
+		where	1=1
+		and (
+		]]>
+			<choose>
+			<when test="cond != null and !cond.equals('0')">
+					<![CDATA[
+						1=0
+					]]>
+					<if
+					test="term != null and !term.equals('')"><![CDATA[or term_nm			like concat('%', #{term}, '%')]]></if>
+					<if
+					test="abrv != null and !abrv.equals('')"><![CDATA[or term_en_abrv_nm	like concat('%', #{abrv}, '%')]]></if>
+					<if
+					test="name != null and !name.equals('')"><![CDATA[or term_en_nm			like concat('%', #{name}, '%')]]></if>
+			</when>
+			<otherwise>
+					<![CDATA[
+						1=1
+					]]>
+				</otherwise>
+		</choose>
+		<![CDATA[
+		)
+		]]>
+	</select>
+
+	<!-- ========================================================================================== -->
+
+	<select id="getStdDomainColumns" resultType="com.soo.apps.standard.dto.TableHeaderDto">
+		<![CDATA[
+			select accessorKey, header, size
+			from (
+						select '01' as seq,	'revNo'			as accessorKey, '제정차수'		as header, '100' as size
+				union	select '02' as seq,	'domnGroupNm'	as accessorKey, '도메인그룹명'	as header, '100' as size
+				union	select '03' as seq,	'domnClassNm'	as accessorKey, '도메인분류명'	as header, '100' as size
+				union	select '04' as seq,	'domnNm'		as accessorKey, '도메인명'		as header, '100' as size
+			--	union	select '05' as seq,	'domnDesc'		as accessorKey, '도메인설명'	as header, '100' as size
+				union	select '06' as seq,	'dataType'		as accessorKey, '데이터타입'	as header, '100' as size
+				union	select '07' as seq,	'dataLen'		as accessorKey, '데이터길이'	as header, '100' as size
+				union	select '08' as seq,	'dataScale'		as accessorKey, '소수점길이'	as header, '100' as size
+			--	union	select '09' as seq,	'saveFmt'		as accessorKey, '저장형식'		as header, '100' as size
+			--	union	select '10' as seq,	'dispFmt'		as accessorKey, '표시형식'		as header, '100' as size
+				union	select '11' as seq,	'unit'			as accessorKey, '단위'			as header, '100' as size
+			--	union	select '12' as seq,	'allowedValue'	as accessorKey, '허용값'		as header, '50' as size
+				union	select '13' as seq,	'stdKind'		as accessorKey, '표준구분'		as header, '100' as size
+				union	select '14' as seq,	'useYn'			as accessorKey, '사용여부'		as header, '50' as size
+			) t
+			order by seq
+		]]>
+	</select>
+
+	<select id="getStdDomainList" resultType="com.soo.apps.standard.dto.StdDomainDto">
+		<![CDATA[
+		select
+					REV_NO 				as revNo
+				,	DOMN_GROUP_NM		as domnGroupNm
+				,	DOMN_CLASS_NM		as domnClassNm
+				,	DOMN_NM				as domnNm
+				,	DOMN_DESC			as domnDesc
+				,	DATA_TYPE			as dataType
+				,	DATA_LEN			as dataLen
+				,	DATA_SCALE			as dataScale
+				,	SAVE_FMT			as saveFmt
+				,	DISP_FMT			as dispFmt
+				,	UNIT				as unit
+				,	ALLOWED_VALUE		as allowedValue
+				,	STD_KIND			as stdKind
+				,	USE_YN				as useYn
+		from (
+				select	*
+				from	std_domn
+				where	1=1
+				order by
+						nullif(regexp_replace(DOMN_GROUP_NM,	'[0-9]',	'', 'g'), '') collate "C"
+					,	nullif(regexp_replace(DOMN_CLASS_NM,	'[0-9]',	'', 'g'), '') collate "C"
+					,	nullif(regexp_replace(DOMN_NM, 			'\D',		'', 'g'), '')::int
+			) t
+		where	1=1
+		and (
+		]]>
+			<choose>
+			<when test="cond != null and !cond.equals('0')">
+				<![CDATA[
+					1=0
+				]]>
+					<if
+					test="name != null and !name.equals('')"><![CDATA[or domn_nm	like concat('%', #{name}, '%')]]></if>
+					<if
+					test="type != null and !type.equals('')"><![CDATA[or data_type	like concat('%', #{type}, '%')]]></if>
+			</when>
+			<otherwise>
+				<![CDATA[
+					1=1
+				]]>
+				</otherwise>
+		</choose>
+		<![CDATA[
+		)
+		]]>
+	</select>
+
+	<!-- ========================================================================================== -->
+
+	<select id="getStdEntityColumns" resultType="com.soo.apps.standard.dto.TableHeaderDto">
+		<![CDATA[
+			select accessorKey, header, size
+			from (
+						select '01' as seq,	'krDbNm'			as accessorKey, '한글DB명'			as header, '100' as size
+				union	select '02' as seq,	'entityNm'			as accessorKey, '엔티티명'			as header, '100' as size
+				union	select '03' as seq,	'entityDesc'		as accessorKey, '엔티티설명'		as header, '100' as size
+				union	select '04' as seq,	'identifier'		as accessorKey, '주식별자'			as header, '100' as size
+				union	select '05' as seq,	'superTypeEntityNm'	as accessorKey, '수퍼타입엔티티명'	as header, '100' as size
+			) t
+			order by seq
+		]]>
+	</select>
+
+	<select id="getStdEntityList" resultType="com.soo.apps.standard.dto.StdEntityDto">
+		<![CDATA[
+			select
+					table_catalog	as krDbNm
+				,	entity_name		as entityNm
+				,	entity_desc		as entityDesc
+				,	identifier		as identifier
+				,	''				as superTypeEntityNm
+			from (
+				select
+						table_catalog				as table_catalog
+					,	upper(table_name)			as table_name
+					,	upper(column_name)			as column_name
+					,	( case when table_name_kr  is null then upper(table_name)  else table_name_kr  end )	as entity_name
+					,	( case when table_name_kr  is null then upper(table_name)  else table_name_kr  end )	as entity_desc
+					,	( case when column_name_kr is null then upper(column_name) else column_name_kr end )	as identifier
+				from (
+						select
+								tbl.table_catalog										as table_catalog
+							,	tbl.table_name											as table_name
+							,	obj_description(pgc.oid)								as table_name_kr
+							,	pga.attname												as column_name
+							,	( (select col_description(pga.attrelid, pga.attnum)) )	as column_name_kr
+						from	information_schema.tables tbl
+									inner join pg_catalog.pg_class pgc on 1=1
+										and	tbl.table_name = pgc.relname
+										and	tbl.table_type = 'BASE TABLE'
+										and	tbl.table_schema = 'public'
+									inner join standard_info si on 1=1
+										and	si.info_type = 'STD'
+										and si.std_yn = 'Y'
+										and	si.use_yn = 'Y'
+										and	case
+												when position('%' in si.tbl_nm) = 0 then upper(tbl.table_name) =    upper(si.tbl_nm)
+												else									 upper(tbl.table_name) like upper(si.tbl_nm)
+											end
+									inner join information_schema.table_constraints tc on 1=1
+										and	tc.constraint_type = 'PRIMARY KEY'
+										and	tc.table_name      = tbl.table_name
+									inner join information_schema.constraint_column_usage cc on	1=1
+										and	tc.table_catalog   = cc.table_catalog
+										and	tc.table_schema    = cc.table_schema
+										and	tc.table_name      = cc.table_name
+										and	tc.constraint_name = cc.constraint_name
+									inner join pg_catalog.pg_attribute pga on 1=1
+										and pga.attname = cc.column_name
+										and	pga.attrelid = pgc.oid
+										and pga.attnum > 0
+										and pga.attisdropped is false
+										and pg_catalog.pg_table_is_visible(pgc.oid)
+						where	1=1
+						order by
+								tbl.table_name
+							,	pga.attrelid
+							,	pga.attnum
+					) tbls
+				where	1=1
+			) t
+		]]>
+	</select>
+
+	<!-- ========================================================================================== -->
+
+	<select id="getStdAttribColumns" resultType="com.soo.apps.standard.dto.TableHeaderDto">
+		<![CDATA[
+			select accessorKey, header, size
+			from (
+						select '01' as seq,	'entityNm'		as accessorKey, '엔티티명'		as header, '100' as size
+				union	select '02' as seq,	'attribNm'		as accessorKey, '속성명'		as header, '100' as size
+				union	select '03' as seq,	'attribKind'	as accessorKey, '속성유형'		as header, '100' as size
+				union	select '04' as seq,	'notNull'		as accessorKey, '필수입력여부'	as header, '100' as size
+				union	select '05' as seq,	'identifier'	as accessorKey, '식별자'		as header, '100' as size
+				union	select '06' as seq,	'refEntityNm'	as accessorKey, '참조엔티티명'	as header, '100' as size
+				union	select '07' as seq,	'refAttribNm'	as accessorKey, '참조속성명'	as header, '100' as size
+				union	select '08' as seq,	'attribDesc'	as accessorKey, '속성설명'		as header, '100' as size
+			) t
+			order by seq
+		]]>
+	</select>
+
+	<select id="getStdAttribList" resultType="com.soo.apps.standard.dto.StdAttribDto">
+		<![CDATA[
+			select
+					entity_name			as entityNm
+				,	attrib_name			as attribNm
+				,	''					as attribKind
+				,	not_null			as notNull
+				,	identifier			as identifier
+				,	ref_entity_name		as refEntityNm
+				,	ref_attrib_name		as refAttribNm
+				,	''					as attribDesc
+			from (
+			select
+					upper(table_name)																		as table_name
+				,	upper(column_name)																		as column_name
+				,	( case when table_name_kr  is null then upper(table_name)  else table_name_kr  end )	as entity_name
+				,	( case when column_name_kr is null then upper(column_name) else column_name_kr end )	as attrib_name
+				,	( case when cols.is_nullable = 'NO' then '필수' else '' end )								as not_null
+				,	(
+						case
+							when pk_info <> ''
+							then
+								case
+									when ref_entity_name is not null then 'PK, FK'
+									else 'PK'
+								end
+							when ref_entity_name is not null then 'FK'
+							else ''
+						end
+					)																						as identifier
+				,	( case when ref_entity_name is not null then ref_entity_name else '' end )				as ref_entity_name
+				,	( case when ref_attrib_name is not null then ref_attrib_name else '' end )				as ref_attrib_name
+			from (
+					select
+							tbl.table_name										as table_name
+						,	obj_description(pgc.oid)							as table_name_kr
+						,	pga.attname											as column_name
+						,	(select col_description(pga.attrelid, pga.attnum))	as column_name_kr
+						,	col.is_nullable										as is_nullable
+						,	(
+								case
+									when 1=1 and
+										(
+											select	cc.column_name
+											from 	information_schema.table_constraints tc
+														inner join information_schema.constraint_column_usage cc on	1=1
+															and	tc.constraint_type = 'PRIMARY KEY'
+															and	tc.table_catalog   = cc.table_catalog
+															and	tc.table_schema    = cc.table_schema
+															and	tc.table_name      = cc.table_name
+															and	tc.constraint_name = cc.constraint_name
+											where	1=1
+												and	tc.table_name  = tbl.table_name
+												and	cc.column_name = col.column_name
+										) = col.column_name
+										then 'PK'
+										else ''
+									end
+							)													as pk_info
+						,
+							(
+								select
+									(
+										select	obj_description(c.oid) entity_name
+										from	pg_catalog.pg_class c inner join pg_catalog.pg_namespace n on c.relnamespace=n.oid
+										where	c.relkind = 'r' and c.relname = ccu.table_name
+									)
+								from	information_schema.table_constraints tc
+										--	inner join information_schema.key_column_usage 			kcu on kcu.constraint_name = tc.constraint_name
+											inner join information_schema.constraint_column_usage	ccu on 1=1
+												and	tc.constraint_type = 'FOREIGN KEY'
+												and	ccu.constraint_name = tc.constraint_name
+								where	1=1
+									and	tc.table_name   = tbl.table_name
+									and ccu.column_name = col.column_name
+								group by
+									entity_name
+							)													as ref_entity_name
+						,
+							(
+								select
+									(
+										select	(select col_description(pga.attrelid, pga.attnum)) attrib_name
+										from	pg_catalog.pg_class c inner join pg_catalog.pg_namespace n on c.relnamespace=n.oid
+										where	c.relkind = 'r' and c.relname = ccu.table_name
+									)
+								from	information_schema.table_constraints tc
+									--	inner join information_schema.key_column_usage			kcu on kcu.constraint_name = tc.constraint_name
+										inner join information_schema.constraint_column_usage	ccu on 1=1
+											and	tc.constraint_type = 'FOREIGN KEY'
+											and	ccu.constraint_name = tc.constraint_name
+								where	1=1
+									and	tc.table_name   = tbl.table_name
+									and ccu.column_name = col.column_name
+								group by
+									attrib_name
+							)													as ref_attrib_name
+					from	information_schema.tables tbl
+								inner join pg_catalog.pg_class pgc on 1=1
+									and	tbl.table_name = pgc.relname
+									and	tbl.table_type = 'BASE TABLE'
+									and	tbl.table_schema = 'public'
+								inner join standard_info si on 1=1
+									and	si.info_type = 'STD'
+									and si.std_yn = 'Y'
+									and	si.use_yn = 'Y'
+									and	case
+											when position('%' in si.tbl_nm) = 0 then upper(tbl.table_name) =    upper(si.tbl_nm)
+											else									 upper(tbl.table_name) like upper(si.tbl_nm)
+										end
+								inner join pg_catalog.pg_attribute pga on 1=1
+									and	pga.attrelid = pgc.oid
+									and pga.attnum > 0
+									and pga.attisdropped is false
+									and pg_catalog.pg_table_is_visible(pgc.oid)
+								inner join information_schema.columns col on 1=1
+									and	col.table_name = tbl.table_name
+									and col.column_name = pga.attname
+					order by
+						tbl.table_name
+						, pga.attrelid, pga.attnum
+				) cols
+			where	1=1
+			) t
+		]]>
+	</select>
+
+	<!-- ========================================================================================== -->
+
+	<select id="getStdTablesColumns" resultType="com.soo.apps.standard.dto.TableHeaderDto">
+		<![CDATA[
+			select accessorKey, header, size
+			from (
+						select '01' as seq,	'enDbNm'		as accessorKey, '영문DB명'			as header, '100' as size
+				union	select '02' as seq,	'tblOwner'		as accessorKey, '테이블소유자'		as header, '100' as size
+				union	select '03' as seq,	'tblKr'			as accessorKey, '테이블한글명'		as header, '100' as size
+				union	select '04' as seq,	'tblNm'			as accessorKey, '테이블영문명'		as header, '100' as size
+				union	select '05' as seq,	'tblType'		as accessorKey, '테이블유형'		as header, '100' as size
+			--	union	select '06' as seq,	'entityNm'		as accessorKey, '엔티티명'			as header, '100' as size
+			--	union	select '07' as seq,	'tblDesc'		as accessorKey, '테이블설명'		as header, '100' as size
+			--	union	select '08' as seq,	'tblVol'		as accessorKey, '데이터볼륨'		as header, '100' as size
+				union	select '09' as seq,	'genPeriod'		as accessorKey, '발생주기'			as header, '100' as size
+				union	select '10' as seq,	'publicYn'		as accessorKey, '공개여부'			as header, '50' as size
+				union	select '11' as seq,	'pubDataList'	as accessorKey, '개방데이터목록'	as header, '50' as size
+				union	select '12' as seq,	'stdApplyYn'	as accessorKey, '표준적용여부'		as header, '50' as size
+				union	select '13' as seq,	'notStdReason'	as accessorKey, '비표준사유'		as header, '50' as size
+			) t
+			order by seq
+		]]>
+	</select>
+
+	<select id="getStdTablesList" resultType="com.soo.apps.standard.dto.StdTablesDto">
+		<![CDATA[
+			select
+					table_catalog		as enDbNm
+				,	table_owner			as tblOwner
+				,	table_name_kr		as tblKr
+				,	table_name			as tblNm
+				,	table_type			as tblType
+				,	entity_name			as entityNm
+				,	table_name_kr		as tblDesc
+				,	table_volumn		as tblVol
+				,	gen_period			as genPeriod
+				,	public_yn			as publicYn
+				,	pub_data_list		as pubDataList
+				,	std_apply_yn		as stdApplyYn
+				,	not_std_readon		as notStdReadon
+			from (
+			select
+					table_catalog																			as table_catalog
+				,	table_owner																				as table_owner
+				,	upper(table_name)																		as table_name
+				,	( case when table_name_kr  is null then upper(table_name)  else table_name_kr  end )	as table_name_kr
+				,	( case when table_name_kr  is null then upper(table_name)  else table_name_kr  end )	as table_desc
+				,	'일반테이블'																					as table_type
+				,	( case when table_name_kr  is null then upper(table_name)  else table_name_kr  end )	as entity_name
+				,	''																						as table_volumn
+				,	'수시'																					as gen_period
+				,	( case when tbls.public_yn = 'Y' then '공개' else '비공개' end )								as public_yn
+				,	''																						as pub_data_list
+				,	''																						as std_apply_yn
+				,	''																						as not_std_readon
+			from (
+					select
+							tbl.table_catalog									as table_catalog
+						,	tbl.table_schema									as table_owner
+						,	tbl.table_name										as table_name
+						,	obj_description(pgc.oid)							as table_name_kr
+						,	(
+								select	public_yn
+								from	standard_info si
+								where	si.info_type = 'TBL'
+								and		upper(tbl.table_name) = upper(si.tbl_nm)
+							)													as public_yn
+					from	information_schema.tables tbl
+								inner join pg_catalog.pg_class pgc on 1=1
+									and	tbl.table_name = pgc.relname
+									and	tbl.table_type = 'BASE TABLE'
+									and	tbl.table_schema = 'public'
+								inner join standard_info si on 1=1
+									and	si.info_type = 'STD'
+									and si.std_yn = 'Y'
+									and	si.use_yn = 'Y'
+									and	case
+											when position('%' in si.tbl_nm) = 0 then upper(tbl.table_name) =    upper(si.tbl_nm)
+											else									 upper(tbl.table_name) like upper(si.tbl_nm)
+										end
+					where	1=1
+					order by
+						table_name
+				) tbls
+			where	1=1
+			) t
+		]]>
+	</select>
+
+	<!-- ========================================================================================== -->
+
+	<select id="getStdColumnColumns" resultType="com.soo.apps.standard.dto.TableHeaderDto">
+		<![CDATA[
+			select accessorKey, header, size
+			from (
+						select '01' as seq,	'tblNm'			as accessorKey, '테이블명'		as header, '100' as size
+				union	select '02' as seq,	'colKr'			as accessorKey, '컬럼한글명'	as header, '100' as size
+				union	select '03' as seq,	'colNm'			as accessorKey, '컬럼영문명'	as header, '100' as size
+				union	select '04' as seq,	'dataType'		as accessorKey, '데이터타입'	as header, '100' as size
+				union	select '05' as seq,	'dataLen'		as accessorKey, '데이터길이'	as header, '100' as size
+				union	select '06' as seq,	'notNull'		as accessorKey, 'NotNULL'		as header, '50' as size
+				union	select '07' as seq,	'pkInfo'		as accessorKey, 'PK'			as header, '50' as size
+				union	select '08' as seq,	'fkInfo'		as accessorKey, 'FK'			as header, '50' as size
+				union	select '09' as seq,	'akInfo'		as accessorKey, 'AK'			as header, '50' as size
+				union	select '10' as seq,	'constrt'		as accessorKey, '제약조건'		as header, '100' as size
+				union	select '11' as seq,	'privateYn'		as accessorKey, '개인정보여부'	as header, '100' as size
+				union	select '12' as seq,	'encryptYn'		as accessorKey, '암호화여부'	as header, '100' as size
+				union	select '13' as seq,	'publicYn'		as accessorKey, '공개/비공개'	as header, '100' as size
+			) t
+			order by seq
+		]]>
+	</select>
+
+	<select id="getStdColumnList" resultType="com.soo.apps.standard.dto.StdColumnDto">
+		<![CDATA[
+			select
+					table_name			as tblNm
+				,	column_name_kr		as colKr
+				,	column_name			as colNm
+				,	data_type			as dataType
+				,	data_len			as dataLen
+				,	not_null			as notNull
+				,	pk_info				as pkInfo
+				,	fk_info				as fkInfo
+				,	constrt				as constrt
+				,	private_yn			as privateYn
+				,	encrypt_yn			as encryptYn
+				,	public_yn			as publicYn
+			from (
+			select
+					upper(table_name)																		as table_name
+				,	( case when table_name_kr is null then upper(table_name) else table_name_kr end )		as table_name_kr
+				,	upper(column_name)																		as column_name
+				,	( case when column_name_kr is null then upper(column_name) else column_name_kr end )	as column_name_kr
+				,	upper(data_type)																		as data_type
+				,	( case when data_len is null then '' else data_len end )								as data_len
+				,	( case when not_null = 'NO' then 'NOT NULL' else '' end )								as not_null
+				,	( case when pk_column_name is null then '' else 'PK' end )								as pk_info
+				,	( case when fk_column_name is null then '' else 'FK' end )								as fk_info
+				,	''																						as ak_info
+				,	''																						as constrt
+				,	( case when private_yn is null then 'N' else 'Y' end )									as private_yn
+				,	( case when encrypt_yn is null then 'N' else encrypt_yn end )							as encrypt_yn
+				,	( case when public_yn = 'Y' then '공개' else '비공개' end )									as public_yn
+			from (
+					with
+						my_description as (
+							select
+									relname			as relname
+								,	attname			as attname
+								,	pgc.oid			as relid
+								,	pga.attnum		as attid
+								,	public_yn
+							from	information_schema.tables tbl
+										inner join pg_catalog.pg_class pgc on 1=1
+											and	tbl.table_name = pgc.relname
+											and	tbl.table_type = 'BASE TABLE'
+											and	tbl.table_schema = 'public'
+										inner join standard_info si on 1=1
+											and	si.info_type = 'STD'
+											and si.std_yn = 'Y'
+											and	si.use_yn = 'Y'
+											and	case
+													when position('%' in si.tbl_nm) = 0 then upper(tbl.table_name) =    upper(si.tbl_nm)
+													else									 upper(tbl.table_name) like upper(si.tbl_nm)
+												end
+										inner join pg_catalog.pg_attribute pga on 1=1
+											and	pga.attrelid = pgc.oid
+											and pga.attnum > 0
+											and pga.attisdropped is false
+											and pg_catalog.pg_table_is_visible(pgc.oid)
+						)
+						,
+						my_primary as (
+							select
+									tc.table_catalog
+								,	tc.table_name
+								,	cc.column_name
+							from
+									information_schema.table_constraints tc
+										inner join standard_info si on 1=1
+											and	si.info_type = 'STD'
+											and si.std_yn = 'Y'
+											and	si.use_yn = 'Y'
+											and	case
+													when position('%' in si.tbl_nm) = 0 then upper(tc.table_name) =    upper(si.tbl_nm)
+													else									 upper(tc.table_name) like upper(si.tbl_nm)
+												end
+										inner join information_schema.constraint_column_usage cc on	1=1
+											and	tc.constraint_type = 'PRIMARY KEY'
+											and	tc.table_catalog   = cc.table_catalog
+											and	tc.table_schema    = cc.table_schema
+											and	tc.table_name      = cc.table_name
+											and	tc.constraint_name = cc.constraint_name
+						)
+						,
+						my_foreign_A as (
+							select
+									ccu.table_name	as main_table_name
+								,	ccu.column_name	as main_column_name
+								,	kcu.table_name	as foreign_table_name
+								,	kcu.column_name	as foreign_column_name
+								,*
+							from	information_schema.table_constraints tc
+										inner join information_schema.key_column_usage        kcu on 1=1
+											and	kcu.constraint_name = tc.constraint_name
+										inner join information_schema.constraint_column_usage ccu on 1=1
+											and	tc.constraint_type = 'FOREIGN KEY'
+											and	ccu.constraint_name = tc.constraint_name
+						)
+						,
+						my_foreign as (
+							select
+									kcu.table_name	as main_table_name
+								,	kcu.column_name	as main_column_name
+								,	ccu.table_name	as foreign_table_name
+								,	ccu.column_name	as foreign_column_name
+							from	information_schema.table_constraints tc
+										inner join information_schema.key_column_usage        kcu on 1=1
+											and	kcu.constraint_name = tc.constraint_name
+										inner join information_schema.constraint_column_usage ccu on 1=1
+											and	tc.constraint_type = 'FOREIGN KEY'
+											and	ccu.constraint_name = tc.constraint_name
+						)
+					select
+							my.relname								as table_name
+						,	obj_description(my.relid)				as table_name_kr
+						,	my.attname								as column_name
+						,	col_description(my.relid, my.attid)		as column_name_kr
+						,	col.udt_name							as data_type
+						,	(
+								case
+									when col.udt_name = 'bpchar'	then cast(col.character_maximum_length as varchar)
+									when col.udt_name = 'bytea'		then cast(col.character_maximum_length as varchar)
+									when col.udt_name = 'geometry'	then cast(col.character_maximum_length as varchar)
+									when col.udt_name = 'varchar'	then cast(col.character_maximum_length as varchar)
+									when col.udt_name = 'numeric'	then
+										case
+											when col.numeric_precision > 0 then
+												case
+													when col.numeric_scale > 0 then
+														concat( cast(col.numeric_precision as varchar), ',', cast(col.numeric_scale as varchar) )
+													else
+														cast(col.numeric_precision as varchar)
+												end
+										end
+								end
+							)											as data_len
+						,	col.is_nullable								as not_null
+						,	(
+								select	column_name
+								from 	my_primary
+								where	1=1
+									and	table_name  = my.relname
+									and	column_name = my.attname
+							)											as pk_column_name
+						,	(
+								select	foreign_table_name
+								from	my_foreign
+								where	1=1
+									and	main_table_name = my.relname
+									and main_column_name = my.attname
+								group by foreign_table_name
+							)											as fk_table_name
+						,	(
+								select	foreign_column_name
+								from	my_foreign
+								where	1=1
+									and	main_table_name = my.relname
+									and main_column_name = my.attname
+								group by foreign_column_name
+							)											as fk_column_name
+						,	(
+								select	private_yn
+								from	standard_info si
+								where	1=1
+									and	si.info_type = 'COL'
+									and si.use_yn = 'Y'
+									and	upper(my.relname) = upper(si.tbl_nm)
+									and	upper(my.attname) = upper(si.col_nm)
+							)											as private_yn
+						,	(
+								select	encrypt_yn
+								from	standard_info si
+								where	1=1
+									and	si.info_type = 'COL'
+									and si.use_yn = 'Y'
+									and	upper(my.relname) = upper(si.tbl_nm)
+									and	upper(my.attname) = upper(si.col_nm)
+							)											as encrypt_yn
+						,	(
+								select	public_yn
+								from	standard_info si
+								where	1=1
+									and	si.info_type = 'TBL'
+									and si.use_yn = 'Y'
+									and	upper(my.relname) = upper(si.tbl_nm)
+							)											as public_yn
+					from
+							my_description my
+								inner join information_schema.columns col on 1=1
+									and my.relname = col.table_name
+									and my.attname = col.column_name
+					where	1=1
+					order by
+							my.relname
+						,	my.attid
+				) tbls
+			where	1=1
+			) t
+		]]>
+	</select>
+
+	<!-- ========================================================================================== -->
+
+	<select id="findUndefinedWordColumns" resultType="com.soo.apps.standard.dto.TableHeaderDto">
+		<![CDATA[
+			select accessorKey, header, size
+			from (
+						select '01' as seq,	'tblNm'			as accessorKey, '테이블명'		as header, '100' as size
+				union	select '02' as seq,	'tblKr'			as accessorKey, '테이블한글명'	as header, '100' as size
+				union	select '03' as seq,	'colNm'			as accessorKey, '컬럼명'		as header, '100' as size
+				union	select '04' as seq,	'colKr'			as accessorKey, '컬럼한글명'	as header, '100' as size
+				union	select '05' as seq,	'num'			as accessorKey, '단어개수'		as header, '100' as size
+				union	select '06' as seq,	'nm1'			as accessorKey, '단어1'			as header, '100' as size
+				union	select '07' as seq,	'nm2'			as accessorKey, '단어2'			as header, '100' as size
+				union	select '08' as seq,	'nm3'			as accessorKey, '단어3'			as header, '100' as size
+				union	select '09' as seq,	'nm4'			as accessorKey, '단어4'			as header, '100' as size
+				union	select '10' as seq,	'nm5'			as accessorKey, '단어5'			as header, '100' as size
+			) t
+			order by seq
+		]]>
+	</select>
+
+	<select id="findUndefinedWordList" resultType="com.soo.apps.standard.dto.UndefinedWordDto">
+		<![CDATA[
+			with
+				std_columns as (
+					select
+							upper(table_name)												as table_name
+						,	table_name_kr													as table_name_kr
+						,	upper(column_name)												as column_name
+						,	column_name_kr													as column_name_kr
+					from (
+							with
+								-- select comment
+								my_description as (
+									select
+											relname
+										,	objoid
+										,	objsubid
+										,	description
+									from
+											pg_stat_all_tables ps
+												inner join standard_info si on 1=1
+													and	si.info_type = 'STD'
+													and si.std_yn = 'Y'
+													and	si.use_yn = 'Y'
+													and	case
+															when position('%' in si.tbl_nm) = 0 then upper(relname) =    upper(si.tbl_nm)
+															else									 upper(relname) like upper(si.tbl_nm)
+														end
+												inner join pg_description pd on 1=1
+													and	ps.relid = pd.objoid
+								)
+							select
+									my.relname									as table_name
+								,	(
+										select	description
+										from	my_description
+										where	1=1
+											and	my.relname = relname
+											and objsubid = 0
+									) 											as table_name_kr
+								,	pa.attname									as column_name
+								,	my.description								as column_name_kr
+							from
+									my_description my
+										inner join pg_attribute pa on 1=1
+											and	my.objoid   = pa.attrelid
+										inner join information_schema.columns col on 1=1
+											and my.relname = col.table_name
+											and pa.attname = col.column_name
+							where	1=1
+							order by
+									my.relname
+								,	my.objsubid
+						) t
+				)
+			select
+					table_name		as tblNm
+				,	table_name_kr	as tblKr
+				,	column_name		as colNm
+				,	column_name_kr	as colKr
+				,	num
+				,	nm1
+				,	nm2
+				,	nm3
+				,	nm4
+				,	nm5
+			from (
+					select	*
+					from (
+							select
+									table_name
+								,	table_name_kr
+								,	column_name
+								,	column_name_kr
+								,	(length(cols.column_name) - length(replace(cols.column_name, '_' , '')) + 1)																		as num
+								,	(select nm from (select split_part(cols.column_name, '_', 1) as nm) t where nm is not null and nm not in ( select word_en_abrv_nm from std_word ))	as nm1
+								,	(select nm from (select split_part(cols.column_name, '_', 2) as nm) t where nm is not null and nm not in ( select word_en_abrv_nm from std_word ))	as nm2
+								,	(select nm from (select split_part(cols.column_name, '_', 3) as nm) t where nm is not null and nm not in ( select word_en_abrv_nm from std_word ))	as nm3
+								,	(select nm from (select split_part(cols.column_name, '_', 4) as nm) t where nm is not null and nm not in ( select word_en_abrv_nm from std_word ))	as nm4
+								,	(select nm from (select split_part(cols.column_name, '_', 5) as nm) t where nm is not null and nm not in ( select word_en_abrv_nm from std_word ))	as nm5
+							from
+									std_columns cols
+							where	1=1
+							order by
+									table_name
+						) w
+					where	1=1
+						and ((1 <= num) and nm1 is not null)
+						or	((2 <= num) and nm2 is not null)
+						or	((3 <= num) and nm3 is not null)
+						or	((4 <= num) and nm4 is not null)
+						or	((5 <= num) and nm4 is not null)
+				) t
+		]]>
+	</select>
+
+	<!-- ========================================================================================== -->
+
+	<select id="findUndefinedTermColumns" resultType="com.soo.apps.standard.dto.TableHeaderDto">
+		<![CDATA[
+			select accessorKey, header, size
+			from (
+						select '01' as seq,	'tblNm'			as accessorKey, '테이블명'			as header, '100' as size
+				union	select '02' as seq,	'colNm'			as accessorKey, '컬럼명'			as header, '100' as size
+				union	select '03' as seq,	'colKr'			as accessorKey, '컬럼한글명'		as header, '100' as size
+				union	select '04' as seq,	'dataType'		as accessorKey, '데이터타입'		as header, '100' as size
+				union	select '05' as seq,	'dataLen'		as accessorKey, '데이터길이'		as header, '100' as size
+			) t
+			order by seq
+		]]>
+	</select>
+
+	<select id="findUndefinedTermList" resultType="com.soo.apps.standard.dto.UndefinedTermDto">
+		<![CDATA[
+			with
+				std_term as (
+					select	term_en_abrv_nm
+					from	std_term
+					where	1=1 and	use_yn = 'Y'
+				)
+				, std_columns as (
+					select
+							upper(table_name)												as table_name
+						,	table_name_kr													as table_name_kr
+						,	upper(column_name)												as column_name
+						,	column_name_kr													as column_name_kr
+						,	upper(data_type)												as data_type
+						,	( case when data_len is null then '' else data_len end )		as data_len
+					from (
+							with
+								-- select comment
+								my_description as (
+									select
+											relname
+										,	objoid
+										,	objsubid
+										,	description
+									from
+											pg_stat_all_tables ps
+												inner join standard_info si on 1=1
+													and	si.info_type = 'STD'
+													and si.std_yn = 'Y'
+													and	si.use_yn = 'Y'
+													and	case
+															when position('%' in si.tbl_nm) = 0 then upper(relname) =    upper(si.tbl_nm)
+															else									 upper(relname) like upper(si.tbl_nm)
+														end
+												inner join pg_description pd on 1=1
+													and	ps.relid = pd.objoid
+								)
+							select
+									my.relname									as table_name
+								,	(
+										select	description
+										from	my_description
+										where	1=1
+											and	my.relname = relname
+											and objsubid = 0
+									) 											as table_name_kr
+								,	pa.attname									as column_name
+								,	my.description								as column_name_kr
+								,	col.udt_name								as data_type
+								,	(
+										case
+											when col.udt_name = 'bpchar'	then cast(col.character_maximum_length as varchar)
+											when col.udt_name = 'bytea'		then cast(col.character_maximum_length as varchar)
+											when col.udt_name = 'geometry'	then cast(col.character_maximum_length as varchar)
+											when col.udt_name = 'varchar'	then cast(col.character_maximum_length as varchar)
+										--	when col.udt_name = 'jsonb'		then cast(col.character_maximum_length as varchar)
+										--	when col.udt_name = 'timestamp'	then cast(col.character_maximum_length as varchar)
+											when col.udt_name = 'numeric'	then
+												case
+													when 0 < col.numeric_precision then
+														case
+															when 0 < col.numeric_scale then
+																concat( cast(col.numeric_precision as varchar), ',', cast(col.numeric_scale as varchar) )
+															else
+																cast(col.numeric_precision as varchar)
+														end
+												end
+										end
+									)											as data_len
+							from
+									my_description my
+										inner join pg_attribute pa on 1=1
+											and	my.objoid   = pa.attrelid
+											and	my.objsubid = pa.attnum
+										inner join information_schema.columns col on 1=1
+											and my.relname = col.table_name
+											and pa.attname = col.column_name
+							where	1=1
+							order by
+									my.relname
+								,	my.objsubid
+						) t
+				)
+			select
+					table_name		as tblNm
+				,	column_name		as colNm
+                ,   column_name_kr  as colKr
+				,	data_type		as dataType
+				,	data_len		as dataLen
+			from (
+					select
+							table_name
+						,	column_name
+						,	column_name_kr
+						,	data_type
+						,	data_len
+					from
+							std_columns cols
+					where	1=1
+						and cols.column_name not in (
+								select term_en_abrv_nm from std_term
+						)
+				) t
+			order by
+					table_name
+		]]>
+	</select>
+
+	<!-- ========================================================================================== -->
+
+	<select id="findUndefinedDomainColumns" resultType="com.soo.apps.standard.dto.TableHeaderDto">
+		<![CDATA[
+			select accessorKey, header, size
+			from (
+						select '01' as seq,	'termNm'		as accessorKey, '용어명'			as header, '100' as size
+				union	select '02' as seq,	'termEnAbrvNm'	as accessorKey, '용어약어명'		as header, '100' as size
+				union	select '03' as seq,	'domnNm'		as accessorKey, '도메인명'			as header, '100' as size
+			) t
+			order by seq
+		]]>
+	</select>
+
+	<select id="findUndefinedDomainList" resultType="com.soo.apps.standard.dto.UndefinedDomainDto">
+		<![CDATA[
+			with
+				std_term as (
+					select	*
+					from std_term
+					where	1=1 and	use_yn = 'Y'
+				)
+				,
+				std_domn as (
+					select	domn_nm
+					from	std_domn
+					where	1=1 and	use_yn = 'Y'
+				)
+			select
+					term_nm				as termNm
+				,	term_en_abrv_nm		as termEnAbrvNm
+				,	domn_nm				as domnNm
+			from (
+					select	*
+					from	std_term st
+					where	1=1
+						and st.domn_nm not in (select domn_nm from std_domn)
+				) t
+			order by
+					term_nm
+		]]>
+	</select>
+
+	<!-- ========================================================================================== -->
+
+	<select id="findDifferentTermColumns" resultType="com.soo.apps.standard.dto.TableHeaderDto">
+		<![CDATA[
+			select accessorKey, header, size
+			from (
+						select '01' as seq,	'tblNm'			as accessorKey, '테이블명'			as header, '100' as size
+				union	select '02' as seq,	'colNm'			as accessorKey, '컬럼명'			as header, '100' as size
+				union	select '03' as seq,	'colKr'			as accessorKey, '컬럼한글명'		as header, '100' as size
+				union	select '04' as seq,	'termEnAbrvNm'	as accessorKey, '용어약어명'		as header, '100' as size
+				union	select '05' as seq,	'termNm'		as accessorKey, '용어명'			as header, '100' as size
+			) t
+			order by seq
+		]]>
+	</select>
+
+	<select id="findDifferentTermList" resultType="com.soo.apps.standard.dto.DifferentTermDto">
+		<![CDATA[
+			with
+				std_columns as (
+					select
+							upper(table_name)												as table_name
+						,	table_name_kr													as table_name_kr
+						,	upper(column_name)												as column_name
+						,	column_name_kr													as column_name_kr
+					from (
+							with
+								-- select comment
+								my_description as (
+									select
+											relname
+										,	objoid
+										,	objsubid
+										,	description
+									from
+											pg_stat_all_tables ps
+												inner join standard_info si on 1=1
+													and	si.info_type = 'STD'
+													and si.std_yn = 'Y'
+													and	si.use_yn = 'Y'
+													and	case
+															when position('%' in si.tbl_nm) = 0 then upper(relname) =    upper(si.tbl_nm)
+															else									 upper(relname) like upper(si.tbl_nm)
+														end
+												inner join pg_description pd on 1=1
+													and	ps.relid = pd.objoid
+								)
+							select
+									my.relname									as table_name
+								,	(
+										select	description
+										from	my_description
+										where	1=1
+											and	my.relname = relname
+											and objsubid = 0
+									) 											as table_name_kr
+								,	pa.attname									as column_name
+								,	my.description								as column_name_kr
+							from
+									my_description my
+										inner join pg_attribute pa on 1=1
+											and	my.objoid   = pa.attrelid
+											and	my.objsubid = pa.attnum
+										inner join information_schema.columns col on 1=1
+											and my.relname = col.table_name
+											and pa.attname = col.column_name
+							where	1=1
+							order by
+									my.relname
+								,	my.objsubid
+						) t
+				)
+			select
+					table_name		as tblNm
+				,	column_name		as colNm
+				,	column_name_kr	as colKr
+				,	term_en_abrv_nm	as termEnAbrvNm
+				,	term_nm			as termNm
+			from (
+					select
+							table_name
+						,	column_name
+						,	column_name_kr
+						,	st.term_en_abrv_nm
+						,	st.term_nm
+					from
+							std_columns cols
+								inner join std_term st on 1=1
+									and	cols.column_name = st.term_en_abrv_nm
+					where	1=1
+						and cols.column_name_kr <> st.term_nm
+				) t
+			order by
+					table_name
+		]]>
+	</select>
+
+	<!-- ========================================================================================== -->
+
+	<select id="findDifferentTypeColumns" resultType="com.soo.apps.standard.dto.TableHeaderDto">
+		<![CDATA[
+			select accessorKey, header, size
+			from (
+						select '01' as seq,	'tblNm'			as accessorKey, '테이블명'			as header, '100' as size
+				union	select '02' as seq,	'colNm'			as accessorKey, '컬럼명'			as header, '100' as size
+				union	select '03' as seq,	'dataType'		as accessorKey, '데이터타입'		as header, '100' as size
+				union	select '04' as seq,	'dataLen'		as accessorKey, '데이터길이'		as header, '100' as size
+				union	select '05' as seq,	'domnDataType'	as accessorKey, '도메인데이터타입'	as header, '100' as size
+				union	select '06' as seq,	'domnDataLen'	as accessorKey, '도메인데이터길이'	as header, '100' as size
+				union	select '07' as seq,	'domnDataScale'	as accessorKey, '도메인소수점길이'	as header, '100' as size
+			) t
+			order by seq
+		]]>
+	</select>
+
+	<select id="findDifferentTypeList" resultType="com.soo.apps.standard.dto.DifferentTypeDto">
+		<![CDATA[
+			with
+				std_domn as (
+					select	*
+					from	std_domn
+					where	1=1 and	use_yn = 'Y'
+				)
+				, std_term as (
+					select	*
+					from	std_term
+					where	1=1 and	use_yn = 'Y'
+				)
+				, std_columns as (
+					select
+							upper(table_name)												as table_name
+						,	table_name_kr													as table_name_kr
+						,	upper(column_name)												as column_name
+						,	column_name_kr													as column_name_kr
+						,	upper(data_type)												as data_type
+						,	( case when data_len is null then '' else data_len end )		as data_len
+					from (
+							with
+								-- select comment
+								my_description as (
+									select
+											relname
+										,	objoid
+										,	objsubid
+										,	description
+									from
+											pg_stat_all_tables ps
+												inner join standard_info si on 1=1
+													and	si.info_type = 'STD'
+													and si.std_yn = 'Y'
+													and	si.use_yn = 'Y'
+													and	case
+															when position('%' in si.tbl_nm) = 0 then upper(relname) =    upper(si.tbl_nm)
+															else									 upper(relname) like upper(si.tbl_nm)
+														end
+												inner join pg_description pd on 1=1
+													and	ps.relid = pd.objoid
+								)
+							select
+									my.relname									as table_name
+								,	(
+										select	description
+										from	my_description
+										where	1=1
+											and	my.relname = relname
+											and objsubid = 0
+									) 											as table_name_kr
+								,	pa.attname									as column_name
+								,	my.description								as column_name_kr
+								,	col.udt_name								as data_type
+								,	(
+										case
+											when col.udt_name = 'bpchar'	then cast(col.character_maximum_length as varchar)
+											when col.udt_name = 'bytea'		then cast(col.character_maximum_length as varchar)
+											when col.udt_name = 'geometry'	then cast(col.character_maximum_length as varchar)
+											when col.udt_name = 'varchar'	then cast(col.character_maximum_length as varchar)
+										--	when col.udt_name = 'jsonb'		then cast(col.character_maximum_length as varchar)
+										--	when col.udt_name = 'timestamp'	then cast(col.character_maximum_length as varchar)
+											when col.udt_name = 'numeric'	then
+												case
+													when 0 < col.numeric_precision then
+														case
+															when 0 < col.numeric_scale then
+																concat( cast(col.numeric_precision as varchar), ',', cast(col.numeric_scale as varchar) )
+															else
+																cast(col.numeric_precision as varchar)
+														end
+												end
+										end
+									)											as data_len
+							from
+									my_description my
+										inner join pg_attribute pa on 1=1
+											and	my.objoid   = pa.attrelid
+											and	my.objsubid = pa.attnum
+										inner join information_schema.columns col on 1=1
+											and my.relname = col.table_name
+											and pa.attname = col.column_name
+							where	1=1
+							order by
+									my.relname
+								,	my.objsubid
+						) t
+				)
+			select
+					table_name		as tblNm
+				,	column_name		as colNm
+				,	data_type		as dataType
+				,	data_len		as dataLen
+				,	domn_data_type	as domnDataType
+				,	domn_data_len	as domnDataLen
+				,	domn_data_scale	as domnDataScale
+			from (
+					select
+							cols.table_name								as table_name
+						,	cols.column_name							as column_name
+						,	cols.data_type								as data_type
+						,	cols.data_len								as data_len
+						,	d.data_type									as domn_data_type
+						,	(
+								case
+									when d.data_len is null	then	''
+									when d.data_len = ''	then	''
+									when d.data_len = '-'	then	''
+									when d.data_len = '0'	then	''
+									else d.data_len
+								end
+							)											as domn_data_len
+						,	(
+								case
+									when d.data_scale is null	then	''
+									when d.data_scale = ''		then	''
+									when d.data_scale = '-'		then	''
+									when d.data_scale = '0'		then	''
+									else d.data_scale
+								end
+							)											as domn_data_scale
+					from	std_columns cols
+								inner join std_term t on 1=1
+									and	cols.column_name = t.term_en_abrv_nm
+								inner join std_domn d on 1=1
+									and t.domn_nm = d.domn_nm
+				) t
+			where	1=1
+				and data_type <> domn_data_type
+				or	data_len  <> (
+					case
+						when domn_data_scale = '' then domn_data_len
+						else concat(domn_data_len, ',', domn_data_scale)
+					end
+				)
+			order by
+					table_name
+		]]>
+	</select>
+
+	<!-- ========================================================================================== -->
+
+	<select id="getSummary" resultType="com.soo.apps.standard.dto.SummaryDto">
+		<!-- select count(*)	as wordCnt
+		from	dblink('dbname=standard', 'select count(*) from std_word') as t (WORD_CNT VARCHAR(20)) -->
+	</select>
+
+	<select id="findTable" resultType="int">
+		<![CDATA[
+			select count(*) from pg_class where relname = #{tblNm}
+		]]>
+	</select>
+
+</mapper>

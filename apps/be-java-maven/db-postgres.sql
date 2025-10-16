@@ -14,3 +14,12 @@ alter user soo with password 'soo#123';
 -- database
 create database soo_database encoding 'UTF8';
 alter database soo_database owner to soo;
+
+
+-- check current-session for using db
+SELECT pid, usename, application_name, client_addr, state, query, query_start, state_change
+FROM pg_stat_activity
+order by datname;
+
+-- terminate specified session (check pid from the above query result)
+SELECT pg_terminate_backend(pid);
