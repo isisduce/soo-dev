@@ -8,6 +8,8 @@ export const CoolmoveLogout = () => {
     const navigate = useNavigate();
 
     const handleLogout = () => {
+        localStorage.removeItem('userid');
+        localStorage.removeItem('passwd');
         localStorage.removeItem('token');
         localStorage.removeItem('autoLogin');
         navigate(routerConst.LOGIN);

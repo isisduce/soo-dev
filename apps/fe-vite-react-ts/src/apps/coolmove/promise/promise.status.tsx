@@ -102,7 +102,7 @@ export const PromiseStatus: React.FC<PromiseStatusProps> = (props: PromiseStatus
                 </Button>
                 <h2>공약 선택 현황</h2>
             </Box>
-            <div className="table-area"
+            <div
                 style={{ width: '100%', overflowX: 'auto' }}
             >
                 <table>

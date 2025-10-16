@@ -40,6 +40,8 @@ export const CandidateStatusContainer: React.FC = () => {
     };
 
     const handleLogout = () => {
+        localStorage.removeItem('userid');
+        localStorage.removeItem('passwd');
         localStorage.removeItem('token');
         localStorage.removeItem('autoLogin');
         navigate(routerConst.LOGIN);

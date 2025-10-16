@@ -96,7 +96,6 @@ export const coolmoveApi = {
             if (type) axiosConfig.params = { type };
             const response = await axios.get(`${api}${uuid ? `/${uuid}` : ''}`, axiosConfig);
             const data = await response.data;
-            console.log('candidateMastSelect data:', data);
             return data;
         } catch (error) {
             console.error('Failed to load candidate API:', error);
