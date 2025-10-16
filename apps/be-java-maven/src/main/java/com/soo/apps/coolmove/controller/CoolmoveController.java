@@ -102,12 +102,19 @@ public class CoolmoveController {
     // ====================================================================================================
     // ====================================================================================================
 
-    @GetMapping("/candidate-mast/{uuid}")
+    @GetMapping({"/candidate-mast", "/candidate-mast/{uuid}"})
     public ResponseEntity<?> candidateMastSelect(
-        @PathVariable(required = false) String uuid
+        @PathVariable(required = false) String uuid,
+        @RequestParam(required = false) String type
     ) {
         String apiPath = String.format("GET %s%s", apiBase, "/candidate-mast");
         HashMap<String,Object> params = new HashMap<>();
+        if (uuid != null && !uuid.isEmpty()) {
+            params.put("uuid", uuid);
+        }
+        if (type != null && !type.isEmpty()) {
+            params.put("type", type);
+        }
         ArrayList<EntityCandidateMast> entityList = coolmoveService.candidateMastSelect(params);
         ArrayList<DtoCandidateMast> dtoList = new ArrayList<>();
         for (int i = 0; i < entityList.size(); i++) {

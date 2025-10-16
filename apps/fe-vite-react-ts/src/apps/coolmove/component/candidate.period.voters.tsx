@@ -31,6 +31,7 @@ export const CandidatePeriodVoters: React.FC<CandidatePeriodVotersProps> = (prop
                     props.setCandidateMast?.({
                         ...props.candidateMast,
                         votersPathNm: file.name,
+                        votersOgnlNm: file.name,
                         votersFile: file,
                     });
                 }
@@ -48,7 +49,7 @@ export const CandidatePeriodVoters: React.FC<CandidatePeriodVotersProps> = (prop
                     readOnly
                     type="text"
                     placeholder={'공개기간을 설정하세요'}
-                    value={props.candidateMast?.period}
+                    value={props.candidateMast?.period || ''}
                     style={{ width: '100%' }}
                 />
                 <button
@@ -68,7 +69,7 @@ export const CandidatePeriodVoters: React.FC<CandidatePeriodVotersProps> = (prop
                     readOnly
                     type="text"
                     placeholder={'유권자 목록 파일을 선택하세요'}
-                    value={props.candidateMast?.votersPathNm}
+                    value={props.candidateMast?.votersOgnlNm || ''}
                     style={{ width: '100%' }}
                 />
                 <button

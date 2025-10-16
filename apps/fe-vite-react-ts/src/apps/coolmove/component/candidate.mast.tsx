@@ -50,6 +50,7 @@ export const CandidateMast: React.FC<CandidateMastProps> = (props: CandidateMast
                 no: candidateMast?.no ?? 0,
                 candidates: candidateMast?.candidates.map(({ photoFile, ...c }) => c),
                 votersFile: undefined,
+                status: candidateMast?.status ?? CoolmoveCode.STATUS.DRAFT,
             };
             console.log(candidateMastPayload);
             const response = await coolmoveApi.candidateMastInsert(
@@ -66,7 +67,6 @@ export const CandidateMast: React.FC<CandidateMastProps> = (props: CandidateMast
                 if (response.result) {
                     props.setCandidateMast?.(response.result);
                 }
-                alert('저장되었습니다.');
             } else {
                 alert(`저장에 실패하였습니다: ${response.code} ${response.message}`);
             }

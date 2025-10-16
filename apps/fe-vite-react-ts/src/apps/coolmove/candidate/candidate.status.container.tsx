@@ -5,6 +5,7 @@ import { coolmoveApi } from '../api/coolmove.api';
 import { CandidateStatus } from './candidate.status.component';
 import { routerConst } from '../routerData';
 import type { DtoCandidateMast } from '../dto/dto.candidate';
+import { CoolmoveCode } from '../types/types';
 
 export const CandidateStatusContainer: React.FC = () => {
 
@@ -26,7 +27,7 @@ export const CandidateStatusContainer: React.FC = () => {
     const loadCandidateMast = async () => {
         try {
             const token = localStorage.getItem('token') || '';
-            const response = await coolmoveApi.candidateMastSelect(apiServer, token);
+            const response = await coolmoveApi.candidateMastSelect(apiServer, token, { type: CoolmoveCode.TYPE.PRIMARY });
             setData(response.result);
             setSelectedCandidateMast(undefined);
         } catch (error) {

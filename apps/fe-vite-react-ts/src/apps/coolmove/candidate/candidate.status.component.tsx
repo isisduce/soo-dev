@@ -65,7 +65,7 @@ export const CandidateStatus: React.FC<CandidateStatusProps> = ({
                         <span className="badge draft">임시저장</span>
                     </>
                 );
-            case CoolmoveCode.STATUS.ACTIVATE:
+            case CoolmoveCode.STATUS.FINAL:
                 return (
                     <a
                         href="#"
@@ -77,7 +77,7 @@ export const CandidateStatus: React.FC<CandidateStatusProps> = ({
                         {formatParticipants(row.votersCount || 0)} 참여
                     </a>
                 );
-            case CoolmoveCode.STATUS.FINISHED:
+            case CoolmoveCode.STATUS.CLOSE:
                 return (
                     <>
                         <div>{row.endDt}</div>

@@ -75,17 +75,26 @@ export const coolmoveApi = {
     candidateMastSelect: async (
         apiServer: string,
         token: string,
-        uuid?: string
+        {
+            uuid,
+            type,
+        }: {
+            uuid?: string,
+            type?: string,
+        }
     ): Promise<ApiResponseDTO<DtoCandidateMast[]>> => {
         if (!apiServer) {
             return ApiResponse.failure<[]>(ApiCode.CODE.ERROR_INVALID_API_SERVER, 'API server is not configured');
         }
         try {
-            const response = await axios.get(`${apiServer}/coolmove/api/candidate-mast/${uuid}`, {
+            const api = `${apiServer}/coolmove/api/candidate-mast`;
+            const axiosConfig: any = {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
-            });
+            };
+            if (type) axiosConfig.params = { type };
+            const response = await axios.get(`${api}${uuid ? `/${uuid}` : ''}`, axiosConfig);
             const data = await response.data;
             console.log('candidateMastSelect data:', data);
             return data;

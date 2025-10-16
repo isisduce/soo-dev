@@ -39,6 +39,7 @@ SELECT
 FROM	candidate_mast cm
 WHERE	1=1
 <if test="uuid	!= null and !uuid	.equals('')">AND uuid	= #{uuid}::UUID</if>
+<if test="type	!= null and !type	.equals('')">AND type	= #{type}</if>
 ORDER BY seq desc
 	</select>
 
