@@ -1,15 +1,16 @@
-
-import { MaterialReactTable, useMaterialReactTable } from "material-react-table";
-import styles from '../../common/Layout.module.scss';
-import GetDataFrom from "../../common/GetDataFrom";
 import { useMemo } from "react";
-import { Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { MaterialReactTable, useMaterialReactTable } from "material-react-table";
+import { Typography } from "@mui/material";
+import { useAppEnvStore } from "../../../../appmain/app.env";
+import GetDataFrom from "../../common/GetDataFrom";
+import styles from '../../common/Layout.module.scss';
 
 const GetSummary = () => {
 
-    // const http = process.env.REACT_APP_STANDARD_BE_ADDR_PORT;
-    const http = 'http://192.168.0.101:8090/standard';
+    const env = useAppEnvStore((state) => state.env);
+    const appServer = env.apps?.urlApiServerJava || '';
+    const api = appServer + '/standard';
 
     const columns = useMemo(
         () => [
@@ -19,14 +20,14 @@ const GetSummary = () => {
         [],
     );
 
-    const stdWord = GetDataFrom(http + '/postgres/list/word/data');
-    const stdTerm = GetDataFrom(http + '/postgres/list/term/data');
-    const stdDomn = GetDataFrom(http + '/postgres/list/domain/data');
-    const notWord = GetDataFrom(http + '/postgres/find/UndefinedWord/data');
-    const notTerm = GetDataFrom(http + '/postgres/find/UndefinedTerm/data');
-    const notDomn = GetDataFrom(http + '/postgres/find/UndefinedDomn/data');
-    const difTerm = GetDataFrom(http + '/postgres/find/DifferentTerm/data');
-    const difType = GetDataFrom(http + '/postgres/find/DifferentType/data');
+    const stdWord = GetDataFrom(api + '/postgres/list/word/data');
+    const stdTerm = GetDataFrom(api + '/postgres/list/term/data');
+    const stdDomn = GetDataFrom(api + '/postgres/list/domain/data');
+    const notWord = GetDataFrom(api + '/postgres/find/UndefinedWord/data');
+    const notTerm = GetDataFrom(api + '/postgres/find/UndefinedTerm/data');
+    const notDomn = GetDataFrom(api + '/postgres/find/UndefinedDomn/data');
+    const difTerm = GetDataFrom(api + '/postgres/find/DifferentTerm/data');
+    const difType = GetDataFrom(api + '/postgres/find/DifferentType/data');
 
     const data = [
         { name: '표준단어개수', count: stdWord.length, gotoLink: '/ListWord', },

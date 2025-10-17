@@ -920,12 +920,10 @@
 						,	column_name_kr													as column_name_kr
 					from (
 							with
-								-- select comment
 								my_description as (
 									select
 											relname
 										,	objoid
-										,	objsubid
 										,	description
 									from
 											pg_stat_all_tables ps
@@ -947,7 +945,6 @@
 										from	my_description
 										where	1=1
 											and	my.relname = relname
-											and objsubid = 0
 									) 											as table_name_kr
 								,	pa.attname									as column_name
 								,	my.description								as column_name_kr
@@ -961,7 +958,6 @@
 							where	1=1
 							order by
 									my.relname
-								,	my.objsubid
 						) t
 				)
 			select
@@ -1024,12 +1020,7 @@
 	<select id="findUndefinedTermList" resultType="com.soo.apps.standard.dto.UndefinedTermDto">
 		<![CDATA[
 			with
-				std_term as (
-					select	term_en_abrv_nm
-					from	std_term
-					where	1=1 and	use_yn = 'Y'
-				)
-				, std_columns as (
+				std_columns as (
 					select
 							upper(table_name)												as table_name
 						,	table_name_kr													as table_name_kr
@@ -1039,12 +1030,10 @@
 						,	( case when data_len is null then '' else data_len end )		as data_len
 					from (
 							with
-								-- select comment
 								my_description as (
 									select
 											relname
 										,	objoid
-										,	objsubid
 										,	description
 									from
 											pg_stat_all_tables ps
@@ -1066,7 +1055,6 @@
 										from	my_description
 										where	1=1
 											and	my.relname = relname
-											and objsubid = 0
 									) 											as table_name_kr
 								,	pa.attname									as column_name
 								,	my.description								as column_name_kr
@@ -1095,14 +1083,12 @@
 									my_description my
 										inner join pg_attribute pa on 1=1
 											and	my.objoid   = pa.attrelid
-											and	my.objsubid = pa.attnum
 										inner join information_schema.columns col on 1=1
 											and my.relname = col.table_name
 											and pa.attname = col.column_name
 							where	1=1
 							order by
 									my.relname
-								,	my.objsubid
 						) t
 				)
 			select
@@ -1200,12 +1186,10 @@
 						,	column_name_kr													as column_name_kr
 					from (
 							with
-								-- select comment
 								my_description as (
 									select
 											relname
 										,	objoid
-										,	objsubid
 										,	description
 									from
 											pg_stat_all_tables ps
@@ -1227,7 +1211,6 @@
 										from	my_description
 										where	1=1
 											and	my.relname = relname
-											and objsubid = 0
 									) 											as table_name_kr
 								,	pa.attname									as column_name
 								,	my.description								as column_name_kr
@@ -1235,14 +1218,12 @@
 									my_description my
 										inner join pg_attribute pa on 1=1
 											and	my.objoid   = pa.attrelid
-											and	my.objsubid = pa.attnum
 										inner join information_schema.columns col on 1=1
 											and my.relname = col.table_name
 											and pa.attname = col.column_name
 							where	1=1
 							order by
 									my.relname
-								,	my.objsubid
 						) t
 				)
 			select
@@ -1316,7 +1297,6 @@
 									select
 											relname
 										,	objoid
-										,	objsubid
 										,	description
 									from
 											pg_stat_all_tables ps
@@ -1338,7 +1318,6 @@
 										from	my_description
 										where	1=1
 											and	my.relname = relname
-											and objsubid = 0
 									) 											as table_name_kr
 								,	pa.attname									as column_name
 								,	my.description								as column_name_kr
@@ -1367,14 +1346,12 @@
 									my_description my
 										inner join pg_attribute pa on 1=1
 											and	my.objoid   = pa.attrelid
-											and	my.objsubid = pa.attnum
 										inner join information_schema.columns col on 1=1
 											and my.relname = col.table_name
 											and pa.attname = col.column_name
 							where	1=1
 							order by
 									my.relname
-								,	my.objsubid
 						) t
 				)
 			select

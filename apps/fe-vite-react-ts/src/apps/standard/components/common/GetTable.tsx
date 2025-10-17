@@ -1,4 +1,4 @@
-// import { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 // import { Box, Button, IconButton, Tooltip, Typography } from "@mui/material";
 import { Typography } from "@mui/material";
 // import { MRT_TableOptions, MaterialReactTable, useMaterialReactTable } from "material-react-table";
@@ -6,31 +6,52 @@ import { MaterialReactTable, useMaterialReactTable } from "material-react-table"
 // import DeleteIcon from '@mui/icons-material/Delete';
 // import EditIcon from '@mui/icons-material/Edit';
 // import SaveIcon from '@mui/icons-material/Save';
-import GetDataFrom from "../../common/GetDataFrom";
+import { useAppEnvStore } from "../../../../appmain/app.env";
 
 const GetTable = (props: any) => {
 
-    // const http = process.env.REACT_APP_STANDARD_BE_ADDR_PORT;
-    const http = 'http://192.168.0.101:8090/standard';
+    const env = useAppEnvStore((state) => state.env);
+    const appServer = env.apps?.urlApiServerJava || '';
+    const api = appServer + '/standard';
 
-    const columns = GetDataFrom(String(http) + props.addr + '/columns');
-    if (columns !== undefined && columns !== null && columns.length) {
-        // console.log(columns);
-    }
+    const [loading, setLoading] = useState(false);
+    const [columns, setColumns] = useState(() => []);
+    useEffect(() => {
+        const loadColumns = async () => {
+            if (!appServer) return;
+            setLoading(true);
+            const url = String(api) + props.addr + '/columns';
+            try {
+                const response = await fetch(url);
+                const data = await response.json();
+                setColumns(data);
+                setLoading(false);
+            } catch (error) {
+                setLoading(false);
+                console.error('GetTable() error : ' + url);
+            }
+        }
+        loadColumns();
+    }, [appServer, api, props.addr]);
 
-    const data = GetDataFrom(String(http) + props.addr + '/data');
-    if (data !== undefined && data !== null && data.length) {
-        // console.log(data);
-    }
-
-    // const [pagination, setPagination] = useState({
-    //     pageSize: 10,
-    //     pageIndex: 0,
-    // });
-
-    // useEffect(() => {
-    //     //do something when the pagination state changes
-    // }, [pagination.pageIndex, pagination.pageSize]);
+    const [data, setData] = useState(() => []);
+    useEffect(() => {
+        const loadData = async () => {
+            if (!appServer) return;
+            setLoading(true);
+            const url = String(api) + props.addr + '/data';
+            try {
+                const response = await fetch(url);
+                const data = await response.json();
+                setData(data);
+                setLoading(false);
+            } catch (error) {
+                setLoading(false);
+                console.error('GetTable() error : ' + url);
+            }
+        }
+        loadData();
+    }, [appServer, api, props.addr]);
 
     const table = useMaterialReactTable({
         columns,
@@ -52,8 +73,10 @@ const GetTable = (props: any) => {
             pagination: {
                 pageSize: 10,
                 pageIndex: 0,
-            }
+            },
+            isLoading: loading,
         },
+        state: { isLoading: loading },
         getRowId: (row: any) => row.id,
         // renderRowActions: ({ row }) => (
         //     <Box sx={{ display: 'flex', gap: '1rem' }}>

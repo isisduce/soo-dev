@@ -57,11 +57,13 @@ export const CandidatePledge: React.FC<CandidatePledgeProps> = (props: Candidate
         return text.length;
     };
 
+    const editEnabled = props.status === CoolmoveCode.STATUS.EMPTY || props.status === CoolmoveCode.STATUS.DRAFT;
+
     return (
         <Box sx={{ width: '100%', backgroundColor: '#EFF9FF', padding: 2, borderRadius: 1, marginBottom: 0 }}>
             {/* <Box sx={{ width: '100%', display: 'flex', flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}> */}
                 <label>
-                    {props.status === CoolmoveCode.STATUS.DRAFT && (
+                    {editEnabled && (
                         <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
                             <span style={{fontSize:14, color:'#888', fontWeight: 'bold', marginBottom: 4 }}>공약 입력</span>
                             <span style={{fontSize:12, color:'#888', marginBottom:2}}>공약 {pledgeMaxCount}개를 입력할 수 있습니다.</span>
@@ -73,7 +75,7 @@ export const CandidatePledge: React.FC<CandidatePledgeProps> = (props: Candidate
                     )}
                     {props.type === CoolmoveCode.TYPE.PROMISE && props.status === CoolmoveCode.STATUS.FINAL && (
                         <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-                            <span style={{fontSize:12, color:'#888' }}>좋아하는 공약을 선택해주세요</span>
+                            <span style={{fontSize:16, color:'#888' }}>좋아하는 공약을 선택해주세요</span>
                         </Box>
                     )}
                     {props.type === CoolmoveCode.TYPE.PROMISE && props.status === CoolmoveCode.STATUS.CLOSE && (
@@ -83,29 +85,29 @@ export const CandidatePledge: React.FC<CandidatePledgeProps> = (props: Candidate
                         </Box>
                     )}
                 </label>
-            {/* </Box> */}
+            <Box sx={{ height: 8 }} />
             <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', fontSize: 12, color: '#888' }}>
                 {props.candidateItem?.pledges?.map((pledge, index) => (
                     <Box key={index} sx={{ width: '100%', display: 'flex', flexDirection: 'row'}}>
                         <Box sx={{ width: '100%',position: 'relative' }}>
                             <textarea
-                                disabled={props.status !== CoolmoveCode.STATUS.DRAFT || draggedIndex != null}
+                                disabled={!editEnabled || draggedIndex != null}
                                 style={{ width: '100%', height: 60, padding: 8, resize: 'none', boxSizing: 'border-box', position: 'relative' }}
                                 maxLength={pledgeMaxLength}
                                 placeholder={
-                                    props.status === CoolmoveCode.STATUS.DRAFT ? `공약을 ${pledgeMaxLength}자 이내로 입력해 주세요.` : '공약 없음'
+                                    editEnabled ? `공약을 ${pledgeMaxLength}자 이내로 입력해 주세요.` : '공약 없음'
                                 }
                                 value={pledge ?? ''}
                                 onChange={(e) => handlePledgeChange(index, e.target.value)}
                             />
-                            { props.status === CoolmoveCode.STATUS.DRAFT && (
+                            {editEnabled && (
                                 <span
                                     style={{ position: 'absolute', right: '10px', bottom: '10px', fontSize: '11px', color: '#888' }}>
                                     <em>{getLength(pledge)}</em>/{pledgeMaxLength}
                                 </span>
                             )}
                         </Box>
-                        {props.status === CoolmoveCode.STATUS.DRAFT && (
+                        {editEnabled && (
                             <Box
                                 draggable
                                 onDragStart={() => handleDragStart(index)}
@@ -132,7 +134,7 @@ export const CandidatePledge: React.FC<CandidatePledgeProps> = (props: Candidate
                                 <Radio
                                     // disabled={!!pledge || pledge.length === 0}
                                     checked={props.candidateVote?.pledgeNo === index}
-                                    value={index}
+                                    value={index + 1}
                                     onClick={() => {
                                         if (props.candidateVote && props.setCandidateVote) {
                                             const newVote = { ...props.candidateVote, pledgeNo: index };

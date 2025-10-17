@@ -5,7 +5,7 @@ import '../styles/css/common.css';
 import '../styles/css/main.css';
 import { useAppEnvStore } from '../../../appmain/app.env';
 import { coolmoveApi } from '../api/coolmove.api';
-import { emptyCandidateMast, type DtoCandidateMast } from '../dto/dto.candidate';
+import { emptyPrimaryMast, type DtoCandidateMast } from '../dto/dto.candidate';
 import { CandidateItemComponent } from '../candidate/candidate-item.component';
 import headerLogoImg from '/styles/images/header-logo.svg';
 import { CandidateItemPreviewComponent } from './candidate-item.preview.component';
@@ -33,7 +33,7 @@ export const CandidateRegistComponent: React.FC<CandidateRegistComponentProps> =
     const apiServer = env.apps?.urlApiServerJava || '';
     const token = localStorage.getItem('token') || '';
 
-    const [candidateMast, setCandidateMast] = useState<DtoCandidateMast>(emptyCandidateMast);
+    const [candidateMast, setCandidateMast] = useState<DtoCandidateMast>(emptyPrimaryMast);
 
     const handleVoterListUpload = () => {
         const input = document.createElement('input');

@@ -90,6 +90,26 @@ SET
 WHERE	uuid			= #{uuid}::UUID
 	</update>
 
+	<update id="candidateMastUpdatePeriod" parameterType="String">
+UPDATE	candidate_mast
+SET
+		period			= #{period}
+	,	beg_dt			= #{begDt}::TIMESTAMP
+	,	end_dt			= #{endDt}::TIMESTAMP
+	,	mod_user_id		= #{modUserId}
+	,	mod_dt			= now()
+WHERE	uuid			= #{uuid}::UUID
+	</update>
+
+	<update id="candidateMastUpdateStatus" parameterType="String">
+UPDATE	candidate_mast
+SET
+		status			= #{status}
+	,	mod_user_id		= #{modUserId}
+	,	mod_dt			= now()
+WHERE	uuid			= #{uuid}::UUID
+	</update>
+
 	<update id="candidateMastRemove" parameterType="String">
 DELETE	FROM	candidate_mast
 WHERE	uuid	= #{uuid}::UUID

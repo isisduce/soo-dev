@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.soo.apps.coolmove.config.CoolmoveConfig;
 import com.soo.apps.coolmove.dto.DtoCandidateMast;
 import com.soo.apps.coolmove.dto.DtoUser;
@@ -135,15 +134,13 @@ public class CoolmoveController {
         @RequestPart(value = "voters", required = false) MultipartFile voters
     ) {
         String apiPath = String.format("POST %s%s", apiBase, "/candidate-mast");
-        ObjectMapper mapper = new ObjectMapper();
-        DtoCandidateMast candidateMast = new DtoCandidateMast();
-        try {
-            candidateMast = mapper.readValue(candidateMastJson, DtoCandidateMast.class);
-        } catch (Exception e) {
-            log.error("Failed to process candidateMast", e);
-            return ResponseEntity.badRequest().body(ApiResponseDto.failure("Failed to process candidateMast"));
+        DtoCandidateMast dto = DtoCandidateMast.fromJson(candidateMastJson);
+        ApiResponseDto<DtoCandidateMast> response;
+        if (dto != null) {
+            response = candidateMastInsertImpl(apiPath, dto, photo1, photo2, voters);
+        } else {
+            response = ApiResponseDto.failure("Invalid candidateMast JSON");
         }
-        ApiResponseDto<DtoCandidateMast> response = candidateMastInsertImpl(apiPath, candidateMast, photo1, photo2, voters);
         return ResponseEntity.ok(response);
     }
 
@@ -182,12 +179,70 @@ public class CoolmoveController {
         }
         DtoCandidateMast savedCandidateMast = coolmoveService.candidateMastInsert(candidateMast);
         ApiResponseDto<DtoCandidateMast> response = ApiResponseDto.success(savedCandidateMast);
-        log.info(apiPath + " :: candidates: " + savedCandidateMast.getCandidates());
-        log.info(apiPath + " :: period: " + savedCandidateMast.getPeriod());
-        log.info(apiPath + " :: voters: " + savedCandidateMast.getVotersOgnlNm());
+        log.info(apiPath + " :: candidateMast: " + savedCandidateMast.toString());
         log.info(apiPath + " => " + response.getMessage());
         return response;
     }
+
+    // ====================================================================================================
+
+    @PostMapping("/candidate-mast/period")
+    public ResponseEntity<?> candidateMastUpdatePeriod(
+        @RequestParam(value = "candidateMast", required = true) String candidateMastJson
+    ) {
+        String apiPath = String.format("POST %s%s", apiBase, "/candidate-mast/period");
+        DtoCandidateMast dto = DtoCandidateMast.fromJson(candidateMastJson);
+        boolean ret = false;
+        if (dto != null) {
+            ret = coolmoveService.candidateMastUpdatePeriod(dto.getUuid(), dto.getPeriod(), dto.getBegDt(), dto.getEndDt(), dto.getModUserId());
+            log.info(apiPath + " " + dto.toString() + " => " + ret);
+        } else {
+            log.info(apiPath + " => " + ret);
+        }
+        ApiResponseDto<Boolean> response = ApiResponseDto.success(ret);
+        return ResponseEntity.ok(response);
+    }
+
+    // ====================================================================================================
+
+    @PostMapping("/candidate-mast/status")
+    public ResponseEntity<?> candidateMastUpdateStatus(
+        @RequestParam(value = "candidateMast", required = true) String candidateMastJson
+    ) {
+        String apiPath = String.format("POST %s%s", apiBase, "/candidate-mast/status");
+        DtoCandidateMast dto = DtoCandidateMast.fromJson(candidateMastJson);
+        boolean ret = false;
+        if (dto != null) {
+            ret = coolmoveService.candidateMastUpdateStatus(dto.getUuid(), dto.getStatus(), dto.getModUserId());
+            log.info(apiPath + " " + dto.toString() + " => " + ret);
+        } else {
+            log.info(apiPath + " => " + ret);
+        }
+        ApiResponseDto<Boolean> response = ApiResponseDto.success(ret);
+        return ResponseEntity.ok(response);
+    }
+
+    // ====================================================================================================
+
+    @PostMapping("/candidate-mast/delete")
+    public ResponseEntity<?> candidateMastRemove(
+        @RequestParam(value = "candidateMast", required = true) String candidateMastJson
+    ) {
+        String apiPath = String.format("POST %s%s", apiBase, "/candidate-mast/delete");
+        DtoCandidateMast dto = DtoCandidateMast.fromJson(candidateMastJson);
+        boolean ret = false;
+        if (dto != null) {
+            ret = coolmoveService.candidateMastRemove(dto.getUuid());
+            log.info(apiPath + " " + dto.toString() + " => " + ret);
+        } else {
+            log.info(apiPath + " => " + ret);
+        }
+        ApiResponseDto<Boolean> response = ApiResponseDto.success(ret);
+        return ResponseEntity.ok(response);
+    }
+
+    // ====================================================================================================
+    // ====================================================================================================
 
     // 유권자 목록 파일 다운로드
     @GetMapping("/candidates/voter-list")

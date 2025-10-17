@@ -71,9 +71,15 @@ public class CoolmoveService {
     // ====================================================================================================
 
     public ArrayList<EntityCandidateMast> candidateMastSelect(HashMap<String,Object> params) {
+        return candidateMastSelect(params, true);
+    }
+
+    public ArrayList<EntityCandidateMast> candidateMastSelect(HashMap<String,Object> params, boolean build) {
         ArrayList<EntityCandidateMast> list = coolmoveMapper.candidateMastSelect(params);
-        for (EntityCandidateMast item : list) {
-            entityCandidateMastBuild(item);
+        if (build) {
+            for (EntityCandidateMast item : list) {
+                entityCandidateMastBuild(item);
+            }
         }
         return list;
     }
@@ -87,12 +93,16 @@ public class CoolmoveService {
     // ====================================================================================================
 
     public EntityCandidateMast candidateMastGet(String uuid) {
+        return candidateMastGet(uuid, true);
+    }
+
+    public EntityCandidateMast candidateMastGet(String uuid, boolean build) {
         if (StringHelper.IsEmpty(uuid)) {
             return null;
         }
         HashMap<String,Object> params = new HashMap<>();
         ParamHelper.addParam(params, "uuid", uuid);
-        ArrayList<EntityCandidateMast> list = candidateMastSelect(params);
+        ArrayList<EntityCandidateMast> list = candidateMastSelect(params, build);
         if (0 < list.size()) {
             return list.get(0);
         }
@@ -106,15 +116,17 @@ public class CoolmoveService {
             log.warn("candidateMastInsert : candidateMast is null");
             return null;
         }
-        EntityCandidateMast item = candidateMastGet(dto.getUuid());
-        if (item == null) {
-            EntityCandidateMast newItem = DtoCandidateMast.toEntity(dto);
-            newItem.setRegUserId(newItem.getSysUserId());
-            if (candidateMastInsert(newItem)) {
-                item = candidateMastGet(newItem.getUuid());
+        EntityCandidateMast entity = candidateMastGet(dto.getUuid(), false);
+        if (entity == null) {
+            EntityCandidateMast newEntity = DtoCandidateMast.toEntity(dto);
+            newEntity.setRegUserId(newEntity.getSysUserId());
+            if (candidateMastInsert(newEntity)) {
+                entity = candidateMastGet(newEntity.getUuid());
             }
+        } else {
+            candidateMastUpdate(dto);
         }
-        return DtoCandidateMast.fromEntity(item);
+        return DtoCandidateMast.fromEntity(entity);
     }
 
     public boolean candidateMastInsert(EntityCandidateMast entity) {
@@ -145,14 +157,14 @@ public class CoolmoveService {
             log.warn("candidateMastUpdate : candidateMast is null");
             return false;
         }
-        EntityCandidateMast item = candidateMastGet(dto.getUuid());
-        if (item != null) {
-            EntityCandidateMast newItem = DtoCandidateMast.toEntity(dto);
-            boolean modified = item.isNotEqual(newItem);
+        EntityCandidateMast entity = candidateMastGet(dto.getUuid());
+        if (entity != null) {
+            EntityCandidateMast newEntity = DtoCandidateMast.toEntity(dto);
+            boolean modified = entity.isNotEqual(newEntity);
             if (modified) {
-                newItem.setSeq(item.getSeq());
-                newItem.setModUserId(newItem.getSysUserId());
-                candidateMastUpdate(newItem);
+                newEntity.setSeq(entity.getSeq());
+                newEntity.setModUserId(newEntity.getSysUserId());
+                candidateMastUpdate(newEntity);
             }
             return (modified);
         }
@@ -173,6 +185,14 @@ public class CoolmoveService {
             }
         }
         return true;
+    }
+
+    public boolean candidateMastUpdatePeriod(String uuid, String period, String begDt, String endDt, String modUserId) {
+        return coolmoveMapper.candidateMastUpdatePeriod(uuid, period, begDt, endDt, modUserId);
+    }
+
+    public boolean candidateMastUpdateStatus(String uuid, String status, String modUserId) {
+        return coolmoveMapper.candidateMastUpdateStatus(uuid, status, modUserId);
     }
 
     // ====================================================================================================
@@ -283,8 +303,8 @@ public class CoolmoveService {
             log.warn("candidateItemRemove : uuid or id is empty");
             return false;
         }
-        coolmoveMapper.candidateItemRemove(uuid, id);
         candidatePledgeRemove(uuid, id, null);
+        coolmoveMapper.candidateItemRemove(uuid, id);
         return true;
     }
 
@@ -315,8 +335,8 @@ public class CoolmoveService {
     // ====================================================================================================
 
     public boolean candidatePledgeRemove(String uuid, String id, String no) {
-        if (StringHelper.IsEmpty(uuid) || StringHelper.IsEmpty(id) || StringHelper.IsEmpty(no)) {
-            log.warn("candidatePledgeRemove : uuid or id or no is empty");
+        if (StringHelper.IsEmpty(uuid) || StringHelper.IsEmpty(id)) {
+            log.warn("candidatePledgeRemove : uuid or id is empty");
             return false;
         }
         coolmoveMapper.candidatePledgeRemove(uuid, id, no);

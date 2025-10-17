@@ -17,6 +17,8 @@ public interface CoolmoveMapper {
 
     boolean candidateMastInsert(EntityCandidateMast entity);
     boolean candidateMastUpdate(EntityCandidateMast entity);
+    boolean candidateMastUpdatePeriod(String uuid, String period, String begDt, String endDt, String modUserId);
+    boolean candidateMastUpdateStatus(String uuid, String status, String modUserId);
     boolean candidateMastRemove(String uuid);
 
     ArrayList<EntityCandidateItem> candidateItemSelect(HashMap<String, Object> params);

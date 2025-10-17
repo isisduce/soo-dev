@@ -13,11 +13,11 @@ interface CandidateMastProps {
     setCandidateMast?: (candidateMast: DtoCandidateMast) => void;
     candidateVote?: DtoCandidateVote;
     setCandidateVote?: (candidateVote: DtoCandidateVote) => void;
-    onSave?: (candidateMast?: DtoCandidateMast) => void;
-    onView?: (candidateMast?: DtoCandidateMast) => void;
-    onDone?: (candidateMast?: DtoCandidateMast) => void;
-    onSend?: (candidateMast?: DtoCandidateMast) => void;
-    onShow?: (candidateMast?: DtoCandidateMast) => void;
+    onDraftSave?: (candidateMast?: DtoCandidateMast) => void;
+    onDraftView?: (candidateMast?: DtoCandidateMast) => void;
+    onDraftDone?: (candidateMast?: DtoCandidateMast) => void;
+    onFinalSend?: (candidateMast?: DtoCandidateMast) => void;
+    onFinalShow?: (candidateMast?: DtoCandidateMast) => void;
 }
 
 export const CandidateMast: React.FC<CandidateMastProps> = (props: CandidateMastProps) => {
@@ -29,7 +29,7 @@ export const CandidateMast: React.FC<CandidateMastProps> = (props: CandidateMast
     const candidateMast = props.candidateMast;
     const candidateVote = props.candidateVote;
     const type = candidateMast?.type ?? CoolmoveCode.TYPE.PROMISE;
-    const status = candidateMast?.status ?? CoolmoveCode.STATUS.DRAFT;
+    const status = candidateMast?.status ?? CoolmoveCode.STATUS.EMPTY;
 
     const handleCandidateItemChange = (candidateItem: DtoCandidateItem) => {
         if (!candidateMast) return;
@@ -43,14 +43,14 @@ export const CandidateMast: React.FC<CandidateMastProps> = (props: CandidateMast
         }
     };
 
-    const handleSave = async () => {
+    const handleDraftSave = async () => {
         if (apiServer && candidateMast) {
             const candidateMastPayload = {
                 ...candidateMast,
                 no: candidateMast?.no ?? 0,
                 candidates: candidateMast?.candidates.map(({ photoFile, ...c }) => c),
                 votersFile: undefined,
-                status: candidateMast?.status ?? CoolmoveCode.STATUS.DRAFT,
+                status: CoolmoveCode.STATUS.DRAFT,
             };
             console.log(candidateMastPayload);
             const response = await coolmoveApi.candidateMastInsert(
@@ -65,42 +65,59 @@ export const CandidateMast: React.FC<CandidateMastProps> = (props: CandidateMast
             );
             if (response.success) {
                 if (response.result) {
-                    props.setCandidateMast?.(response.result);
+                    // props.setCandidateMast?.(response.result);
                 }
             } else {
                 alert(`저장에 실패하였습니다: ${response.code} ${response.message}`);
             }
         }
-        if (props.onSave) {
-            props.onSave(candidateMast);
+        if (props.onDraftSave) {
+            props.onDraftSave();
         }
     }
 
-    const handleView = () => {
-        console.log('미리 보기');
-        if (props.onView) {
-            props.onView(candidateMast);
+    const handleDraftView = () => {
+        if (props.onDraftView) {
+            props.onDraftView();
         }
     }
 
-    const handleDone = () => {
-        console.log('등록 완료');
-        if (props.onDone) {
-            props.onDone(candidateMast);
+    const handleDraftDone = async () => {
+        if (apiServer && candidateMast) {
+            const newStatus = CoolmoveCode.STATUS.FINAL;
+            const response = await coolmoveApi.candidateMastUpdateStatus(
+                apiServer,
+                token,
+                candidateMast.uuid || '',
+                newStatus
+            );
+            if (response.success) {
+                if (response.result) {
+                    props.setCandidateMast?.({
+                        ...candidateMast,
+                        status: newStatus,
+                    });
+                }
+            } else {
+                alert(`저장에 실패하였습니다: ${response.code} ${response.message}`);
+            }
+        }
+        if (props.onDraftDone) {
+            props.onDraftDone();
         }
     }
 
-    const handleSend = () => {
+    const handleFinalSend = () => {
         console.log('카카오로 발송');
-        if (props.onSend) {
-            props.onSend(candidateMast);
+        if (props.onFinalSend) {
+            props.onFinalSend();
         }
     }
 
-    const handleShow = () => {
+    const handleFinalShow = () => {
         console.log('스마트폰에 공개');
-        if (props.onShow) {
-            props.onShow(candidateMast);
+        if (props.onFinalShow) {
+            props.onFinalShow();
         }
     }
 
@@ -141,11 +158,12 @@ export const CandidateMast: React.FC<CandidateMastProps> = (props: CandidateMast
             <CandidateOperation
                 type={type}
                 status={status}
-                onSave={handleSave}
-                onView={handleView}
-                onDone={handleDone}
-                onSend={handleSend}
-                onShow={handleShow}
+                candidateMast={candidateMast}
+                onDraftSave={handleDraftSave}
+                onDraftView={handleDraftView}
+                onDraftDone={handleDraftDone}
+                onFinalSend={handleFinalSend}
+                onFinalShow={handleFinalShow}
             />
         </Box>
     );

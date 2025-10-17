@@ -40,12 +40,14 @@ export const CandidatePeriodVoters: React.FC<CandidatePeriodVotersProps> = (prop
         input.click();
     };
 
+    const editEnabled = props.status === CoolmoveCode.STATUS.EMPTY || props.status === CoolmoveCode.STATUS.DRAFT;
+
     return (
         <Box sx={{ width: '100%', backgroundColor: '#EFF9FF', padding: 2, borderRadius: 1 }}>
             <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', width: '100%', gap: 1 }}>
                 <Box sx={{ width: `${publicHeadWidth}px`, marginRight: 1, whiteSpace: 'nowrap' }}>공개기간</Box>
                 <input
-                    disabled={props.status !== CoolmoveCode.STATUS.DRAFT}
+                    disabled={!editEnabled}
                     readOnly
                     type="text"
                     placeholder={'공개기간을 설정하세요'}
@@ -53,6 +55,7 @@ export const CandidatePeriodVoters: React.FC<CandidatePeriodVotersProps> = (prop
                     style={{ width: '100%' }}
                 />
                 <button
+                    disabled={!editEnabled}
                     type="button"
                     className="btn outline small"
                     style={{ whiteSpace: 'nowrap' }}
@@ -65,7 +68,7 @@ export const CandidatePeriodVoters: React.FC<CandidatePeriodVotersProps> = (prop
             <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', width: '100%', gap: 1 }}>
                 <Box sx={{ width: `${publicHeadWidth}px`, marginRight: 1, whiteSpace: 'nowrap' }}>유권자들</Box>
                 <input
-                    disabled={props.status !== CoolmoveCode.STATUS.DRAFT}
+                    disabled={!editEnabled}
                     readOnly
                     type="text"
                     placeholder={'유권자 목록 파일을 선택하세요'}
@@ -73,7 +76,7 @@ export const CandidatePeriodVoters: React.FC<CandidatePeriodVotersProps> = (prop
                     style={{ width: '100%' }}
                 />
                 <button
-                    disabled={props.status !== CoolmoveCode.STATUS.DRAFT}
+                    disabled={!editEnabled}
                     type="button"
                     className="btn outline small"
                     style={{ whiteSpace: 'nowrap' }}

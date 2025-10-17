@@ -60,13 +60,15 @@ export const CandidatePlayer: React.FC<CandidatePlayerProps> = (props: Candidate
         }
     };
 
+    const editEnabled = props.status === CoolmoveCode.STATUS.EMPTY || props.status === CoolmoveCode.STATUS.DRAFT;
+
     return (
         <Box sx={{ display: 'flex', flexDirection: 'column', backgroundColor: '#EFF9FF', padding: 2, gap: 1 }}>
             <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', width: '100%' }}>
                 <Box sx={{ width: `${playerHeadWidth}px`, marginRight: 1, whiteSpace: 'nowrap' }}>소속</Box>
                 <Box sx={{ width: '100%' }}>
                     <input
-                        disabled={props.status !== CoolmoveCode.STATUS.DRAFT}
+                        disabled={!editEnabled}
                         type="text"
                         placeholder={`${playerNameMaxLength}자 이내`}
                         maxLength={playerNameMaxLength}
@@ -80,7 +82,7 @@ export const CandidatePlayer: React.FC<CandidatePlayerProps> = (props: Candidate
                 <Box sx={{ width: `${playerHeadWidth}px`, marginRight: 1, whiteSpace: 'nowrap' }}>이름</Box>
                 <Box sx={{ width: '100%' }}>
                     <input
-                        disabled={props.status !== CoolmoveCode.STATUS.DRAFT}
+                        disabled={!editEnabled}
                         type="text"
                         placeholder={`${playerNameMaxLength}자 이내`}
                         maxLength={playerNameMaxLength}
@@ -93,7 +95,7 @@ export const CandidatePlayer: React.FC<CandidatePlayerProps> = (props: Candidate
             <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', width: '100%' }}>
                 <Box sx={{ width: `${playerHeadWidth}px`, marginRight: 1, marginTop: 1, whiteSpace: 'nowrap', alignSelf: 'flex-start' }}>사진</Box>
                 <Box sx={{ width: '100%', display: 'flex', justifyContent: 'left' }}>
-                    {props.status !== CoolmoveCode.STATUS.DRAFT && (
+                    {!editEnabled && (
                         <>
                             <img src={
                                 props.candidateItem?.photoFile && props.candidateItem.photoFile instanceof File
@@ -113,7 +115,7 @@ export const CandidatePlayer: React.FC<CandidatePlayerProps> = (props: Candidate
                             />
                         </>
                     )}
-                    {props.status === CoolmoveCode.STATUS.DRAFT && (
+                    {editEnabled && (
                         <>
                             <button
                                 type="button"

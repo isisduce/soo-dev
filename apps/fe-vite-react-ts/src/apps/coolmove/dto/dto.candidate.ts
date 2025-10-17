@@ -68,15 +68,6 @@ export const emptyCandidateItem: DtoCandidateItem = {
     sysUserId: localStorage.getItem('userid'),
 };
 
-export const emptyCandidateMast: DtoCandidateMast = {
-    no: 0,
-    candidates: [
-        { ...emptyCandidateItem, id: 1, pledges: [...(emptyCandidateItem.pledges ?? [])] },
-        { ...emptyCandidateItem, id: 2, pledges: [...(emptyCandidateItem.pledges ?? [])] },
-    ],
-    sysUserId: localStorage.getItem('userid'),
-};
-
 export const emptyPrimaryMast: DtoCandidateMast = {
     no: 0,
     type: CoolmoveCode.TYPE.PRIMARY,
@@ -84,6 +75,7 @@ export const emptyPrimaryMast: DtoCandidateMast = {
         { ...emptyCandidateItem, id: 1, pledges: [...(emptyCandidateItem.pledges ?? [])] },
         { ...emptyCandidateItem, id: 2, pledges: [...(emptyCandidateItem.pledges ?? [])] },
     ],
+    status: CoolmoveCode.STATUS.EMPTY,
     sysUserId: localStorage.getItem('userid'),
 };
 
@@ -93,6 +85,7 @@ export const emptyPromiseMast: DtoCandidateMast = {
     candidates: [
         { ...emptyCandidateItem, id: 1, pledges: [...(emptyCandidateItem.pledges ?? [])] },
     ],
+    status: CoolmoveCode.STATUS.EMPTY,
     sysUserId: localStorage.getItem('userid'),
 };
 

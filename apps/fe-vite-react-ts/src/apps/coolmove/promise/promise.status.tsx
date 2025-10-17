@@ -5,12 +5,14 @@ import { CoolmoveStatusNotice } from '../component/coolmove.status.notice';
 import type { DtoCandidateMast } from '../dto/dto.candidate';
 import { CoolmoveCode } from '../types/types';
 import defaultUserImg from '/styles/images/user-img-120.png';
+import { coolmoveApi } from '../api/coolmove.api';
 
 interface PromiseStatusProps {
     data?: DtoCandidateMast[];
     selectedCandidateMast?: DtoCandidateMast;
     setSelectedCandidateMast?: (candidateMast: DtoCandidateMast | undefined) => void;
     onNew?: () => void;
+    onRemove?: (row: DtoCandidateMast) => void;
 
     // onNewRegistration?: () => void;
     // onPublishToMobile?: (formData: any) => void;
@@ -26,10 +28,10 @@ export const PromiseStatus: React.FC<PromiseStatusProps> = (props: PromiseStatus
     const env = useAppEnvStore((state) => state.env);
     const imgServer = env.apps?.urlImgServer || '';
 
-    const [selectedRow, setSelectedRow] = useState<number | null>(null);
+    // const [selectedRow, setSelectedRow] = useState<number | null>(null);
 
     const handleRowClick = (row: DtoCandidateMast) => {
-        setSelectedRow(row.no);
+        // setSelectedRow(row.no);
         props.setSelectedCandidateMast?.(row);
     };
 
@@ -70,10 +72,15 @@ export const PromiseStatus: React.FC<PromiseStatusProps> = (props: PromiseStatus
     };
 
     const handleNew = () => {
-        setSelectedRow(null);
+        // setSelectedRow(null);
         props.setSelectedCandidateMast?.(undefined);
         props.onNew?.();
     };
+
+    const handleRemove = async (row: DtoCandidateMast) => {
+        await coolmoveApi.candidateMastRemove(env.apps?.urlApiServerJava || '', localStorage.getItem('token') || '', row.uuid || '')
+        props.onRemove?.(row);
+    }
 
     // const renderDateCell = (date: string) => {
     //     if (date === "-" || date === "") return date;
@@ -118,13 +125,14 @@ export const PromiseStatus: React.FC<PromiseStatusProps> = (props: PromiseStatus
                             <th>카카오 발송</th>
                             <th>공개 여부</th>
                             <th>결과보고서</th>
+                            <th>삭제</th>
                         </tr>
                     </thead>
                     <tbody>
                         {props.data?.map((row) => (
                             <tr
                                 key={row.no}
-                                className={selectedRow === row.no ? 'active' : ''}
+                                className={props.selectedCandidateMast?.uuid === row.uuid ? 'active' : ''}
                                 onClick={() => handleRowClick(row)}
                             >
                                 <td>{row.no}</td>
@@ -233,6 +241,16 @@ export const PromiseStatus: React.FC<PromiseStatusProps> = (props: PromiseStatus
                                             title="보고서 다운로드"
                                         />
                                     ) : (row.statusType === 'end' ? '-' : '')} */}
+                                </td>
+                                <td>
+                                    <Button
+                                        variant="contained"
+                                        color="error"
+                                        size="small"
+                                        onClick={() => handleRemove(row)}
+                                    >
+                                        삭제
+                                    </Button>
                                 </td>
                             </tr>
                         ))}

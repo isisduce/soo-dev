@@ -46,13 +46,33 @@ export const PromiseContainer = () => {
         }
     };
 
-    const handleNew = () => {
-        console.log('신규 등록 클릭');
+    const handleCandidateMastChange = (candidateMast: DtoCandidateMast) => {
+        setData(data.map(d => d.uuid === candidateMast.uuid ? candidateMast : d));
     }
 
-    const handleSave = () => {
+    const handleNew = () => {
+    }
+
+    const handleRemove = (candidateMast: DtoCandidateMast) => {
         loadCandidateMast();
-        console.log('저장 클릭');
+    }
+
+    const handleDraftSave = () => {
+        if (!selectedCandidateMast?.uuid) {
+            loadCandidateMast();
+        } else {
+            console.log('PromiseContainer - handleDraftSave', selectedCandidateMast);
+            setData(data.map(d => d.uuid === selectedCandidateMast.uuid ? selectedCandidateMast : d));
+        }
+        // setSelectedCandidateMast(undefined);
+    }
+
+    const handleDraftView = () => {
+    }
+
+    const handleDraftDone = () => {
+        loadCandidateMast();
+        setSelectedCandidateMast(undefined);
     }
 
     return (
@@ -75,7 +95,10 @@ export const PromiseContainer = () => {
                         <Box sx={{ width: { xs: '540px', md: '320px' }, maxWidth: { md: '540px' } }}>
                             <PromiseMast
                                 candidateMast={selectedCandidateMast}
-                                onSave={handleSave}
+                                setCandidateMast={handleCandidateMastChange}
+                                onDraftSave={handleDraftSave}
+                                onDraftView={handleDraftView}
+                                onDraftDone={handleDraftDone}
                             />
                         </Box>
                         <Box sx={{ width: { xs: '100%', md: 'calc(100% - 320px)' }, flexGrow: 1, minWidth: 0, overflow: 'auto' }}>
@@ -84,6 +107,7 @@ export const PromiseContainer = () => {
                                 selectedCandidateMast={selectedCandidateMast}
                                 setSelectedCandidateMast={setSelectedCandidateMast}
                                 onNew={handleNew}
+                                onRemove={handleRemove}
                             />
                         </Box>
                     </Box>
