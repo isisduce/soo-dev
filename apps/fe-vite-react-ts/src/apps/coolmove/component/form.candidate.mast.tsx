@@ -9,6 +9,7 @@ import { FormCandidateOperation } from './form.candidate.operation';
 interface FormCandidateMastProps {
     candidateMast?: DtoCandidateMast;
     setCandidateMast?: (v: DtoCandidateMast) => void;
+    selectedCandidateMast?: DtoCandidateMast;
     candidateVote?: DtoCandidateVote;
     setCandidateVote?: (v: DtoCandidateVote) => void;
     onDraftSave?: (v?: DtoCandidateMast) => void;
@@ -39,14 +40,13 @@ export const FormCandidateMast: React.FC<FormCandidateMastProps> = (props: FormC
 
     return (
         <Box sx={{ width: '100%', backgroundColor: '#f9f9f9', padding: 1, borderRadius: 4, boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)', }} >
-            <Box sx={{ marginBottom: '16px' }} >
+            <Box sx={{ width: '100%' }} >
                 {type === CoolmoveCode.TYPE.PROMISE && <h2>공약 등록</h2>}
                 {type === CoolmoveCode.TYPE.PRIMARY && <h2>후보자 등록</h2>}
             </Box>
-            <Box sx={{ height: 12 }} />
-            <Box sx={{ width: '100%', display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, gap: 1, }} >
+            <Box sx={{ width: '100%', display: 'flex', flexDirection: { xs: 'column', sm: 'row' } }} >
                 {candidateMast?.candidates.map((candidate, index) => (
-                    <Box key={index} sx={{ minWidth: { sm: 320 }, flex: 1, display: 'flex', flexDirection: 'column', gap: 1 }}>
+                    <Box key={index} sx={{ minWidth: { sm: 320 }, flex: 1, display: 'flex', flexDirection: 'column' }}>
                         {type === CoolmoveCode.TYPE.PRIMARY &&
                             <Box>
                                 <h3>후보자 {candidate.id} 등록</h3>
@@ -63,27 +63,28 @@ export const FormCandidateMast: React.FC<FormCandidateMastProps> = (props: FormC
                     </Box>
                 ))}
             </Box>
-            <Box sx={{ height: 12 }} />
-            <FormCandidatePeriodVoters
-                type={type}
-                status={status}
-                candidateMast={candidateMast}
-                setCandidateMast={props.setCandidateMast}
-            />
-            <Box sx={{ height: 12 }} />
-            <span>'등록완료'를 선택해야 화면에 노출됩니다.</span>
-            <Box sx={{ height: 4 }} />
-            <FormCandidateOperation
-                type={type}
-                status={status}
-                candidateMast={candidateMast}
-                setCandidateMast={props.setCandidateMast}
-                onDraftSave={props.onDraftSave}
-                onDraftView={props.onDraftView}
-                onDraftDone={props.onDraftDone}
-                onFinalSend={props.onFinalSend}
-                onFinalShow={props.onFinalShow}
-            />
+            <Box sx={{ width: '100%', mt: 1 }} >
+                <FormCandidatePeriodVoters
+                    type={type}
+                    status={status}
+                    candidateMast={candidateMast}
+                    setCandidateMast={props.setCandidateMast}
+                />
+            </Box>
+            <Box sx={{ width: '100%', mt: 1 }} >
+                <FormCandidateOperation
+                    type={type}
+                    status={status}
+                    candidateMast={candidateMast}
+                    setCandidateMast={props.setCandidateMast}
+                    selectedCandidateMast={props.selectedCandidateMast}
+                    onDraftSave={props.onDraftSave}
+                    onDraftView={props.onDraftView}
+                    onDraftDone={props.onDraftDone}
+                    onFinalSend={props.onFinalSend}
+                    onFinalShow={props.onFinalShow}
+                />
+            </Box>
         </Box>
     );
 };

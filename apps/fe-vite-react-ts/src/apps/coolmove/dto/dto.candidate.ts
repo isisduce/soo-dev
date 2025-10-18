@@ -114,7 +114,8 @@ export const CandidateMast = {
         };
     },
 
-    isChanged: (a: DtoCandidateMast, b: DtoCandidateMast): boolean => {
+    isChanged: (a?: DtoCandidateMast, b?: DtoCandidateMast): boolean => {
+        if (!a || !b) return true;
         if (a.uuid !== b.uuid) return true;
         if (a.mastNm !== b.mastNm) return true;
         if (a.type !== b.type) return true;

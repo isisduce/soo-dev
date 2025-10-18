@@ -63,7 +63,7 @@ export const FormCandidatePlayer: React.FC<FormCandidatePlayerProps> = (props: F
     const editEnabled = props.status === CoolmoveCode.STATUS.EMPTY || props.status === CoolmoveCode.STATUS.DRAFT;
 
     return (
-        <Box sx={{ display: 'flex', flexDirection: 'column', backgroundColor: '#EFF9FF', padding: 2, gap: 1 }}>
+        <Box sx={{ display: 'flex', flexDirection: 'column', backgroundColor: '#EFF9FF', padding: 1, gap: 1 }}>
             <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', width: '100%' }}>
                 <Box sx={{ width: `${playerHeadWidth}px`, marginRight: 1, whiteSpace: 'nowrap' }}>소속</Box>
                 <Box sx={{ width: '100%' }}>

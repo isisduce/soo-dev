@@ -20,22 +20,25 @@ export const FormCandidateItem: React.FC<FormCandidateItemProps> = (props: FormC
     const status = props.status ?? CoolmoveCode.STATUS.DRAFT;
 
     return (
-        <Box sx={{ width: '100%', backgroundColor: '#f9f9f9', padding: 0 }}>
-            <FormCandidatePlayer
-                type={type}
-                status={status}
-                candidateItem={props.candidateItem}
-                setCandidateItem={props.setCandidateItem}
-            />
-            <Box sx={{ height: 12 }} />
-            <FormCandidatePledge
-                type={type}
-                status={status}
-                candidateItem={props.candidateItem}
-                setCandidateItem={props.setCandidateItem}
-                candidateVote={props.candidateVote}
-                setCandidateVote={props.setCandidateVote}
-            />
+        <Box sx={{ width: '100%' }}>
+            <Box sx={{ width: '100%', mt: 1 }} >
+                <FormCandidatePlayer
+                    type={type}
+                    status={status}
+                    candidateItem={props.candidateItem}
+                    setCandidateItem={props.setCandidateItem}
+                />
+            </Box>
+            <Box sx={{ width: '100%', mt: 1 }} >
+                <FormCandidatePledge
+                    type={type}
+                    status={status}
+                    candidateItem={props.candidateItem}
+                    setCandidateItem={props.setCandidateItem}
+                    candidateVote={props.candidateVote}
+                    setCandidateVote={props.setCandidateVote}
+                />
+            </Box>
         </Box>
     );
 };

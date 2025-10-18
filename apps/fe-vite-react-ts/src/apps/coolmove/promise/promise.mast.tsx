@@ -4,6 +4,7 @@ import { FormCandidateMast } from '../component/form.candidate.mast';
 
 interface PromiseMastProps {
     candidateMast?: DtoCandidateMast;
+    selectedCandidateMast?: DtoCandidateMast;
     candidateVote?: DtoCandidateVote;
     onDraftSave?: (v?: DtoCandidateMast) => void;
     onDraftView?: (v?: DtoCandidateMast) => void;
@@ -48,6 +49,7 @@ export const PromiseMast: React.FC<PromiseMastProps> = (props: PromiseMastProps)
         <FormCandidateMast
             candidateMast={candidateMast}
             setCandidateMast={handleCandidateMastChange}
+            selectedCandidateMast={props.selectedCandidateMast}
             candidateVote={candidateVote}
             setCandidateVote={handleCandidateVoteChange}
             onDraftSave={handleDraftSave}

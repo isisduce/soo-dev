@@ -50,13 +50,22 @@ export const PromiseContainer = () => {
         if (!v) return;
         const response = await coolmoveApi.candidateMastRemove(env.apps?.urlApiServerJava || '', localStorage.getItem('token') || '', v.uuid || '')
         if (response.success) {
-            setData(prev => prev.filter(item => item.uuid !== v.uuid));
+            setData(prev => {
+                const newArr = prev.filter(item => item.uuid !== v.uuid);
+                return newArr.map((item, idx) => ({ ...item, no: newArr.length - idx }));
+            });
             setSelectedCandidateMast(prev => (prev && prev.uuid === v.uuid) ? undefined : prev);
         }
     }
 
     const handleSave = async (v?: DtoCandidateMast, status?: CoolmoveStatus) => {
         if (!v) return;
+        if (!v?.uuid) {
+            if (10 <= data.length) {
+                alert('공약은 최대 10개까지만 등록할 수 있습니다.');
+                return;
+            }
+        }
         if (apiServer) {
             const payload = {
                 ...v,
@@ -85,6 +94,7 @@ export const PromiseContainer = () => {
                             : [saved, ...prev];
                         return newArr.map((item, idx) => ({ ...item, no: newArr.length - idx }));
                     });
+                    setSelectedCandidateMast(prev => (prev && prev.uuid === saved.uuid) ? saved : prev);
                 }
             } else {
                 alert(`저장에 실패하였습니다: ${response.code} ${response.message}`);
@@ -106,7 +116,7 @@ export const PromiseContainer = () => {
 
     return (
         <>{signin &&
-            <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', }}>
+            <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', minHeight: '100vh', }}>
                 <AppBar sx={{ backgroundColor: '#ffffff', color: '#000000', display: 'flex', flexDirection: 'row', alignItems: 'center', padding: '0 16px', boxShadow: '0 2px 4px rgba(0,0,0,0.1)', flexWrap: 'nowrap', overflowX: 'auto' }}>
                     <Box sx={{ display: 'flex !important', alignItems: 'center', flexShrink: 1 }}>
                         <CoolmoveHeaderLogo />
@@ -118,18 +128,19 @@ export const PromiseContainer = () => {
                     </Box>
                 </AppBar>
                 <Box sx={{ height: `${CoolmoveConst.HEADER_HEIGHT}px` }} />
-                <Box>
+                <Box sx={{ width: '100%' }}>
                     {/* Responsive layout: column on xs, row on md and up */}
                     <Box sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, gap: 2, padding: 2, boxSizing: 'border-box' }}>
-                        <Box sx={{ width: { xs: '540px', md: '320px' }, maxWidth: { md: '540px' } }}>
+                        <Box sx={{ width: { xs: '540px', md: '380px' }, maxWidth: { md: '540px' } }}>
                             <PromiseMast
                                 candidateMast={selectedCandidateMast}
+                                selectedCandidateMast={selectedCandidateMast}
                                 onDraftSave={handleDraftSave}
                                 onDraftView={handleDraftView}
                                 onDraftDone={handleDraftDone}
                             />
                         </Box>
-                        <Box sx={{ width: { xs: '100%', md: 'calc(100% - 320px)' }, flexGrow: 1, minWidth: 0, overflow: 'auto' }}>
+                        <Box sx={{ width: { xs: '100%', md: 'calc(100% - 300px)' }, flexGrow: 1, minWidth: 0, overflow: 'auto' }}>
                             <Box sx={{ width: '100%', marginBottom: 2 }}>
                                 <TableCandidateMast
                                     data={data}

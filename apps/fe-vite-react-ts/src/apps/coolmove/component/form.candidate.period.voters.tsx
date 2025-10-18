@@ -1,4 +1,4 @@
-import { Box, Typography } from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
 import { type DtoCandidateMast } from '../dto/dto.candidate';
 import { CoolmoveCode, type CoolmoveStatus, type CoolmoveType } from '../types/types';
 
@@ -43,7 +43,7 @@ export const FormCandidatePeriodVoters: React.FC<FormCandidatePeriodVotersProps>
     const editEnabled = props.status === CoolmoveCode.STATUS.EMPTY || props.status === CoolmoveCode.STATUS.DRAFT;
 
     return (
-        <Box sx={{ width: '100%', backgroundColor: '#EFF9FF', padding: 2, borderRadius: 1 }}>
+        <Box sx={{ width: '100%', backgroundColor: '#EFF9FF', padding: 1, borderRadius: 1 }}>
             <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', width: '100%', gap: 1 }}>
                 <Box sx={{ width: `${publicHeadWidth}px`, marginRight: 1, whiteSpace: 'nowrap' }}>공개기간</Box>
                 <input
@@ -54,15 +54,16 @@ export const FormCandidatePeriodVoters: React.FC<FormCandidatePeriodVotersProps>
                     value={props.candidateMast?.period || ''}
                     style={{ width: '100%' }}
                 />
-                <button
+                <Button
                     disabled={!editEnabled}
-                    type="button"
-                    className="btn outline small"
+                    color='inherit'
+                    size='small'
+                    variant='outlined'
                     style={{ whiteSpace: 'nowrap' }}
                     onClick={handlePeriodChange}
                 >
                     설정
-                </button>
+                </Button>
             </Box>
             <Box sx={{ height: 8 }} />
             <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', width: '100%', gap: 1 }}>
@@ -75,19 +76,21 @@ export const FormCandidatePeriodVoters: React.FC<FormCandidatePeriodVotersProps>
                     value={props.candidateMast?.votersOgnlNm || ''}
                     style={{ width: '100%' }}
                 />
-                <button
+                <Button
                     disabled={!editEnabled}
-                    type="button"
-                    className="btn outline small"
+                    variant='outlined'
+                    color='inherit'
+                    size='small'
                     style={{ whiteSpace: 'nowrap' }}
                     onClick={handleVotersUpload}
                 >
                     파일
-                </button>
+                </Button>
             </Box>
             <Box sx={{ height: 12 }} />
             <Typography variant="body2" color='warning' >
-                공개기간과 유권자 목록은 선거가 시작된 후에는 변경할 수 없습니다.
+                <Box>공개기간과 유권자 목록은</Box>
+                <Box>선거가 시작된 후에는 변경할 수 없습니다.</Box>
             </Typography>
         </Box>
     );

@@ -60,8 +60,8 @@ export const FormCandidatePledge: React.FC<FormCandidatePledgeProps> = (props: F
     const editEnabled = props.status === CoolmoveCode.STATUS.EMPTY || props.status === CoolmoveCode.STATUS.DRAFT;
 
     return (
-        <Box sx={{ width: '100%', backgroundColor: '#EFF9FF', padding: 2, borderRadius: 1, marginBottom: 0 }}>
-            {/* <Box sx={{ width: '100%', display: 'flex', flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center' }}> */}
+        <Box sx={{ width: '100%', backgroundColor: '#EFF9FF', padding: 1, borderRadius: 1, marginBottom: 0 }}>
+            <Box sx={{ width: '100%', display: 'flex', flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
                 <label>
                     {editEnabled && (
                         <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
@@ -85,14 +85,14 @@ export const FormCandidatePledge: React.FC<FormCandidatePledgeProps> = (props: F
                         </Box>
                     )}
                 </label>
-            <Box sx={{ height: 8 }} />
-            <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', fontSize: 12, color: '#888' }}>
+            </Box>
+            <Box sx={{ width: '100%', mt: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', fontSize: 12, color: '#888' }}>
                 {props.candidateItem?.pledges?.map((pledge, index) => (
                     <Box key={index} sx={{ width: '100%', display: 'flex', flexDirection: 'row'}}>
-                        <Box sx={{ width: '100%',position: 'relative' }}>
+                        <Box sx={{ width: '100%', position: 'relative' }}>
                             <textarea
                                 disabled={!editEnabled || draggedIndex != null}
-                                style={{ width: '100%', height: 60, padding: 8, resize: 'none', boxSizing: 'border-box', position: 'relative' }}
+                                style={{ width: '100%', height: 50, padding: 8, resize: 'none', boxSizing: 'border-box', position: 'relative' }}
                                 maxLength={pledgeMaxLength}
                                 placeholder={
                                     editEnabled ? `공약을 ${pledgeMaxLength}자 이내로 입력해 주세요.` : '공약 없음'
@@ -126,7 +126,7 @@ export const FormCandidatePledge: React.FC<FormCandidatePledgeProps> = (props: F
                                     justifyContent: 'center'
                                 }}
                             >
-                                <span style={{fontSize:12, color:'#888'}}><img src={dragHandle} alt="드래그 핸들" /></span>
+                                <span style={{fontSize:10, color:'#888'}}><img src={dragHandle} alt="드래그 핸들" /></span>
                             </Box>
                         )}
                         {props.type === CoolmoveCode.TYPE.PROMISE && props.status === CoolmoveCode.STATUS.FINAL && (
