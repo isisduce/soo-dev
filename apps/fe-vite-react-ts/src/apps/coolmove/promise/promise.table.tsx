@@ -1,29 +1,27 @@
-import React, { useState } from 'react';
+import React, { } from 'react';
 import { Box, Button } from '@mui/material';
 import { useAppEnvStore } from '../../../appmain/app.env';
-import { CoolmoveStatusNotice } from '../component/coolmove.status.notice';
-import type { DtoCandidateMast } from '../dto/dto.candidate';
-import { CoolmoveCode } from '../types/types';
-import defaultUserImg from '/styles/images/user-img-120.png';
 import { coolmoveApi } from '../api/coolmove.api';
+import { CoolmoveCode } from '../types/types';
+import type { DtoCandidateMast } from '../dto/dto.candidate';
+import defaultUserImg from '/styles/images/user-img-120.png';
 
-interface PromiseStatusProps {
+interface PromiseTableProps {
     data?: DtoCandidateMast[];
     selectedCandidateMast?: DtoCandidateMast;
     setSelectedCandidateMast?: (candidateMast: DtoCandidateMast | undefined) => void;
     onNew?: () => void;
-    onRemove?: (row: DtoCandidateMast) => void;
+    onRemove?: (uuud?: string) => void;
 
-    // onNewRegistration?: () => void;
-    // onPublishToMobile?: (formData: any) => void;
-    // onExcelDownload?: (rowNo: number) => void;
-    // onKakaoSend?: (rowNo: number) => void;
-    // onPublish?: (rowNo: number) => void;
-    // onReportDownload?: (rowNo: number) => void;
-    // // onPledgeReorder?: (newOrder: PledgeData[]) => void;
+    onFinal?: () => void;
+    onSendToMobile?: () => void;
+    onOpenToMobile?: () => void;
+    onPublish?: () => void;
+    onVotersDownload?: () => void;
+    onReportDownload?: () => void;
 }
 
-export const PromiseStatus: React.FC<PromiseStatusProps> = (props: PromiseStatusProps) => {
+export const PromiseTable: React.FC<PromiseTableProps> = (props: PromiseTableProps) => {
 
     const env = useAppEnvStore((state) => state.env);
     const imgServer = env.apps?.urlImgServer || '';
@@ -78,8 +76,10 @@ export const PromiseStatus: React.FC<PromiseStatusProps> = (props: PromiseStatus
     };
 
     const handleRemove = async (row: DtoCandidateMast) => {
-        await coolmoveApi.candidateMastRemove(env.apps?.urlApiServerJava || '', localStorage.getItem('token') || '', row.uuid || '')
-        props.onRemove?.(row);
+        const response = await coolmoveApi.candidateMastRemove(env.apps?.urlApiServerJava || '', localStorage.getItem('token') || '', row.uuid || '')
+        if (response.success) {
+            props.onRemove?.(row.uuid);
+        }
     }
 
     // const renderDateCell = (date: string) => {
@@ -257,7 +257,7 @@ export const PromiseStatus: React.FC<PromiseStatusProps> = (props: PromiseStatus
                     </tbody>
                 </table>
             </div>
-            <CoolmoveStatusNotice />
         </Box>
     );
+
 };

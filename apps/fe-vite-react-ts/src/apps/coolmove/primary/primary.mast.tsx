@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { defaultCandidateVote, emptyPrimaryMast, type DtoCandidateMast, type DtoCandidateVote } from '../dto/dto.candidate';
-import { CandidateMast } from '../component/candidate.mast';
+import { CandidateMast, CandidateVote, type DtoCandidateMast, type DtoCandidateVote } from '../dto/dto.candidate';
+import { FormCandidateMast } from '../component/form.candidate.mast';
 
 interface PrimaryMastProps {
     candidateMast?: DtoCandidateMast;
@@ -16,9 +16,9 @@ interface PrimaryMastProps {
 
 export const PrimaryMast: React.FC<PrimaryMastProps> = (props: PrimaryMastProps) => {
 
-    const [candidateMast, setCandidateMast] = useState<DtoCandidateMast | undefined>(emptyPrimaryMast);
+    const [candidateMast, setCandidateMast] = useState<DtoCandidateMast | undefined>(CandidateMast.createEmptyPrimary);
     useEffect(() => {
-        setCandidateMast(props.candidateMast ?? emptyPrimaryMast);
+        setCandidateMast(props.candidateMast ?? CandidateMast.createEmptyPrimary);
     }, [props.candidateMast]);
 
     const handleCandidateMastChange = (candidateMast: DtoCandidateMast) => {
@@ -28,9 +28,9 @@ export const PrimaryMast: React.FC<PrimaryMastProps> = (props: PrimaryMastProps)
         }
     }
 
-    const [candidateVote, setCandidateVote] = useState<DtoCandidateVote | undefined>(defaultCandidateVote);
+    const [candidateVote, setCandidateVote] = useState<DtoCandidateVote | undefined>(CandidateVote.createEmpty);
     useEffect(() => {
-        setCandidateVote(props.candidateVote ?? defaultCandidateVote);
+        setCandidateVote(props.candidateVote ?? CandidateVote.createEmpty);
     }, [props.candidateVote]);
 
     const handleCandidateVoteChange = (candidateVote: DtoCandidateVote) => {
@@ -41,7 +41,7 @@ export const PrimaryMast: React.FC<PrimaryMastProps> = (props: PrimaryMastProps)
     }
 
     return (
-        <CandidateMast
+        <FormCandidateMast
             candidateMast={candidateMast}
             setCandidateMast={handleCandidateMastChange}
             candidateVote={candidateVote}

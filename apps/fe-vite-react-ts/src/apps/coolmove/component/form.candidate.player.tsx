@@ -5,14 +5,14 @@ import defaultUserImg from '/styles/images/user-img-120.png';
 import { CoolmoveCode, type CoolmoveStatus, type CoolmoveType } from '../types/types';
 import { type DtoCandidateItem } from '../dto/dto.candidate';
 
-interface CandidatePlayerProps {
+interface FormCandidatePlayerProps {
     type?: CoolmoveType;
     status?: CoolmoveStatus;
     candidateItem?: DtoCandidateItem;
     setCandidateItem?: (candidateItem: DtoCandidateItem) => void;
 }
 
-export const CandidatePlayer: React.FC<CandidatePlayerProps> = (props: CandidatePlayerProps) => {
+export const FormCandidatePlayer: React.FC<FormCandidatePlayerProps> = (props: FormCandidatePlayerProps) => {
 
     const env = useAppEnvStore((state) => state.env);
     const imgServer = env.apps?.urlImgServer || '';

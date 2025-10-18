@@ -2,7 +2,7 @@
 import { Box } from '@mui/material';
 import { CoolmoveConst } from '../types/const';
 
-export const CoolmoveUserConfig = () => {
+export const CoolmoveHeaderUserConfig = () => {
 
     // const navigate = useNavigate();
 

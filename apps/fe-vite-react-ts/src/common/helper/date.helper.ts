@@ -15,13 +15,15 @@ const DateHelper = {
         }
     ): string => {
         var s = '';
-        var date = strDt ? new Date(strDt): new Date();
-        if (options?.yy) {                  s += `${       date.getFullYear()}`; }
-        if (options?.mm) { if (s) s += '-'; s += `${String(date.getMonth() + 1).padStart(2, '0')}`; }
-        if (options?.dd) { if (s) s += '-'; s += `${String(date.getDate()).padStart(2, '0')}`; }
-        if (options?.h)  { if (s) s += ' '; s += `${String(date.getHours()).padStart(2, '0')}`; }
-        if (options?.m)  { if (s) s += ':'; s += `${String(date.getMinutes()).padStart(2, '0')}`; }
-        if (options?.s)  { if (s) s += ':'; s += `${String(date.getSeconds()).padStart(2, '0')}`; }
+        if (strDt) {
+            var date = strDt ? new Date(strDt): new Date();
+            if (options?.yy) {                  s += `${       date.getFullYear()}`; }
+            if (options?.mm) { if (s) s += '-'; s += `${String(date.getMonth() + 1).padStart(2, '0')}`; }
+            if (options?.dd) { if (s) s += '-'; s += `${String(date.getDate()).padStart(2, '0')}`; }
+            if (options?.h)  { if (s) s += ' '; s += `${String(date.getHours()).padStart(2, '0')}`; }
+            if (options?.m)  { if (s) s += ':'; s += `${String(date.getMinutes()).padStart(2, '0')}`; }
+            if (options?.s)  { if (s) s += ':'; s += `${String(date.getSeconds()).padStart(2, '0')}`; }
+        }
         return s;
     },
 

@@ -125,6 +125,7 @@ public class CoolmoveService {
             }
         } else {
             candidateMastUpdate(dto);
+            entity = candidateMastGet(dto.getUuid());
         }
         return DtoCandidateMast.fromEntity(entity);
     }

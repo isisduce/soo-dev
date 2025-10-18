@@ -3,10 +3,11 @@ import { Box, Button } from '@mui/material';
 import { CoolmoveCode, type CoolmoveStatus, type CoolmoveType } from '../types/types';
 import type { DtoCandidateMast } from '../dto/dto.candidate';
 
-interface CandidateOperationProps {
+interface FormCandidateOperationProps {
     type?: CoolmoveType;
     status?: CoolmoveStatus;
     candidateMast?: DtoCandidateMast;
+    setCandidateMast?: (candidateMast: DtoCandidateMast) => void;
     onDraftSave?: () => void;
     onDraftView?: () => void;
     onDraftDone?: () => void;
@@ -14,7 +15,7 @@ interface CandidateOperationProps {
     onFinalShow?: () => void;
 }
 
-export const CandidateOperation: React.FC<CandidateOperationProps> = (props: CandidateOperationProps) => {
+export const FormCandidateOperation: React.FC<FormCandidateOperationProps> = (props: FormCandidateOperationProps) => {
 
     const editEnabled = props.status === CoolmoveCode.STATUS.EMPTY || props.status === CoolmoveCode.STATUS.DRAFT;
     const saveEnabled = props.candidateMast?.candidates.every(c => c.clubNm && c.playerNm);
@@ -27,14 +28,22 @@ export const CandidateOperation: React.FC<CandidateOperationProps> = (props: Can
                     color="primary"
                     disabled={!editEnabled || !saveEnabled}
                     sx={{ width: '34%', whiteSpace: 'nowrap' }}
-                    onClick={() => props.onDraftSave?.()}
+                    onClick={() => {
+                        if (props.candidateMast && props.setCandidateMast) {
+                            props.setCandidateMast?.({
+                                ...props.candidateMast,
+                                status: CoolmoveCode.STATUS.DRAFT,
+                            });
+                        }
+                        props.onDraftSave?.()
+                    }}
                 >
                     임시 저장
                 </Button>
                 <Button
                     variant="contained"
                     color="primary"
-                    disabled={!editEnabled}
+                    disabled={!editEnabled || !saveEnabled}
                     sx={{ width: '33%', whiteSpace: 'nowrap' }}
                     onClick={() => props.onDraftView?.()}
                 >
@@ -45,7 +54,15 @@ export const CandidateOperation: React.FC<CandidateOperationProps> = (props: Can
                     color="primary"
                     disabled={!editEnabled || !saveEnabled}
                     sx={{ width: '33%', whiteSpace: 'nowrap' }}
-                    onClick={() => props.onDraftDone?.()}
+                    onClick={() => {
+                        if (props.candidateMast && props.setCandidateMast) {
+                            props.setCandidateMast?.({
+                                ...props.candidateMast,
+                                status: CoolmoveCode.STATUS.FINAL,
+                            });
+                        }
+                        props.onDraftDone?.()
+                    }}
                 >
                     등록 완료
                 </Button>

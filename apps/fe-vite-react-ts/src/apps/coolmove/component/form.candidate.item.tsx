@@ -2,10 +2,10 @@ import React, { } from 'react';
 import { Box } from '@mui/material';
 import { type CoolmoveType, type CoolmoveStatus, CoolmoveCode } from '../types/types';
 import { type DtoCandidateItem, type DtoCandidateVote } from '../dto/dto.candidate';
-import { CandidatePlayer } from './candidate.player';
-import { CandidatePledge } from './candidate.pledge';
+import { FormCandidatePlayer } from './form.candidate.player';
+import { FormCandidatePledge } from './form.candidate.pledge';
 
-interface CandidateItemProps {
+interface FormCandidateItemProps {
     type?: CoolmoveType;
     status?: CoolmoveStatus;
     candidateItem?: DtoCandidateItem;
@@ -14,21 +14,21 @@ interface CandidateItemProps {
     setCandidateVote?: (candidateVote: DtoCandidateVote) => void;
 }
 
-export const CandidateItem: React.FC<CandidateItemProps> = (props: CandidateItemProps) => {
+export const FormCandidateItem: React.FC<FormCandidateItemProps> = (props: FormCandidateItemProps) => {
 
     const type = props.type ?? CoolmoveCode.TYPE.PROMISE;
     const status = props.status ?? CoolmoveCode.STATUS.DRAFT;
 
     return (
         <Box sx={{ width: '100%', backgroundColor: '#f9f9f9', padding: 0 }}>
-            <CandidatePlayer
+            <FormCandidatePlayer
                 type={type}
                 status={status}
                 candidateItem={props.candidateItem}
                 setCandidateItem={props.setCandidateItem}
             />
             <Box sx={{ height: 12 }} />
-            <CandidatePledge
+            <FormCandidatePledge
                 type={type}
                 status={status}
                 candidateItem={props.candidateItem}

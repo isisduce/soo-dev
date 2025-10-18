@@ -4,7 +4,7 @@ import dragHandle from '/styles/images/ico-list-24.svg';
 import { type CoolmoveStatus, type CoolmoveType, CoolmoveCode } from '../types/types';
 import { type DtoCandidateItem, type DtoCandidateVote } from '../dto/dto.candidate';
 
-interface CandidatePledgeProps {
+interface FormCandidatePledgeProps {
     type?: CoolmoveType;
     status?: CoolmoveStatus;
     candidateItem?: DtoCandidateItem;
@@ -13,7 +13,7 @@ interface CandidatePledgeProps {
     setCandidateVote?: (candidateVote: DtoCandidateVote) => void;
 }
 
-export const CandidatePledge: React.FC<CandidatePledgeProps> = (props: CandidatePledgeProps) => {
+export const FormCandidatePledge: React.FC<FormCandidatePledgeProps> = (props: FormCandidatePledgeProps) => {
 
     const pledgeMaxCount = 5;
     const pledgeMaxLength = 40;
@@ -21,7 +21,7 @@ export const CandidatePledge: React.FC<CandidatePledgeProps> = (props: Candidate
     const handlePledgeChange = (index: number, value: string) => {
         const newPledges = props.candidateItem?.pledges?.map((pledge, i) =>
             i === index ? value : pledge
-        );
+        ) || ['','','','','',''];
         if (props.candidateItem) {
             props.setCandidateItem?.({ ...props.candidateItem, pledges: newPledges });
         }

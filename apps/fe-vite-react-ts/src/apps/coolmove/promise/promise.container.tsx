@@ -1,29 +1,25 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { AppBar, Box } from '@mui/material';
 import { useAppEnvStore } from '../../../appmain/app.env';
 import { CoolmoveHeaderLogo } from '../component/coolmove.header.logo';
-import { CoolmoveLogout } from '../component/coolmove.logout';
-import { CoolmoveUserConfig } from '../component/coolmove.user.config';
+import { CoolmoveHeaderLogout } from '../component/coolmove.header.logout';
+import { CoolmoveHeaderUserConfig } from '../component/coolmove.header.user.config';
 import { PromiseMast } from './promise.mast';
-import { PromiseStatus } from './promise.status';
 import type { DtoCandidateMast } from '../dto/dto.candidate';
+import { CandidateMast } from '../dto/dto.candidate';
 import { coolmoveApi } from '../api/coolmove.api';
-import { CoolmoveCode } from '../types/types';
-import { routerConst } from '../routerData';
+import { CoolmoveCode, type CoolmoveStatus } from '../types/types';
 import { CoolmoveConst } from '../types/const';
+import { signinCheck } from '../login/signin.check';
+import { FormCandidateTableNotice } from '../component/form.candidate.table.notice';
+import { TableCandidateMast } from '../component/table.candidate.mast';
 
 export const PromiseContainer = () => {
 
-    const navigate = useNavigate();
     const env = useAppEnvStore((state) => state.env);
     const apiServer = env.apps?.urlApiServerJava || '';
-    const userid = localStorage.getItem('userid') || '';
-    const signin = !!userid;
-
-    if (!signin) {
-        navigate(routerConst.LOGIN);
-    }
+    const token = localStorage.getItem('token') || '';
+    const signin = signinCheck();
 
     // const [selectedRow, setSelectedRow] = useState<number | null>(null);
     const [data, setData] = useState<DtoCandidateMast[]>([]);
@@ -46,33 +42,66 @@ export const PromiseContainer = () => {
         }
     };
 
-    const handleCandidateMastChange = (candidateMast: DtoCandidateMast) => {
-        setData(data.map(d => d.uuid === candidateMast.uuid ? candidateMast : d));
-    }
-
     const handleNew = () => {
+        setSelectedCandidateMast(CandidateMast.createEmptyPromise());
     }
 
-    const handleRemove = (candidateMast: DtoCandidateMast) => {
-        loadCandidateMast();
-    }
-
-    const handleDraftSave = () => {
-        if (!selectedCandidateMast?.uuid) {
-            loadCandidateMast();
-        } else {
-            console.log('PromiseContainer - handleDraftSave', selectedCandidateMast);
-            setData(data.map(d => d.uuid === selectedCandidateMast.uuid ? selectedCandidateMast : d));
+    const handleRemove = async (v?: DtoCandidateMast) => {
+        if (!v) return;
+        const response = await coolmoveApi.candidateMastRemove(env.apps?.urlApiServerJava || '', localStorage.getItem('token') || '', v.uuid || '')
+        if (response.success) {
+            setData(prev => prev.filter(item => item.uuid !== v.uuid));
+            setSelectedCandidateMast(prev => (prev && prev.uuid === v.uuid) ? undefined : prev);
         }
-        // setSelectedCandidateMast(undefined);
     }
 
-    const handleDraftView = () => {
+    const handleSave = async (v?: DtoCandidateMast, status?: CoolmoveStatus) => {
+        if (!v) return;
+        if (apiServer) {
+            const payload = {
+                ...v,
+                no: v?.no ?? 0,
+                candidates: v?.candidates.map(({ photoFile, ...c }) => c),
+                votersFile: undefined,
+                status: status ?? CoolmoveCode.STATUS.EMPTY,
+            };
+            const response = await coolmoveApi.candidateMastInsert(
+                apiServer,
+                token,
+                {
+                    candidateMast: payload,
+                    photo1: v.candidates[0]?.photoFile,
+                    photo2: v.candidates[1]?.photoFile,
+                    voters: v.votersFile,
+                }
+            );
+            if (response.success) {
+                if (response.result) {
+                    const saved = response.result as DtoCandidateMast;
+                    setData(prev => {
+                        const exists = prev.some(item => item.uuid === saved.uuid);
+                        const newArr = exists
+                            ? prev.map(item => item.uuid === saved.uuid ? saved : item)
+                            : [saved, ...prev];
+                        return newArr.map((item, idx) => ({ ...item, no: newArr.length - idx }));
+                    });
+                }
+            } else {
+                alert(`저장에 실패하였습니다: ${response.code} ${response.message}`);
+            }
+        }
     }
 
-    const handleDraftDone = () => {
-        loadCandidateMast();
-        setSelectedCandidateMast(undefined);
+    const handleDraftSave = async (v?: DtoCandidateMast) => {
+        handleSave(v, CoolmoveCode.STATUS.DRAFT);
+    }
+
+    const handleDraftView = (v?: DtoCandidateMast) => {
+        if (!v) return;
+    }
+
+    const handleDraftDone = async (v?: DtoCandidateMast) => {
+        handleSave(v, CoolmoveCode.STATUS.FINAL);
     }
 
     return (
@@ -84,8 +113,8 @@ export const PromiseContainer = () => {
                     </Box>
                     <Box sx={{ flexGrow: 1 }} />
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, flexShrink: 0, minWidth: 0 }}>
-                        <CoolmoveLogout />
-                        <CoolmoveUserConfig />
+                        <CoolmoveHeaderLogout />
+                        <CoolmoveHeaderUserConfig />
                     </Box>
                 </AppBar>
                 <Box sx={{ height: `${CoolmoveConst.HEADER_HEIGHT}px` }} />
@@ -95,20 +124,23 @@ export const PromiseContainer = () => {
                         <Box sx={{ width: { xs: '540px', md: '320px' }, maxWidth: { md: '540px' } }}>
                             <PromiseMast
                                 candidateMast={selectedCandidateMast}
-                                setCandidateMast={handleCandidateMastChange}
                                 onDraftSave={handleDraftSave}
                                 onDraftView={handleDraftView}
                                 onDraftDone={handleDraftDone}
                             />
                         </Box>
                         <Box sx={{ width: { xs: '100%', md: 'calc(100% - 320px)' }, flexGrow: 1, minWidth: 0, overflow: 'auto' }}>
-                            <PromiseStatus
-                                data={data}
-                                selectedCandidateMast={selectedCandidateMast}
-                                setSelectedCandidateMast={setSelectedCandidateMast}
-                                onNew={handleNew}
-                                onRemove={handleRemove}
-                            />
+                            <Box sx={{ width: '100%', marginBottom: 2 }}>
+                                <TableCandidateMast
+                                    data={data}
+                                    isLoading={false}
+                                    selectedCandidateMast={selectedCandidateMast}
+                                    setSelectedCandidateMast={setSelectedCandidateMast}
+                                    onNew={handleNew}
+                                    onRemove={handleRemove}
+                                />
+                                <FormCandidateTableNotice />
+                            </Box>
                         </Box>
                     </Box>
                 </Box>

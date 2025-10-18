@@ -1,63 +1,60 @@
 import React, { useEffect, useState } from 'react';
-import { defaultCandidateVote, emptyPromiseMast, type DtoCandidateMast, type DtoCandidateVote } from '../dto/dto.candidate';
-import { CandidateMast } from '../component/candidate.mast';
+import { CandidateMast, CandidateVote, type DtoCandidateMast, type DtoCandidateVote } from '../dto/dto.candidate';
+import { FormCandidateMast } from '../component/form.candidate.mast';
 
 interface PromiseMastProps {
     candidateMast?: DtoCandidateMast;
-    setCandidateMast?: (candidateMast: DtoCandidateMast) => void;
     candidateVote?: DtoCandidateVote;
-    setCandidateVote?: (candidateVote: DtoCandidateVote) => void;
-    onDraftSave?: (candidateMast?: DtoCandidateMast) => void;
-    onDraftView?: (candidateMast?: DtoCandidateMast) => void;
-    onDraftDone?: (candidateMast?: DtoCandidateMast) => void;
-    onFinalSend?: (candidateMast?: DtoCandidateMast) => void;
-    onFinalShow?: (candidateMast?: DtoCandidateMast) => void;
+    onDraftSave?: (v?: DtoCandidateMast) => void;
+    onDraftView?: (v?: DtoCandidateMast) => void;
+    onDraftDone?: (v?: DtoCandidateMast) => void;
+    onFinalSend?: (v?: DtoCandidateMast) => void;
+    onFinalShow?: (v?: DtoCandidateMast) => void;
 }
 
 export const PromiseMast: React.FC<PromiseMastProps> = (props: PromiseMastProps) => {
 
-    const [candidateMast, setCandidateMast] = useState<DtoCandidateMast | undefined>(emptyPromiseMast);
+    const [candidateMast, setCandidateMast] = useState<DtoCandidateMast | undefined>(CandidateMast.createEmptyPromise);
     useEffect(() => {
-        setCandidateMast(props.candidateMast ?? emptyPromiseMast);
+        setCandidateMast(props.candidateMast ?? CandidateMast.createEmptyPromise);
     }, [props.candidateMast]);
 
     const handleCandidateMastChange = (candidateMast: DtoCandidateMast) => {
         setCandidateMast(candidateMast);
-        if (props.setCandidateMast) {
-            props.setCandidateMast(candidateMast);
-        }
     }
 
-    const [candidateVote, setCandidateVote] = useState<DtoCandidateVote | undefined>(defaultCandidateVote);
+    const [candidateVote, setCandidateVote] = useState<DtoCandidateVote | undefined>(CandidateVote.createEmpty);
     useEffect(() => {
-        setCandidateVote(props.candidateVote ?? defaultCandidateVote);
+        setCandidateVote(props.candidateVote ?? CandidateVote.createEmpty);
     }, [props.candidateVote]);
 
     const handleCandidateVoteChange = (candidateVote: DtoCandidateVote) => {
         setCandidateVote(candidateVote);
-        if (props.setCandidateVote) {
-            props.setCandidateVote(candidateVote);
-        }
     }
 
     const handleDraftSave = () => {
-        // setCandidateMast(emptyPromiseMast)
         if (props.onDraftSave) {
             props.onDraftSave(candidateMast);
         }
     }
 
+    const handleDraftDone = () => {
+        if (props.onDraftDone) {
+            props.onDraftDone(candidateMast);
+        }
+    }
+
     return (
-        <CandidateMast
+        <FormCandidateMast
             candidateMast={candidateMast}
             setCandidateMast={handleCandidateMastChange}
             candidateVote={candidateVote}
             setCandidateVote={handleCandidateVoteChange}
             onDraftSave={handleDraftSave}
-            onDraftView={props.onDraftView}
-            onDraftDone={props.onDraftDone}
-            onFinalSend={props.onFinalSend}
-            onFinalShow={props.onFinalShow}
+            // onDraftView={props.onDraftView}
+            onDraftDone={handleDraftDone}
+            // onFinalSend={props.onFinalSend}
+            // onFinalShow={props.onFinalShow}
         />
     );
 

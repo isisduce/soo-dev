@@ -3,7 +3,7 @@ import { Box } from '@mui/material';
 import { routerConst } from '../routerData';
 import { CoolmoveConst } from '../types/const';
 
-export const CoolmoveLogout = () => {
+export const CoolmoveHeaderLogout = () => {
 
     const navigate = useNavigate();
 

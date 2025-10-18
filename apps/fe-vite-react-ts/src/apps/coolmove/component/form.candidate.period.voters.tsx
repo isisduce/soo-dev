@@ -2,14 +2,14 @@ import { Box, Typography } from '@mui/material';
 import { type DtoCandidateMast } from '../dto/dto.candidate';
 import { CoolmoveCode, type CoolmoveStatus, type CoolmoveType } from '../types/types';
 
-interface CandidatePeriodVotersProps {
+interface FormCandidatePeriodVotersProps {
     type?: CoolmoveType;
     status?: CoolmoveStatus;
     candidateMast?: DtoCandidateMast;
     setCandidateMast?: (candidateMast: DtoCandidateMast) => void;
 }
 
-export const CandidatePeriodVoters: React.FC<CandidatePeriodVotersProps> = (props: CandidatePeriodVotersProps) => {
+export const FormCandidatePeriodVoters: React.FC<FormCandidatePeriodVotersProps> = (props: FormCandidatePeriodVotersProps) => {
 
     const publicHeadWidth = 80;
 
