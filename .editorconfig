@@ -14,5 +14,8 @@ trim_trailing_whitespace = true
 [*.java]
 indent_style = space
 
+[*.sql]
+indent_style = tab
+
 [*.xml]
 indent_style = tab

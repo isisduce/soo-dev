@@ -4,14 +4,13 @@ import { FormCandidateMast } from '../component/form.candidate.mast';
 
 interface PrimaryMastProps {
     candidateMast?: DtoCandidateMast;
-    setCandidateMast?: (candidateMast: DtoCandidateMast) => void;
+    selectedCandidateMast?: DtoCandidateMast;
     candidateVote?: DtoCandidateVote;
-    setCandidateVote?: (candidateVote: DtoCandidateVote) => void;
-    onDraftSave?: (candidateMast?: DtoCandidateMast) => void;
-    onDraftView?: (candidateMast?: DtoCandidateMast) => void;
-    onDraftDone?: (candidateMast?: DtoCandidateMast) => void;
-    onFinalSend?: (candidateMast?: DtoCandidateMast) => void;
-    onFinalShow?: (candidateMast?: DtoCandidateMast) => void;
+    onDraftSave?: (v?: DtoCandidateMast) => void;
+    onDraftView?: (v?: DtoCandidateMast) => void;
+    onDraftDone?: (v?: DtoCandidateMast) => void;
+    onFinalSend?: (v?: DtoCandidateMast) => void;
+    onFinalShow?: (v?: DtoCandidateMast) => void;
 }
 
 export const PrimaryMast: React.FC<PrimaryMastProps> = (props: PrimaryMastProps) => {
@@ -23,9 +22,6 @@ export const PrimaryMast: React.FC<PrimaryMastProps> = (props: PrimaryMastProps)
 
     const handleCandidateMastChange = (candidateMast: DtoCandidateMast) => {
         setCandidateMast(candidateMast);
-        if (props.setCandidateMast) {
-            props.setCandidateMast(candidateMast);
-        }
     }
 
     const [candidateVote, setCandidateVote] = useState<DtoCandidateVote | undefined>(CandidateVote.createEmpty);
@@ -35,8 +31,17 @@ export const PrimaryMast: React.FC<PrimaryMastProps> = (props: PrimaryMastProps)
 
     const handleCandidateVoteChange = (candidateVote: DtoCandidateVote) => {
         setCandidateVote(candidateVote);
-        if (props.setCandidateVote) {
-            props.setCandidateVote(candidateVote);
+    }
+
+    const handleDraftSave = () => {
+        if (props.onDraftSave) {
+            props.onDraftSave(candidateMast);
+        }
+    }
+
+    const handleDraftDone = () => {
+        if (props.onDraftDone) {
+            props.onDraftDone(candidateMast);
         }
     }
 
@@ -44,13 +49,15 @@ export const PrimaryMast: React.FC<PrimaryMastProps> = (props: PrimaryMastProps)
         <FormCandidateMast
             candidateMast={candidateMast}
             setCandidateMast={handleCandidateMastChange}
+            selectedCandidateMast={props.selectedCandidateMast}
             candidateVote={candidateVote}
             setCandidateVote={handleCandidateVoteChange}
-            onDraftSave={props.onDraftSave}
-            onDraftView={props.onDraftView}
-            onDraftDone={props.onDraftDone}
-            onFinalSend={props.onFinalSend}
-            onFinalShow={props.onFinalShow}
+            onDraftSave={handleDraftSave}
+            // onDraftView={props.onDraftView}
+            onDraftDone={handleDraftDone}
+            // onFinalSend={props.onFinalSend}
+            // onFinalShow={props.onFinalShow}
         />
     );
+
 };

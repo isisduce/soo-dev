@@ -39,7 +39,7 @@ export const LoginContainer: React.FC = () => {
                 }
 
                 // 매니저 메인으로 이동
-                navigate(routerConst.CANDIDATE_STATUS);
+                navigate(routerConst.PRIMARY_CONTAINER);
             } else {
                 setShowError(true);
                 setErrorMessage('아이디 또는 비밀번호가 올바르지 않습니다.');

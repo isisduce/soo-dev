@@ -36,7 +36,7 @@ export const CandidateStatusContainer: React.FC = () => {
     };
 
     const handleNewAdd = () => {
-        navigate(routerConst.CANDIDATE_REGIST);
+        navigate(routerConst.PRIMARY_REGIST);
     };
 
     const handleLogout = () => {
@@ -54,7 +54,7 @@ export const CandidateStatusContainer: React.FC = () => {
     const handleRowClick = (rowData: any) => {
         // setSelectedRow(rowData.no);
         setSelectedCandidateMast(rowData);
-        console.log('선택된 행:', rowData);
+        // console.log('선택된 행:', rowData);
     };
 
     const handleDateClick = (date: string, type: 'start' | 'end') => {

@@ -3,7 +3,7 @@ import { Box, Button, IconButton } from '@mui/material';
 import { MaterialReactTable, useMaterialReactTable, type MRT_Cell, type MRT_ColumnDef } from 'material-react-table';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useAppEnvStore } from '../../../appmain/app.env';
-import { CoolmoveCode } from '../types/types';
+import { CoolmoveCode, type CoolmoveType } from '../types/types';
 import type { DtoCandidateMast } from '../dto/dto.candidate';
 import imgDefaultUser from '/styles/images/user-img-120.png';
 import imgXlsx from '/styles/images/ico-excel-18.svg';
@@ -11,6 +11,7 @@ import imgKakao from '/styles/images/ico-kakao.svg';
 import DateHelper from '../../../common/helper/date.helper';
 
 interface TableCandidateMastProps {
+    type: CoolmoveType;
     data?: DtoCandidateMast[];
     isLoading?: boolean;
     selectedCandidateMast?: DtoCandidateMast;
@@ -48,19 +49,23 @@ export const TableCandidateMast: React.FC<TableCandidateMastProps> = (props: Tab
 
     // ====================================================================================================
 
-    const cellClub = useCallback(({ cell }: { cell: MRT_Cell<DtoCandidateMast> }) => {
-        const candidateMast = cell.row.original;
-        const candidateItem = candidateMast.candidates && candidateMast.candidates.length > 0 ? candidateMast.candidates[0] : undefined;
+    const cellClubSub = (candidateMast: DtoCandidateMast, id: number) => {
+        const candidateItem = candidateMast.candidates && candidateMast.candidates.length > 0 ? candidateMast.candidates[id] : undefined;
         return (
             <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', }} >
                 {candidateItem?.clubNm}
             </Box>
         );
+    }
+    const cellClub = useCallback(({ cell }: { cell: MRT_Cell<DtoCandidateMast> }) => {
+        return cellClubSub(cell.row.original, 0);
+    }, []);
+    const cellClub2 = useCallback(({ cell }: { cell: MRT_Cell<DtoCandidateMast> }) => {
+        return cellClubSub(cell.row.original, 1);
     }, []);
 
-    const cellPlayer = useCallback(({ cell }: { cell: MRT_Cell<DtoCandidateMast> }) => {
-        const candidateMast = cell.row.original;
-        const candidateItem = candidateMast.candidates && candidateMast.candidates.length > 0 ? candidateMast.candidates[0] : undefined;
+    const cellPlayerSub = (candidateMast: DtoCandidateMast, id: number) => {
+        const candidateItem = candidateMast.candidates && candidateMast.candidates.length > 0 ? candidateMast.candidates[id] : undefined;
         const imgSrc = candidateItem?.photoPathNm ? `${imgServer}${candidateItem.photoPathNm}` : imgDefaultUser;
         return (
             <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 1 }} >
@@ -72,7 +77,13 @@ export const TableCandidateMast: React.FC<TableCandidateMastProps> = (props: Tab
                 {candidateItem?.playerNm}
             </Box>
         );
-    }, [imgServer]);
+    }
+    const cellPlayer = useCallback(({ cell }: { cell: MRT_Cell<DtoCandidateMast> }) => {
+        return cellPlayerSub(cell.row.original, 0);
+    }, []);
+    const cellPlayer2 = useCallback(({ cell }: { cell: MRT_Cell<DtoCandidateMast> }) => {
+        return cellPlayerSub(cell.row.original, 1);
+    }, []);
 
     const cellBegDt = useCallback(({ cell }: { cell: MRT_Cell<DtoCandidateMast> }) => {
         return (
@@ -245,6 +256,34 @@ export const TableCandidateMast: React.FC<TableCandidateMastProps> = (props: Tab
                 enableSorting: false,
                 Cell: cellPlayer,
             },
+        ];
+    if (props.type === CoolmoveCode.TYPE.PRIMARY) {
+        columns = [
+            ...columns,
+            {
+                accessorKey: 'club2',
+                header: '소속2',
+                muiTableHeadCellProps: { align: 'center' },
+                muiTableBodyCellProps: { align: 'center' },
+                size: 50,
+                enableEditing: false,
+                enableSorting: false,
+                Cell: cellClub2,
+            },
+            {
+                accessorKey: 'player2',
+                header: '이름2',
+                muiTableHeadCellProps: { align: 'center' },
+                muiTableBodyCellProps: { align: 'center' },
+                size: 50,
+                enableEditing: false,
+                enableSorting: false,
+                Cell: cellPlayer2,
+            },
+        ];
+    }
+        columns = [
+            ...columns,
             {
                 accessorKey: 'begDt',
                 header: '공개일시',

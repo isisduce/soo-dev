@@ -78,6 +78,7 @@ export const CandidateItem = {
         if (a.playerNm !== b.playerNm) return true;
         if (a.photoPathNm !== b.photoPathNm) return true;
         if (a.photoOgnlNm !== b.photoOgnlNm) return true;
+        if (a.photoFile !== b.photoFile) return true;
         if ((a.pledges?.length || 0) !== (b.pledges?.length || 0)) return true;
         for (let i = 0; i < (a.pledges?.length || 0); i++) {
             if (a.pledges?.[i] !== b.pledges?.[i]) return true;
@@ -125,6 +126,7 @@ export const CandidateMast = {
         if (a.status !== b.status) return true;
         if (a.votersPathNm !== b.votersPathNm) return true;
         if (a.votersOgnlNm !== b.votersOgnlNm) return true;
+        if (a.votersFile !== b.votersFile) return true;
         if ((a.candidates?.length || 0) !== (b.candidates?.length || 0)) return true;
         for (let i = 0; i < (a.candidates?.length || 0); i++) {
             if (CandidateItem.isChanged(a.candidates[i], b.candidates[i])) return true;

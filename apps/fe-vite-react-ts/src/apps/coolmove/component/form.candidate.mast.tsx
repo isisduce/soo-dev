@@ -39,7 +39,7 @@ export const FormCandidateMast: React.FC<FormCandidateMastProps> = (props: FormC
     };
 
     return (
-        <Box sx={{ width: '100%', backgroundColor: '#f9f9f9', padding: 1, borderRadius: 4, boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)', }} >
+        <Box sx={{ width: '100%', backgroundColor: '#fff', padding: 1, borderRadius: 4, boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)', }} >
             <Box sx={{ width: '100%' }} >
                 {type === CoolmoveCode.TYPE.PROMISE && <h2>공약 등록</h2>}
                 {type === CoolmoveCode.TYPE.PRIMARY && <h2>후보자 등록</h2>}

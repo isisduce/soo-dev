@@ -87,11 +87,14 @@ export const FormCandidatePeriodVoters: React.FC<FormCandidatePeriodVotersProps>
                     파일
                 </Button>
             </Box>
-            <Box sx={{ height: 12 }} />
-            <Typography variant="body2" color='warning' >
-                <Box>공개기간과 유권자 목록은</Box>
-                <Box>선거가 시작된 후에는 변경할 수 없습니다.</Box>
-            </Typography>
+            <Box sx={{ mt: 1 }}>
+                <Typography variant="body2" color='warning' >
+                    공개기간과 유권자 목록은
+                </Typography>
+                <Typography variant="body2" color='warning' >
+                    선거가 시작된 후에는 변경할 수 없습니다.
+                </Typography>
+            </Box>
         </Box>
     );
 };

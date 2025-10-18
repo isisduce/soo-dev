@@ -4,7 +4,7 @@ import { useAppEnvStore } from '../../../appmain/app.env';
 import { CoolmoveHeaderLogo } from '../component/coolmove.header.logo';
 import { CoolmoveHeaderLogout } from '../component/coolmove.header.logout';
 import { CoolmoveHeaderUserConfig } from '../component/coolmove.header.user.config';
-import { PromiseMast } from './promise.mast';
+import { PrimaryMast } from './primary.mast';
 import type { DtoCandidateMast } from '../dto/dto.candidate';
 import { CandidateMast } from '../dto/dto.candidate';
 import { coolmoveApi } from '../api/coolmove.api';
@@ -14,7 +14,7 @@ import { signinCheck } from '../login/signin.check';
 import { FormCandidateTableNotice } from '../component/form.candidate.table.notice';
 import { TableCandidateMast } from '../component/table.candidate.mast';
 
-export const PromiseContainer = () => {
+export const PrimaryContainer = () => {
 
     const env = useAppEnvStore((state) => state.env);
     const apiServer = env.apps?.urlApiServerJava || '';
@@ -33,7 +33,7 @@ export const PromiseContainer = () => {
     const loadCandidateMast = async () => {
         try {
             const token = localStorage.getItem('token') || '';
-            const response = await coolmoveApi.candidateMastSelect(apiServer, token, { type: CoolmoveCode.TYPE.PROMISE });
+            const response = await coolmoveApi.candidateMastSelect(apiServer, token, { type: CoolmoveCode.TYPE.PRIMARY });
             setData(response.result);
             setSelectedCandidateMast(undefined);
         } catch (error) {
@@ -42,7 +42,7 @@ export const PromiseContainer = () => {
     };
 
     const handleNew = () => {
-        setSelectedCandidateMast(CandidateMast.createEmptyPromise());
+        setSelectedCandidateMast(CandidateMast.createEmptyPrimary());
     }
 
     const handleRemove = async (v?: DtoCandidateMast) => {
@@ -130,8 +130,8 @@ export const PromiseContainer = () => {
                 <Box sx={{ width: '100%' }}>
                     {/* Responsive layout: column on xs, row on md and up */}
                     <Box sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, gap: 2, padding: 2, boxSizing: 'border-box' }}>
-                        <Box sx={{ width: { xs: '540px', md: '380px' }, maxWidth: { md: '540px' } }}>
-                            <PromiseMast
+                        <Box sx={{ width: { xs: '640px', md: '640px' }, maxWidth: { md: '640px' } }}>
+                            <PrimaryMast
                                 candidateMast={selectedCandidateMast}
                                 selectedCandidateMast={selectedCandidateMast}
                                 onDraftSave={handleDraftSave}
@@ -139,10 +139,10 @@ export const PromiseContainer = () => {
                                 onDraftDone={handleDraftDone}
                             />
                         </Box>
-                        <Box sx={{ width: { xs: '100%', md: 'calc(100% - 300px)' }, flexGrow: 1, minWidth: 0, overflow: 'auto' }}>
+                        <Box sx={{ width: { xs: '100%', md: 'calc(100% - 600px)' }, flexGrow: 1, minWidth: 0, overflow: 'auto' }}>
                             <Box sx={{ width: '100%', marginBottom: 2 }}>
                                 <TableCandidateMast
-                                    type={CoolmoveCode.TYPE.PROMISE}
+                                    type={CoolmoveCode.TYPE.PRIMARY}
                                     data={data}
                                     isLoading={false}
                                     selectedCandidateMast={selectedCandidateMast}
