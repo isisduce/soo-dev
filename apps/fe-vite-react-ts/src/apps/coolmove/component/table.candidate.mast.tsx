@@ -32,7 +32,7 @@ export const TableCandidateMast: React.FC<TableCandidateMastProps> = (props: Tab
 
     const enableEditing = false;
     const [selectedRow, setSelectedRow] = useState<string | null | undefined>();
-    const noSelectHeaders: string[] = [ '유권자', '문자전송', '삭제', ];
+    const noSelectHeaders: string[] = [ '유권자', '문자전송', '결과보고서', '삭제', ];
 
     // ====================================================================================================
 
@@ -157,7 +157,7 @@ export const TableCandidateMast: React.FC<TableCandidateMastProps> = (props: Tab
 
     const cellSendMms = useCallback(({ cell }: { cell: MRT_Cell<DtoCandidateMast> }) => {
         const candidateMast = cell.row.original;
-        const disabled = !!candidateMast.votersPathNm === false;
+        const disabled = !!candidateMast.votersPathNm === false || candidateMast.status !== CoolmoveCode.STATUS.FINAL;
         const imgSrc = imgKakao;
         return (
             <Box>
